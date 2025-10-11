@@ -45,8 +45,8 @@ const App = () => {
         <Header isAuthenticated={isAuthenticated} onLogout={handleLogout} />
         <main className="main-content">
           <Routes>
-            {/* Redirect root to login for immediate access */}
-            <Route path="/" element={<Navigate to="/login" replace />} />
+            {/* Redirect root to dashboard */}
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
             
             {/* Dashboard - Main landing page */}
             <Route path="/dashboard" element={<Dashboard />} />
