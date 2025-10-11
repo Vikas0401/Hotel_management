@@ -3,7 +3,7 @@ import React from 'react';
 const Footer = () => {
     return (
         <footer style={{
-            background: 'linear-gradient(135deg, #2c3e50 0%, #34495e 100%)',
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
             color: 'white',
             padding: '30px 20px 20px 20px',
             marginTop: 'auto',
@@ -30,8 +30,8 @@ const Footer = () => {
                             height: '50px', 
                             width: '50px',
                             borderRadius: '50%',
-                            border: '2px solid white',
-                            boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+                            border: '3px solid #FFD700',
+                            boxShadow: '0 4px 12px rgba(255,215,0,0.4)',
                             background: 'white',
                             padding: '3px'
                         }}
@@ -46,16 +46,19 @@ const Footer = () => {
                     <div>
                         <h3 style={{ 
                             margin: '0 0 5px 0', 
-                            fontSize: '18px',
-                            fontWeight: 'bold' 
+                            fontSize: '20px',
+                            fontWeight: 'bold',
+                            color: '#FFD700',
+                            textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
                         }}>
                             VK Solutions
                         </h3>
                         <p style={{ 
                             margin: '0', 
                             fontSize: '14px', 
-                            opacity: '0.9',
-                            fontStyle: 'italic' 
+                            opacity: '0.95',
+                            fontStyle: 'italic',
+                            color: '#F0F8FF'
                         }}>
                             Custom Software Development
                         </p>

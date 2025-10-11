@@ -52,19 +52,19 @@ const Header = ({ isAuthenticated, onLogout }) => {
             )}
             <div className="header-content">
                 <Link to="/" className={`logo ${user?.hotelId === 'matoshree' ? 'hotel-matoshree-name' : ''}`}>
-                    {user?.hotelName || 'Hotel Management System'}
+                    🏨 {user?.hotelName || 'Hotel Management System'}
                 </Link>
                 <nav>
                     <ul className="nav-menu">
                         {/* Only show home link if not on login page and authenticated */}
                         {isAuthenticated && location.pathname !== '/' && (
-                            <li><Link to="/">मुख्यपृष्ठ</Link></li>
+                            <li><Link to="/">🏠 मुख्यपृष्ठ</Link></li>
                         )}
                         {isAuthenticated && (
                             <>
-                                <li><Link to="/menu">मेनू</Link></li>
-                                <li><Link to="/bill">बिल</Link></li>
-                                <li><Link to="/bill-history">बिल इतिहास</Link></li>
+                                <li><Link to="/menu">📋 मेनू</Link></li>
+                                <li><Link to="/bill">🧾 बिल</Link></li>
+                                <li><Link to="/bill-history">📊 बिल इतिहास</Link></li>
                                 <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                     <span style={{ fontSize: '14px', opacity: '0.8' }}>
                                         स्वागत आहे, {user?.hotelName}
@@ -90,13 +90,13 @@ const Header = ({ isAuthenticated, onLogout }) => {
                                             e.target.style.color = 'white';
                                         }}
                                     >
-                                        लॉगआउट
+                                        🚪 लॉगआउट
                                     </button>
                                 </li>
                             </>
                         )}
                         {!isAuthenticated && (
-                            <li><Link to="/login">Login</Link></li>
+                            <li><Link to="/login">🔐 Login</Link></li>
                         )}
                     </ul>
                 </nav>

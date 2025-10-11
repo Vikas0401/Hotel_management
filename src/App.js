@@ -44,7 +44,7 @@ const App = () => {
         <Header isAuthenticated={isAuthenticated} onLogout={handleLogout} />
         <main className="main-content">
           <Routes>
-            <Route path="/" element={isAuthenticated ? <HomePage /> : <LoginPage onLogin={handleLogin} />} />
+            <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
             <Route path="/home" element={isAuthenticated ? <HomePage /> : <LoginPage onLogin={handleLogin} />} />
             <Route path="/menu" element={isAuthenticated ? <MenuPage /> : <LoginPage onLogin={handleLogin} />} />
