@@ -57,8 +57,8 @@ const Header = ({ isAuthenticated, onLogout }) => {
                 <nav>
                     <ul className="nav-menu">
                         {/* Only show home link if not on login page and authenticated */}
-                        {isAuthenticated && location.pathname !== '/' && (
-                            <li><Link to="/">🏠 मुख्यपृष्ठ</Link></li>
+                        {isAuthenticated && location.pathname !== '/home' && (
+                            <li><Link to="/home">🏠 मुख्यपृष्ठ</Link></li>
                         )}
                         {isAuthenticated && (
                             <>
