@@ -1,18 +1,57 @@
-/* Food Menu Styles */
+/* Food Menu Styles - Mobile First */
 .food-entry-container {
     display: flex;
-    gap: 30px;
-    padding: 20px;
+    flex-direction: column; /* Mobile: Stack vertically */
+    gap: 20px;
+    padding: 15px;
     max-width: 1400px;
     margin: 0 auto;
 }
 
+/* Form at top for mobile accessibility */
+.food-entry-form {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border: 2px solid #e74c3c;
+    order: -1; /* Always first on mobile */
+}
+
+.food-entry-form h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.4rem;
+}
+
 .menu-display {
-    flex: 2;
     background: #f8f9fa;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Desktop styles */
+@media (min-width: 768px) {
+    .food-entry-container {
+        flex-direction: row;
+        gap: 30px;
+        padding: 20px;
+    }
+    
+    .food-entry-form {
+        flex: 1;
+        height: fit-content;
+        position: sticky;
+        top: 20px;
+        order: 2; /* Move to right on desktop */
+    }
+    
+    .menu-display {
+        flex: 2;
+        order: 1; /* Move to left on desktop */
+    }
 }
 
 .menu-display h2 {
@@ -24,8 +63,8 @@
 
 .menu-categories {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
 }
 
 .menu-category {
