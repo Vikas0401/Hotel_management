@@ -54,7 +54,7 @@ const Login = ({ onLogin }) => {
                 
                 <div style={{ position: 'relative', zIndex: 2 }}>
                     <img 
-                        src="/images/vk-logo.svg" 
+                        src={`${process.env.PUBLIC_URL}/images/vk-logo.svg`} 
                         alt="VK Solutions Logo" 
                         style={{ 
                             height: '80px', 
@@ -68,7 +68,7 @@ const Login = ({ onLogin }) => {
                         }}
                         onError={(e) => {
                             // Fallback to PNG if SVG doesn't load
-                            e.target.src = '/images/vk-logo.png';
+                            e.target.src = `${process.env.PUBLIC_URL}/images/vk-logo.png`;
                             e.target.onerror = () => {
                                 e.target.style.display = 'none';
                             };

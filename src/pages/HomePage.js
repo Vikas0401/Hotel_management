@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getCurrentUser } from '../services/authService';
+import { useNavigate } from 'react-router-dom';
 
 // Matoshree Logo Component
 const MatoshreeLogo = () => (
@@ -7,6 +8,7 @@ const MatoshreeLogo = () => (
         className="matoshree-logo" 
         viewBox="0 0 200 200" 
         xmlns="http://www.w3.org/2000/svg"
+        style={{ width: '120px', height: '120px' }}
     >
         {/* Hexagonal background */}
         <polygon 
@@ -37,13 +39,263 @@ const MatoshreeLogo = () => (
     </svg>
 );
 
+// Hotel Icon Component
+const HotelIcon = () => (
+    <svg width="80" height="80" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="30" width="80" height="60" fill="#4A90E2" stroke="#2E5C8A" strokeWidth="2"/>
+        <rect x="20" y="20" width="60" height="50" fill="#5BA3F5" stroke="#2E5C8A" strokeWidth="2"/>
+        <rect x="30" y="40" width="8" height="12" fill="#FFD700"/>
+        <rect x="42" y="40" width="8" height="12" fill="#FFD700"/>
+        <rect x="54" y="40" width="8" height="12" fill="#FFD700"/>
+        <rect x="66" y="40" width="8" height="12" fill="#FFD700"/>
+        <rect x="30" y="55" width="8" height="12" fill="#FFD700"/>
+        <rect x="42" y="55" width="8" height="12" fill="#FFD700"/>
+        <rect x="54" y="55" width="8" height="12" fill="#FFD700"/>
+        <rect x="66" y="55" width="8" height="12" fill="#FFD700"/>
+        <path d="M20 20 L50 10 L80 20" stroke="#C41E3A" strokeWidth="3" fill="none"/>
+    </svg>
+);
+
 const HomePage = () => {
     const [user, setUser] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         setUser(getCurrentUser());
     }, []);
 
+    // If user is not logged in, show welcome landing page
+    if (!user) {
+        return (
+            <div style={{ 
+                minHeight: '80vh', 
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                color: 'white',
+                padding: '0'
+            }}>
+                {/* Hero Section */}
+                <div style={{ 
+                    textAlign: 'center', 
+                    padding: '60px 20px', 
+                    background: 'rgba(255,255,255,0.1)',
+                    backdropFilter: 'blur(10px)'
+                }}>
+                    <HotelIcon />
+                    <h1 style={{ 
+                        fontSize: '3rem', 
+                        margin: '20px 0', 
+                        fontWeight: 'bold',
+                        textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
+                    }}>
+                        Hotel Management System
+                    </h1>
+                    <p style={{ 
+                        fontSize: '1.3rem', 
+                        marginBottom: '40px', 
+                        maxWidth: '600px', 
+                        margin: '0 auto 40px',
+                        opacity: '0.9'
+                    }}>
+                        Complete digital solution for modern hotel operations with billing, menu management, and customer service
+                    </p>
+                    <button 
+                        onClick={() => navigate('/login')}
+                        style={{
+                            background: '#C41E3A',
+                            color: 'white',
+                            border: 'none',
+                            padding: '15px 40px',
+                            fontSize: '1.2rem',
+                            borderRadius: '50px',
+                            cursor: 'pointer',
+                            boxShadow: '0 8px 25px rgba(196, 30, 58, 0.3)',
+                            transition: 'all 0.3s ease',
+                            fontWeight: 'bold'
+                        }}
+                        onMouseOver={(e) => {
+                            e.target.style.transform = 'translateY(-2px)';
+                            e.target.style.boxShadow = '0 12px 35px rgba(196, 30, 58, 0.4)';
+                        }}
+                        onMouseOut={(e) => {
+                            e.target.style.transform = 'translateY(0)';
+                            e.target.style.boxShadow = '0 8px 25px rgba(196, 30, 58, 0.3)';
+                        }}
+                    >
+                        Get Started →
+                    </button>
+                </div>
+
+                {/* Features Section */}
+                <div style={{ 
+                    padding: '60px 20px', 
+                    background: 'white', 
+                    color: '#333'
+                }}>
+                    <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+                        <h2 style={{ 
+                            textAlign: 'center', 
+                            fontSize: '2.5rem', 
+                            marginBottom: '50px',
+                            color: '#2c3e50'
+                        }}>
+                            Powerful Features for Your Hotel
+                        </h2>
+                        
+                        <div style={{ 
+                            display: 'grid', 
+                            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
+                            gap: '30px',
+                            marginBottom: '50px'
+                        }}>
+                            {[
+                                {
+                                    icon: '🧾',
+                                    title: 'Smart Billing System',
+                                    description: 'Generate professional bills with payment tracking (जमा/बाकी), PDF export, and automatic calculations.'
+                                },
+                                {
+                                    icon: '📱',
+                                    title: 'Mobile-First Design',
+                                    description: 'Optimized for tablets and mobile devices. Access your hotel management system anywhere, anytime.'
+                                },
+                                {
+                                    icon: '🍽️',
+                                    title: 'Menu Management',
+                                    description: 'Dynamic menu system with easy item addition, pricing updates, and category organization.'
+                                },
+                                {
+                                    icon: '📊',
+                                    title: 'Bill History & Reports',
+                                    description: 'Complete transaction history with search, filter, and export capabilities for business insights.'
+                                },
+                                {
+                                    icon: '🔐',
+                                    title: 'Secure Authentication',
+                                    description: 'Role-based access control ensuring data security and user privacy protection.'
+                                },
+                                {
+                                    icon: '🎨',
+                                    title: 'Multi-language Support',
+                                    description: 'Built with Marathi language support for local businesses and traditional hotel operations.'
+                                }
+                            ].map((feature, index) => (
+                                <div key={index} style={{
+                                    background: '#f8f9fa',
+                                    padding: '30px',
+                                    borderRadius: '15px',
+                                    textAlign: 'center',
+                                    boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+                                    transition: 'transform 0.3s ease',
+                                    cursor: 'pointer'
+                                }}
+                                onMouseOver={(e) => {
+                                    e.currentTarget.style.transform = 'translateY(-5px)';
+                                }}
+                                onMouseOut={(e) => {
+                                    e.currentTarget.style.transform = 'translateY(0)';
+                                }}
+                                >
+                                    <div style={{ fontSize: '3rem', marginBottom: '20px' }}>
+                                        {feature.icon}
+                                    </div>
+                                    <h3 style={{ 
+                                        color: '#2c3e50', 
+                                        marginBottom: '15px',
+                                        fontSize: '1.3rem'
+                                    }}>
+                                        {feature.title}
+                                    </h3>
+                                    <p style={{ 
+                                        color: '#666', 
+                                        lineHeight: '1.6',
+                                        fontSize: '1rem'
+                                    }}>
+                                        {feature.description}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Technology Section */}
+                <div style={{ 
+                    padding: '60px 20px', 
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    color: 'white',
+                    textAlign: 'center'
+                }}>
+                    <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+                        <h2 style={{ 
+                            fontSize: '2.5rem', 
+                            marginBottom: '30px',
+                            textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
+                        }}>
+                            Built with Modern Technology
+                        </h2>
+                        <p style={{ 
+                            fontSize: '1.2rem', 
+                            marginBottom: '40px', 
+                            opacity: '0.9',
+                            lineHeight: '1.6'
+                        }}>
+                            Our hotel management system is built using cutting-edge web technologies 
+                            ensuring fast performance, reliability, and seamless user experience.
+                        </p>
+                        
+                        <div style={{ 
+                            display: 'flex', 
+                            justifyContent: 'center', 
+                            flexWrap: 'wrap', 
+                            gap: '20px',
+                            marginBottom: '40px'
+                        }}>
+                            {['React.js', 'JavaScript', 'PDF Generation', 'Responsive Design', 'localStorage', 'Modern UI/UX'].map((tech, index) => (
+                                <span key={index} style={{
+                                    background: 'rgba(255,255,255,0.2)',
+                                    padding: '10px 20px',
+                                    borderRadius: '25px',
+                                    fontSize: '1rem',
+                                    backdropFilter: 'blur(10px)',
+                                    border: '1px solid rgba(255,255,255,0.3)'
+                                }}>
+                                    {tech}
+                                </span>
+                            ))}
+                        </div>
+                        
+                        <button 
+                            onClick={() => navigate('/login')}
+                            style={{
+                                background: 'white',
+                                color: '#667eea',
+                                border: 'none',
+                                padding: '15px 40px',
+                                fontSize: '1.2rem',
+                                borderRadius: '50px',
+                                cursor: 'pointer',
+                                boxShadow: '0 8px 25px rgba(0,0,0,0.2)',
+                                fontWeight: 'bold',
+                                transition: 'all 0.3s ease'
+                            }}
+                            onMouseOver={(e) => {
+                                e.target.style.transform = 'translateY(-2px)';
+                                e.target.style.boxShadow = '0 12px 35px rgba(0,0,0,0.3)';
+                            }}
+                            onMouseOut={(e) => {
+                                e.target.style.transform = 'translateY(0)';
+                                e.target.style.boxShadow = '0 8px 25px rgba(0,0,0,0.2)';
+                            }}
+                        >
+                            Start Managing Your Hotel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    // For logged-in users, show the original hotel-specific content
     const getHotelDescription = () => {
         if (user?.hotelId === 'matoshree') {
             return {

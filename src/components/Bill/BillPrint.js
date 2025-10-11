@@ -179,7 +179,7 @@ const BillPrint = () => {
             }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <img 
-                        src="/images/vk-logo.svg" 
+                        src={`${process.env.PUBLIC_URL}/images/vk-logo.svg`} 
                         alt="VK Solutions" 
                         style={{ 
                             height: '40px', 
@@ -190,7 +190,7 @@ const BillPrint = () => {
                         }}
                         onError={(e) => {
                             // Fallback to PNG if SVG doesn't load
-                            e.target.src = '/images/vk-logo.png';
+                            e.target.src = `${process.env.PUBLIC_URL}/images/vk-logo.png`;
                             e.target.onerror = () => {
                                 e.target.style.display = 'none';
                             };
