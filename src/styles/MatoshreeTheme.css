@@ -1,0 +1,289 @@
+/* Matoshree Hotel Theme */
+.matoshree-theme {
+  /* Primary Colors */
+  --primary-red: #C41E3A;
+  --primary-yellow: #FFD700;
+  --accent-orange: #FF8C00;
+  --text-dark: #2C1810;
+  --cream-bg: #FFF8DC;
+  --warm-white: #FFFEF7;
+  
+  /* Background and base styling */
+  background: linear-gradient(135deg, var(--cream-bg) 0%, var(--warm-white) 100%);
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Header styling for Matoshree theme */
+.matoshree-theme .header {
+  background: linear-gradient(135deg, var(--primary-red) 0%, #A01B32 100%);
+  box-shadow: 0 4px 15px rgba(196, 30, 58, 0.3);
+  border-bottom: 3px solid var(--primary-yellow);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.matoshree-theme .header-scrolled {
+  padding: 0.7rem 0;
+  box-shadow: 0 6px 25px rgba(196, 30, 58, 0.4);
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid var(--primary-yellow);
+}
+
+.matoshree-theme .header .logo {
+  color: var(--primary-yellow);
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  font-size: 1.6rem;
+}
+
+.matoshree-theme .nav-menu a {
+  color: var(--warm-white);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.matoshree-theme .nav-menu a:hover {
+  color: var(--primary-yellow);
+  transform: translateY(-2px);
+}
+
+.matoshree-theme .nav-menu a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--primary-yellow);
+  transition: width 0.3s ease;
+}
+
+.matoshree-theme .nav-menu a:hover::after {
+  width: 100%;
+}
+
+/* Logo styling */
+.matoshree-logo {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px auto;
+  display: block;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  transition: transform 0.3s ease;
+}
+
+.matoshree-logo:hover {
+  transform: scale(1.05);
+}
+
+/* Card styling for Matoshree theme */
+.matoshree-theme .card {
+  background: var(--warm-white);
+  border: 2px solid var(--primary-yellow);
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(196, 30, 58, 0.15);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.matoshree-theme .card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-red), var(--primary-yellow), var(--primary-red));
+}
+
+.matoshree-theme .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(196, 30, 58, 0.25);
+}
+
+/* Button styling for Matoshree theme */
+.matoshree-theme .btn-primary {
+  background: linear-gradient(135deg, var(--primary-red) 0%, #A01B32 100%);
+  border: 2px solid var(--primary-yellow);
+  color: var(--warm-white);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(196, 30, 58, 0.3);
+}
+
+.matoshree-theme .btn-primary:hover {
+  background: linear-gradient(135deg, #A01B32 0%, var(--primary-red) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(196, 30, 58, 0.4);
+}
+
+.matoshree-theme .btn-secondary {
+  background: var(--primary-yellow);
+  color: var(--text-dark);
+  border: 2px solid var(--primary-red);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.matoshree-theme .btn-secondary:hover {
+  background: var(--accent-orange);
+  transform: translateY(-2px);
+}
+
+/* Menu category styling */
+.matoshree-theme .menu-category h3 {
+  background: linear-gradient(135deg, var(--primary-red), #A01B32);
+  color: var(--primary-yellow);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  border-radius: 8px 8px 0 0;
+  position: relative;
+}
+
+.matoshree-theme .menu-category h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--primary-yellow);
+}
+
+/* Food item cards */
+.matoshree-theme .menu-item-card {
+  background: var(--warm-white);
+  border: 1px solid var(--primary-yellow);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.matoshree-theme .menu-item-card:hover {
+  border-color: var(--primary-red);
+  box-shadow: 0 4px 15px rgba(196, 30, 58, 0.2);
+  transform: translateY(-2px);
+}
+
+.matoshree-theme .item-code {
+  background: linear-gradient(135deg, var(--primary-red), #A01B32);
+  color: var(--primary-yellow);
+  border-radius: 6px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.matoshree-theme .item-rate {
+  color: var(--primary-red);
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* Bill styling */
+.matoshree-theme .bill-table th {
+  background: linear-gradient(135deg, var(--primary-red), #A01B32);
+  color: var(--primary-yellow);
+}
+
+.matoshree-theme .total-row {
+  background: linear-gradient(135deg, var(--primary-yellow), var(--accent-orange));
+  color: var(--text-dark);
+  border: 2px solid var(--primary-red);
+}
+
+/* Form styling */
+.matoshree-theme .form-input:focus {
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.2);
+}
+
+.matoshree-theme .login-form {
+  border: 3px solid var(--primary-yellow);
+  background: var(--warm-white);
+  box-shadow: 0 10px 30px rgba(196, 30, 58, 0.2);
+}
+
+.matoshree-theme .login-button {
+  background: linear-gradient(135deg, var(--primary-red), #A01B32);
+  border: 2px solid var(--primary-yellow);
+  color: var(--warm-white);
+}
+
+.matoshree-theme .login-button:hover {
+  background: linear-gradient(135deg, #A01B32, var(--primary-red));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(196, 30, 58, 0.4);
+}
+
+/* Management panel styling */
+.matoshree-theme .management-header {
+  background: linear-gradient(135deg, var(--primary-red), #A01B32);
+  border: 3px solid var(--primary-yellow);
+  color: var(--warm-white);
+}
+
+.matoshree-theme .add-item-form {
+  border: 3px solid var(--primary-yellow);
+  background: var(--warm-white);
+  box-shadow: 0 6px 20px rgba(196, 30, 58, 0.15);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .matoshree-logo {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .matoshree-theme .header .logo {
+    font-size: 1.3rem;
+  }
+}
+
+/* Animation for theme transition */
+.theme-transition {
+  transition: all 0.5s ease-in-out;
+}
+
+/* Decorative elements */
+.matoshree-theme .decorative-border {
+  border-image: linear-gradient(45deg, var(--primary-red), var(--primary-yellow), var(--primary-red)) 1;
+  border-width: 2px;
+  border-style: solid;
+}
+
+/* Welcome text styling */
+.matoshree-theme .welcome-title {
+  background: linear-gradient(135deg, var(--primary-red), var(--accent-orange));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 2px 4px rgba(196, 30, 58, 0.3);
+}
+
+/* Traditional pattern background */
+.matoshree-theme::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(196, 30, 58, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
