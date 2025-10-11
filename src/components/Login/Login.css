@@ -4,7 +4,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 60vh; /* Reduced from 100vh to bring footer closer */
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 20px;
 }

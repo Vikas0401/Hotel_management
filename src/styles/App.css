@@ -20,9 +20,11 @@ body {
 }
 
 .main-content {
-    flex: 1;
-    padding-top: 80px; /* Account for fixed header height */
-    min-height: calc(100vh - 140px); /* Adjust for header and footer */
+    flex: 0 1 auto; /* Changed from flex: 1 to allow footer to be visible */
+    margin-top: 58px; /* Further reduced to eliminate white gap */
+    /* Removed min-height to allow footer to be visible without scrolling */
+    display: flex;
+    flex-direction: column;
 }
 
 h1, h2, h3 {
