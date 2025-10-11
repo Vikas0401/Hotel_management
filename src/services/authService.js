@@ -93,5 +93,8 @@ export const getCurrentUser = () => {
 
 export const getCurrentHotelId = () => {
     const user = getCurrentUser();
+    console.log("🏨 getCurrentHotelId() Debug:");
+    console.log("- Current user:", user);
+    console.log("- HotelId:", user ? user.hotelId : "null");
     return user ? user.hotelId : null;
 };

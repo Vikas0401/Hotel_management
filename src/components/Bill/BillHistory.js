@@ -26,7 +26,7 @@ const BillHistory = () => {
     }, []);
 
     const applyFilters = useCallback(() => {
-        const filtered = filterBills(filters);
+        const filtered = filterBills(filters.customerName, filters.startDate, filters.endDate);
         setFilteredBills(filtered);
     }, [filters]);
 
@@ -35,7 +35,10 @@ const BillHistory = () => {
     }, [bills, filters, applyFilters]);
 
     const loadBills = () => {
+        console.log('Loading bills...');
         const billHistory = getBillHistory();
+        console.log('Retrieved bill history:', billHistory);
+        console.log('Number of bills:', billHistory.length);
         setBills(billHistory);
     };
 

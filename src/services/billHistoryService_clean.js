@@ -5,18 +5,10 @@ import 'jspdf-autotable';
 
 // Save bill to history
 export const saveBillToHistory = (billData) => {
-    console.log('saveBillToHistory called with:', billData);
-    
     const hotelId = getCurrentHotelId();
     const user = getCurrentUser();
     
-    console.log('Hotel ID:', hotelId);
-    console.log('User:', user);
-    
-    if (!hotelId || !billData) {
-        console.log('Missing hotelId or billData:', { hotelId, billData });
-        return false;
-    }
+    if (!hotelId || !billData) return false;
     
     const billRecord = {
         id: 'BILL_' + Date.now(),
@@ -34,20 +26,14 @@ export const saveBillToHistory = (billData) => {
         savedBy: user?.username
     };
     
-    console.log('Bill record created:', billRecord);
-    
     // Get existing bills for this hotel
     const existingBills = getBillHistory();
-    console.log('Existing bills:', existingBills);
     
     // Add new bill to the beginning of the array
     const updatedBills = [billRecord, ...existingBills];
     
     // Save to localStorage
-    const storageKey = `bill_history_${hotelId}`;
-    localStorage.setItem(storageKey, JSON.stringify(updatedBills));
-    console.log('Saved to localStorage with key:', storageKey);
-    console.log('Updated bills count:', updatedBills.length);
+    localStorage.setItem(`bill_history_${hotelId}`, JSON.stringify(updatedBills));
     
     return billRecord.id;
 };
@@ -55,23 +41,10 @@ export const saveBillToHistory = (billData) => {
 // Get bill history for current hotel
 export const getBillHistory = () => {
     const hotelId = getCurrentHotelId();
-    console.log('getBillHistory called with hotelId:', hotelId);
+    if (!hotelId) return [];
     
-    if (!hotelId) {
-        console.log('No hotelId found, returning empty array');
-        return [];
-    }
-    
-    const storageKey = `bill_history_${hotelId}`;
-    const bills = localStorage.getItem(storageKey);
-    console.log('Retrieved from localStorage with key:', storageKey);
-    console.log('Raw data from localStorage:', bills);
-    
-    const parsedBills = bills ? JSON.parse(bills) : [];
-    console.log('Parsed bills:', parsedBills);
-    console.log('Number of bills found:', parsedBills.length);
-    
-    return parsedBills;
+    const bills = localStorage.getItem(`bill_history_${hotelId}`);
+    return bills ? JSON.parse(bills) : [];
 };
 
 // Get bill by ID
@@ -118,12 +91,9 @@ export const filterBills = (searchTerm = '', startDate = '', endDate = '') => {
     const bills = getBillHistory();
     
     return bills.filter(bill => {
-        // Ensure searchTerm is a string and handle null/undefined
-        const searchStr = String(searchTerm || '').toLowerCase();
-        
-        const matchesSearch = !searchStr || 
-            bill.billNumber?.toLowerCase().includes(searchStr) ||
-            bill.customerInfo?.name?.toLowerCase().includes(searchStr) ||
+        const matchesSearch = !searchTerm || 
+            bill.billNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            bill.customerInfo?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             bill.customerInfo?.phoneNumber?.includes(searchTerm);
             
         const matchesDateRange = (!startDate || bill.date >= startDate) &&
@@ -195,43 +165,6 @@ export const exportBillHistory = () => {
     };
     
     return JSON.stringify(exportData, null, 2);
-};
-
-// Export bills to PDF (for backup/download)
-export const exportBillHistoryToPDF = () => {
-    try {
-        const bills = getBillHistory();
-        const user = getCurrentUser();
-        
-        if (bills.length === 0) {
-            throw new Error('No bills to export');
-        }
-        
-        // Create new PDF document
-        const doc = new jsPDF();
-        
-        // Add basic header
-        doc.text('VK Solutions', 20, 20);
-        doc.text(`${user?.hotelName || 'Hotel'} - Bill History`, 20, 30);
-        doc.text(`Export Date: ${new Date().toLocaleDateString()}`, 20, 40);
-        doc.text(`Total Bills: ${bills.length}`, 20, 50);
-        
-        // Add bills summary
-        let yPos = 70;
-        bills.slice(0, 10).forEach((bill, index) => { // Limit to first 10 bills
-            doc.text(`${index + 1}. Bill ${bill.billNumber} - ${bill.date} - Rs. ${(bill.total || 0).toFixed(2)}`, 20, yPos);
-            yPos += 10;
-        });
-        
-        if (bills.length > 10) {
-            doc.text(`... and ${bills.length - 10} more bills`, 20, yPos);
-        }
-        
-        return doc;
-    } catch (error) {
-        console.error('Error generating PDF:', error);
-        throw error;
-    }
 };
 
 // Print single bill (for browser print)

@@ -74,11 +74,29 @@ const BillPrint = () => {
         }
     };
 
+    const clearBill = () => {
+        // Clear localStorage
+        localStorage.removeItem('selectedFoods');
+        localStorage.removeItem('customerInfo');
+        localStorage.removeItem('paymentInfo');
+        
+        // Reset state
+        setFoodItems([]);
+        setCustomerInfo({ name: '', tableNumber: '', phoneNumber: '' });
+        setPaymentInfo({ jama: 0, baki: 0 });
+        
+        console.log('Bill cleared successfully');
+    };
+
     const handleSaveBill = () => {
         if (foodItems.length === 0) {
             alert('बिल सेव्ह करण्यासाठी आयटम जोडा!');
             return;
         }
+
+        const subtotal = calculateSubtotal();
+        const tax = calculateTax(subtotal);
+        const total = calculateTotal();
 
         const billData = {
             billNumber,
@@ -92,12 +110,19 @@ const BillPrint = () => {
             paymentInfo
         };
 
+        console.log('Attempting to save bill:', billData);
         const success = saveBillToHistory(billData);
+        console.log('Save result:', success);
         
         if (success) {
             alert('बिल यशस्वीरित्या सेव्ह झाले!');
+            console.log('Bill saved successfully with ID:', success);
+            
+            // Clear the bill after successful save
+            clearBill();
         } else {
             alert('बिल सेव्ह करताना काही त्रुटी झाली. कृपया पुन्हा प्रयत्न करा.');
+            console.log('Failed to save bill');
         }
     };
 
