@@ -13,6 +13,10 @@ const BillPrint = () => {
         tableNumber: '',
         phoneNumber: ''
     });
+    const [paymentInfo, setPaymentInfo] = useState({
+        jama: 0, // received amount
+        baki: 0  // remaining balance
+    });
 
     useEffect(() => {
         // Load food items from localStorage
@@ -25,6 +29,17 @@ const BillPrint = () => {
         const savedCustomerInfo = localStorage.getItem('customerInfo');
         if (savedCustomerInfo) {
             setCustomerInfo(JSON.parse(savedCustomerInfo));
+        }
+
+        // Load payment info from localStorage
+        const savedPaymentInfo = localStorage.getItem('paymentInfo');
+        if (savedPaymentInfo) {
+            setPaymentInfo(JSON.parse(savedPaymentInfo));
+        } else {
+            // Initialize with default values
+            const defaultPayment = { jama: 0, baki: 0 };
+            setPaymentInfo(defaultPayment);
+            localStorage.setItem('paymentInfo', JSON.stringify(defaultPayment));
         }
 
         setUser(getCurrentUser());
@@ -52,8 +67,10 @@ const BillPrint = () => {
         if (window.confirm('तुम्हाला खात्री आहे की तुम्ही बिल क्लियर करू इच्छिता?')) {
             localStorage.removeItem('selectedFoods');
             localStorage.removeItem('customerInfo');
+            localStorage.removeItem('paymentInfo');
             setFoodItems([]);
             setCustomerInfo({ name: '', tableNumber: '', phoneNumber: '' });
+            setPaymentInfo({ jama: 0, baki: 0 });
         }
     };
 
@@ -71,7 +88,8 @@ const BillPrint = () => {
             items: foodItems,
             subtotal,
             tax,
-            total
+            total,
+            paymentInfo
         };
 
         const success = saveBillToHistory(billData);
@@ -93,9 +111,40 @@ const BillPrint = () => {
         localStorage.setItem('customerInfo', JSON.stringify(updatedInfo));
     };
 
+    const handlePaymentInfoChange = (e) => {
+        const { name, value } = e.target;
+        const numValue = parseFloat(value) || 0;
+        const updatedPaymentInfo = {
+            ...paymentInfo,
+            [name]: numValue
+        };
+        
+        // Auto-calculate baki when jama changes
+        if (name === 'jama') {
+            updatedPaymentInfo.baki = Math.max(0, total - numValue);
+        }
+        
+        setPaymentInfo(updatedPaymentInfo);
+        localStorage.setItem('paymentInfo', JSON.stringify(updatedPaymentInfo));
+    };
+
     const subtotal = calculateSubtotal();
     const tax = calculateTax(subtotal);
     const total = calculateTotal();
+
+    // Update baki when total changes
+    useEffect(() => {
+        const newBaki = Math.max(0, total - paymentInfo.jama);
+        if (newBaki !== paymentInfo.baki) {
+            const updatedPaymentInfo = {
+                ...paymentInfo,
+                baki: newBaki
+            };
+            setPaymentInfo(updatedPaymentInfo);
+            localStorage.setItem('paymentInfo', JSON.stringify(updatedPaymentInfo));
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [total, paymentInfo.jama]);
 
     const getHotelAddress = () => {
         if (user?.hotelId === 'matoshree') {
@@ -230,6 +279,68 @@ const BillPrint = () => {
                 </div>
             </div>
 
+            {/* Payment Information Section for Input */}
+            <div className="payment-input-section" style={{ 
+                marginBottom: '20px', 
+                padding: '15px', 
+                background: '#e8f4fd', 
+                borderRadius: '6px',
+                border: '1px solid #0066cc'
+            }}>
+                <h3 style={{ 
+                    color: user?.hotelId === 'matoshree' ? '#C41E3A' : '#2c3e50', 
+                    marginBottom: '15px',
+                    fontSize: '18px'
+                }} className={user?.hotelId === 'matoshree' ? 'marathi-header' : ''}>
+                    पेमेंट माहिती
+                </h3>
+                <div style={{ 
+                    display: 'grid', 
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
+                    gap: '15px',
+                    alignItems: 'center'
+                }}>
+                    <div>
+                        <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>
+                            जमा (Received Amount): ₹
+                        </label>
+                        <input
+                            type="number"
+                            name="jama"
+                            value={paymentInfo.jama}
+                            onChange={handlePaymentInfoChange}
+                            min="0"
+                            step="0.01"
+                            style={{
+                                padding: '10px',
+                                border: '1px solid #ddd',
+                                borderRadius: '4px',
+                                fontSize: '14px',
+                                width: '100%'
+                            }}
+                            className={user?.hotelId === 'matoshree' ? 'marathi-body' : ''}
+                        />
+                    </div>
+                    <div>
+                        <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>
+                            बाकी (Balance): ₹
+                        </label>
+                        <div style={{
+                            padding: '10px',
+                            border: '1px solid #ddd',
+                            borderRadius: '4px',
+                            fontSize: '14px',
+                            fontWeight: 'bold',
+                            color: paymentInfo.baki > 0 ? '#dc3545' : '#28a745',
+                            backgroundColor: '#f8f9fa',
+                            textAlign: 'center'
+                        }}>
+                            {paymentInfo.baki.toFixed(2)}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             {foodItems.length > 0 ? (
                 <>
                     {/* Customer Info for Print */}
@@ -290,6 +401,21 @@ const BillPrint = () => {
                         <div className="total-row">
                             <span>एकूण रक्कम:</span>
                             <span>₹{total.toFixed(2)}</span>
+                        </div>
+                        
+                        {/* Payment Summary for Print */}
+                        <div style={{ marginTop: '15px', paddingTop: '15px', borderTop: '1px solid #ddd' }}>
+                            <div className="summary-row">
+                                <span>जमा (Received):</span>
+                                <span>₹{paymentInfo.jama.toFixed(2)}</span>
+                            </div>
+                            <div className="summary-row" style={{ 
+                                color: paymentInfo.baki > 0 ? '#dc3545' : '#28a745',
+                                fontWeight: 'bold'
+                            }}>
+                                <span>बाकी (Balance):</span>
+                                <span>₹{paymentInfo.baki.toFixed(2)}</span>
+                            </div>
                         </div>
                     </div>
 

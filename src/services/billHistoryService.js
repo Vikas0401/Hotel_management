@@ -18,6 +18,7 @@ export const saveBillToHistory = (billData) => {
         subtotal: billData.subtotal,
         tax: billData.tax,
         total: billData.total,
+        paymentInfo: billData.paymentInfo || { jama: 0, baki: billData.total || 0 },
         hotelName: user?.hotelName,
         savedAt: new Date().toISOString(),
         savedBy: user?.username
@@ -57,6 +58,30 @@ export const deleteBillFromHistory = (billId) => {
     
     const bills = getBillHistory();
     const updatedBills = bills.filter(bill => bill.id !== billId);
+    
+    localStorage.setItem(`bill_history_${hotelId}`, JSON.stringify(updatedBills));
+    return true;
+};
+
+// Update payment information for a specific bill
+export const updateBillPayment = (billId, paymentInfo) => {
+    const hotelId = getCurrentHotelId();
+    if (!hotelId) return false;
+    
+    const bills = getBillHistory();
+    const updatedBills = bills.map(bill => {
+        if (bill.id === billId) {
+            return {
+                ...bill,
+                paymentInfo: {
+                    jama: paymentInfo.jama,
+                    baki: paymentInfo.baki
+                },
+                lastUpdated: new Date().toISOString()
+            };
+        }
+        return bill;
+    });
     
     localStorage.setItem(`bill_history_${hotelId}`, JSON.stringify(updatedBills));
     return true;

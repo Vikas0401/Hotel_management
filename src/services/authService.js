@@ -35,6 +35,10 @@ export const login = (username, password) => {
         };
         localStorage.setItem("user", JSON.stringify(userSession));
         localStorage.setItem("hotel_name_version", "marathi_v1");
+        
+        // Set session flag to indicate this is a new session
+        sessionStorage.setItem("user_session", "active");
+        
         return true;
     }
     return false;
@@ -43,17 +47,21 @@ export const login = (username, password) => {
 export const logout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("hotel_name_version");
+    sessionStorage.removeItem("user_session");
 };
 
 export const isAuthenticated = () => {
     const user = localStorage.getItem("user");
-    if (user) {
+    const sessionActive = sessionStorage.getItem("user_session");
+    
+    if (user && sessionActive === "active") {
         // Check if we need to update hotel name to Marathi version
         const nameVersion = localStorage.getItem("hotel_name_version");
         if (nameVersion !== "marathi_v1") {
             // Force logout to refresh with new Marathi names
             localStorage.removeItem("user");
             localStorage.removeItem("hotel_name_version");
+            sessionStorage.removeItem("user_session");
             return false;
         }
         return true;
@@ -63,7 +71,9 @@ export const isAuthenticated = () => {
 
 export const getCurrentUser = () => {
     const user = localStorage.getItem("user");
-    if (user) {
+    const sessionActive = sessionStorage.getItem("user_session");
+    
+    if (user && sessionActive === "active") {
         const userData = JSON.parse(user);
         
         // Check if we need to update hotel name to Marathi version
@@ -72,6 +82,7 @@ export const getCurrentUser = () => {
             // Force logout to refresh with new Marathi names
             localStorage.removeItem("user");
             localStorage.removeItem("hotel_name_version");
+            sessionStorage.removeItem("user_session");
             return null;
         }
         

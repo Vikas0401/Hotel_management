@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getBillHistory, filterBills, deleteBillFromHistory, getBillStatistics, exportBillHistory } from '../../services/billHistoryService';
+import { getBillHistory, filterBills, deleteBillFromHistory, getBillStatistics, exportBillHistory, updateBillPayment } from '../../services/billHistoryService';
 import { getCurrentUser } from '../../services/authService';
 
 const BillHistory = () => {
@@ -13,6 +13,11 @@ const BillHistory = () => {
         endDate: ''
     });
     const [selectedBill, setSelectedBill] = useState(null);
+    const [editingPayment, setEditingPayment] = useState(false);
+    const [editPaymentData, setEditPaymentData] = useState({
+        jama: 0,
+        baki: 0
+    });
 
     useEffect(() => {
         setUser(getCurrentUser());
@@ -79,6 +84,52 @@ const BillHistory = () => {
 
     const formatCurrency = (amount) => {
         return `₹${amount.toFixed(2)}`;
+    };
+
+    const handleEditPayment = (bill) => {
+        setEditingPayment(true);
+        setEditPaymentData({
+            jama: bill.paymentInfo?.jama || 0,
+            baki: bill.paymentInfo?.baki || bill.total
+        });
+    };
+
+    const handlePaymentDataChange = (e) => {
+        const { name, value } = e.target;
+        const numValue = parseFloat(value) || 0;
+        
+        if (name === 'jama') {
+            const newBaki = Math.max(0, selectedBill.total - numValue);
+            setEditPaymentData({
+                jama: numValue,
+                baki: newBaki
+            });
+        }
+    };
+
+    const handleSavePayment = () => {
+        if (selectedBill) {
+            const success = updateBillPayment(selectedBill.id, editPaymentData);
+            if (success) {
+                // Update the selected bill with new payment info
+                setSelectedBill({
+                    ...selectedBill,
+                    paymentInfo: editPaymentData
+                });
+                
+                // Reload bills to reflect changes in the table
+                loadBills();
+                setEditingPayment(false);
+                alert('पेमेंट माहिती यशस्वीरित्या अपडेट झाली!');
+            } else {
+                alert('पेमेंट माहिती अपडेट करताना त्रुटी झाली!');
+            }
+        }
+    };
+
+    const handleCancelEdit = () => {
+        setEditingPayment(false);
+        setEditPaymentData({ jama: 0, baki: 0 });
     };
 
     return (
@@ -285,6 +336,8 @@ const BillHistory = () => {
                                     <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #dee2e6' }}>ग्राहक</th>
                                     <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #dee2e6' }}>टेबल</th>
                                     <th style={{ padding: '12px', textAlign: 'right', borderBottom: '2px solid #dee2e6' }}>रक्कम</th>
+                                    <th style={{ padding: '12px', textAlign: 'right', borderBottom: '2px solid #dee2e6' }}>जमा</th>
+                                    <th style={{ padding: '12px', textAlign: 'right', borderBottom: '2px solid #dee2e6' }}>बाकी</th>
                                     <th style={{ padding: '12px', textAlign: 'center', borderBottom: '2px solid #dee2e6' }}>कृती</th>
                                 </tr>
                             </thead>
@@ -299,6 +352,15 @@ const BillHistory = () => {
                                         <td style={{ padding: '12px' }}>{bill.customerInfo?.name || '-'}</td>
                                         <td style={{ padding: '12px' }}>{bill.customerInfo?.tableNumber || '-'}</td>
                                         <td style={{ padding: '12px', textAlign: 'right', fontWeight: 'bold' }}>{formatCurrency(bill.total)}</td>
+                                        <td style={{ padding: '12px', textAlign: 'right' }}>{formatCurrency(bill.paymentInfo?.jama || 0)}</td>
+                                        <td style={{ 
+                                            padding: '12px', 
+                                            textAlign: 'right', 
+                                            color: (bill.paymentInfo?.baki || bill.total) > 0 ? '#dc3545' : '#28a745',
+                                            fontWeight: 'bold'
+                                        }}>
+                                            {formatCurrency(bill.paymentInfo?.baki || bill.total)}
+                                        </td>
                                         <td style={{ padding: '12px', textAlign: 'center' }}>
                                             <button
                                                 onClick={() => setSelectedBill(bill)}
@@ -366,7 +428,11 @@ const BillHistory = () => {
                                 बिल तपशील - {selectedBill.billNumber}
                             </h3>
                             <button
-                                onClick={() => setSelectedBill(null)}
+                                onClick={() => {
+                                    setSelectedBill(null);
+                                    setEditingPayment(false);
+                                    setEditPaymentData({ jama: 0, baki: 0 });
+                                }}
                                 style={{
                                     background: 'none',
                                     border: 'none',
@@ -419,6 +485,110 @@ const BillHistory = () => {
                             <p style={{ fontSize: '18px', color: user?.hotelId === 'matoshree' ? '#C41E3A' : '#007bff' }}>
                                 <strong>एकूण: {formatCurrency(selectedBill.total)}</strong>
                             </p>
+                            
+                            {/* Payment Information */}
+                            <div style={{ marginTop: '15px', paddingTop: '15px', borderTop: '1px solid #ddd' }}>
+                                {editingPayment ? (
+                                    /* Edit Mode */
+                                    <div style={{ textAlign: 'left' }}>
+                                        <h4 style={{ marginBottom: '15px', color: '#2c3e50' }}>पेमेंट माहिती संपादित करा</h4>
+                                        <div style={{ marginBottom: '15px' }}>
+                                            <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>
+                                                जमा (Received Amount): ₹
+                                            </label>
+                                            <input
+                                                type="number"
+                                                name="jama"
+                                                value={editPaymentData.jama}
+                                                onChange={handlePaymentDataChange}
+                                                min="0"
+                                                step="0.01"
+                                                style={{
+                                                    padding: '8px',
+                                                    border: '1px solid #ddd',
+                                                    borderRadius: '4px',
+                                                    width: '150px',
+                                                    fontSize: '14px'
+                                                }}
+                                            />
+                                        </div>
+                                        <div style={{ marginBottom: '15px' }}>
+                                            <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>
+                                                बाकी (Balance): ₹
+                                            </label>
+                                            <div style={{
+                                                padding: '8px',
+                                                border: '1px solid #ddd',
+                                                borderRadius: '4px',
+                                                backgroundColor: '#f8f9fa',
+                                                width: '150px',
+                                                fontSize: '14px',
+                                                fontWeight: 'bold',
+                                                color: editPaymentData.baki > 0 ? '#dc3545' : '#28a745'
+                                            }}>
+                                                {editPaymentData.baki.toFixed(2)}
+                                            </div>
+                                        </div>
+                                        <div style={{ display: 'flex', gap: '10px' }}>
+                                            <button
+                                                onClick={handleSavePayment}
+                                                style={{
+                                                    padding: '8px 16px',
+                                                    background: '#28a745',
+                                                    color: 'white',
+                                                    border: 'none',
+                                                    borderRadius: '4px',
+                                                    cursor: 'pointer',
+                                                    fontSize: '14px'
+                                                }}
+                                            >
+                                                सेव्ह करा
+                                            </button>
+                                            <button
+                                                onClick={handleCancelEdit}
+                                                style={{
+                                                    padding: '8px 16px',
+                                                    background: '#6c757d',
+                                                    color: 'white',
+                                                    border: 'none',
+                                                    borderRadius: '4px',
+                                                    cursor: 'pointer',
+                                                    fontSize: '14px'
+                                                }}
+                                            >
+                                                रद्द करा
+                                            </button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    /* View Mode */
+                                    <div>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                                            <p><strong>जमा (Received): {formatCurrency(selectedBill.paymentInfo?.jama || 0)}</strong></p>
+                                            <button
+                                                onClick={() => handleEditPayment(selectedBill)}
+                                                style={{
+                                                    padding: '4px 8px',
+                                                    background: '#007bff',
+                                                    color: 'white',
+                                                    border: 'none',
+                                                    borderRadius: '3px',
+                                                    cursor: 'pointer',
+                                                    fontSize: '12px'
+                                                }}
+                                            >
+                                                संपादित करा
+                                            </button>
+                                        </div>
+                                        <p style={{ 
+                                            color: (selectedBill.paymentInfo?.baki || selectedBill.total) > 0 ? '#dc3545' : '#28a745',
+                                            fontSize: '16px'
+                                        }}>
+                                            <strong>बाकी (Balance): {formatCurrency(selectedBill.paymentInfo?.baki || selectedBill.total)}</strong>
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
