@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
     getHotelMenu, 
     addMenuItem, 
@@ -22,19 +22,19 @@ const MenuManagement = ({ onMenuUpdate }) => {
     });
     const [user, setUser] = useState(null);
 
-    useEffect(() => {
-        loadMenu();
-        setUser(getCurrentUser());
-    }, []);
-
-    const loadMenu = () => {
+    const loadMenu = useCallback(() => {
         const currentMenu = getHotelMenu();
         setMenu(currentMenu);
         setCategories(getMenuCategories());
         if (onMenuUpdate) {
             onMenuUpdate(currentMenu);
         }
-    };
+    }, [onMenuUpdate]);
+
+    useEffect(() => {
+        loadMenu();
+        setUser(getCurrentUser());
+    }, [loadMenu]);
 
     const handleAddItem = () => {
         if (newItem.code && newItem.name && newItem.rate && newItem.category) {

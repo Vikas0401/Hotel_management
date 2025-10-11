@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { getHotelMenu, getMenuCategories } from '../../services/menuService';
+import { getHotelMenu } from '../../services/menuService';
 import { getCurrentUser } from '../../services/authService';
 import '../../styles/components/FoodMenu.css';
 
 const FoodEntry = ({ onFoodSelect }) => {
     const [foodItems, setFoodItems] = useState({});
-    const [categories, setCategories] = useState([]);
+    // const [categories, setCategories] = useState([]);
     const [foodCode, setFoodCode] = useState('');
     const [quantity, setQuantity] = useState(1);
     const [error, setError] = useState('');
@@ -19,7 +19,7 @@ const FoodEntry = ({ onFoodSelect }) => {
     const loadMenu = () => {
         const menu = getHotelMenu();
         setFoodItems(menu);
-        setCategories(getMenuCategories());
+        // setCategories(getMenuCategories());
     };
 
     const handleFoodCodeChange = (e) => {
@@ -108,11 +108,7 @@ const FoodEntry = ({ onFoodSelect }) => {
                     {error && <p className="error-message">{error}</p>}
                 </form>
             </div>
-        </div>
-    );
-
-    return (
-        <div className="food-entry-container">
+            
             <div className="menu-display">
                 <h2>Maharashtra Hotel Menu</h2>
                 <div className="menu-categories">

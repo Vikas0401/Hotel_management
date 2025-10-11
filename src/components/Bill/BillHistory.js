@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { getBillHistory, filterBills, deleteBillFromHistory, getBillStatistics, exportBillHistoryToPDF, exportSingleBillToPDF, printSingleBill, updateBillPayment } from '../../services/billHistoryService';
 import { getCurrentUser } from '../../services/authService';
 
@@ -25,9 +25,14 @@ const BillHistory = () => {
         loadStatistics();
     }, []);
 
+    const applyFilters = useCallback(() => {
+        const filtered = filterBills(filters);
+        setFilteredBills(filtered);
+    }, [filters]);
+
     useEffect(() => {
         applyFilters();
-    }, [bills, filters]);
+    }, [bills, filters, applyFilters]);
 
     const loadBills = () => {
         const billHistory = getBillHistory();
@@ -37,11 +42,6 @@ const BillHistory = () => {
     const loadStatistics = () => {
         const stats = getBillStatistics();
         setStatistics(stats);
-    };
-
-    const applyFilters = () => {
-        const filtered = filterBills(filters);
-        setFilteredBills(filtered);
     };
 
     const handleFilterChange = (e) => {
