@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { getCurrentUser } from '../../services/authService';
 import './Header.css';
 
 const Header = ({ isAuthenticated, onLogout }) => {
     const [user, setUser] = useState(null);
     const [scrolled, setScrolled] = useState(false);
+    const location = useLocation();
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -33,6 +34,54 @@ const Header = ({ isAuthenticated, onLogout }) => {
 
     return (
         <header className={`header ${scrolled ? 'header-scrolled' : ''}`}>
+            {/* Developer Branding */}
+            <div className="developer-branding" style={{ 
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                color: 'white',
+                padding: '8px 20px',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                fontSize: '13px',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+            }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <img 
+                        src="/images/vk-logo.svg" 
+                        alt="VK Solutions Logo" 
+                        style={{ 
+                            height: '28px', 
+                            width: '28px',
+                            borderRadius: '50%',
+                            boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
+                            background: 'white',
+                            padding: '2px'
+                        }}
+                        onError={(e) => {
+                            // Fallback to PNG if SVG doesn't load
+                            e.target.src = '/images/vk-logo.png';
+                            e.target.onerror = () => {
+                                e.target.style.display = 'none';
+                            };
+                        }}
+                    />
+                    <div>
+                        <div style={{ fontWeight: 'bold', fontSize: '14px' }}>Developed by VK Solutions</div>
+                        <div style={{ fontSize: '12px', opacity: '0.9' }}>Professional Software Development</div>
+                    </div>
+                </div>
+                <div className="contact-info" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                        <span>📱</span>
+                        <span>+91 9689517133</span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                        <span>📧</span>
+                        <span>vikas4kale@gmail.com</span>
+                    </div>
+                </div>
+            </div>
+            
             {/* Signature Line */}
             {isAuthenticated && (
                 <div style={{ 
@@ -55,8 +104,11 @@ const Header = ({ isAuthenticated, onLogout }) => {
                 </Link>
                 <nav>
                     <ul className="nav-menu">
-                        <li><Link to="/">मुख्यपृष्ठ</Link></li>
-                        {isAuthenticated ? (
+                        {/* Only show home link if not on login page and authenticated */}
+                        {isAuthenticated && location.pathname !== '/' && (
+                            <li><Link to="/">मुख्यपृष्ठ</Link></li>
+                        )}
+                        {isAuthenticated && (
                             <>
                                 <li><Link to="/menu">मेनू</Link></li>
                                 <li><Link to="/bill">बिल</Link></li>
@@ -90,7 +142,8 @@ const Header = ({ isAuthenticated, onLogout }) => {
                                     </button>
                                 </li>
                             </>
-                        ) : (
+                        )}
+                        {!isAuthenticated && (
                             <li><Link to="/login">Login</Link></li>
                         )}
                     </ul>

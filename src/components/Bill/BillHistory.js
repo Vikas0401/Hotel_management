@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getBillHistory, filterBills, deleteBillFromHistory, getBillStatistics, exportBillHistory, updateBillPayment } from '../../services/billHistoryService';
+import { getBillHistory, filterBills, deleteBillFromHistory, getBillStatistics, exportBillHistoryToPDF, exportSingleBillToPDF, printSingleBill, updateBillPayment } from '../../services/billHistoryService';
 import { getCurrentUser } from '../../services/authService';
 
 const BillHistory = () => {
@@ -70,16 +70,40 @@ const BillHistory = () => {
     };
 
     const handleExportHistory = () => {
-        const exportData = exportBillHistory();
-        const blob = new Blob([exportData], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${user?.hotelName}_bill_history_${new Date().toISOString().split('T')[0]}.json`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+        try {
+            const doc = exportBillHistoryToPDF();
+            const fileName = `${user?.hotelName || 'Hotel'}_bill_history_${new Date().toISOString().split('T')[0]}.pdf`;
+            doc.save(fileName);
+            
+            // Show success message
+            alert('बिल इतिहास PDF मध्ये डाउनलोड झाला!');
+        } catch (error) {
+            console.error('Error generating PDF:', error);
+            alert('PDF बनवताना त्रुटी झाली. कृपया पुन्हा प्रयत्न करा.');
+        }
+    };
+
+    const handleExportSingleBill = (bill) => {
+        try {
+            const doc = exportSingleBillToPDF(bill);
+            const fileName = `${user?.hotelName || 'Hotel'}_bill_${bill.billNumber}_${bill.date.replace(/\//g, '-')}.pdf`;
+            doc.save(fileName);
+            
+            // Show success message
+            alert('बिल PDF मध्ये डाउनलोड झाले!');
+        } catch (error) {
+            console.error('Error generating single bill PDF:', error);
+            alert('PDF बनवताना त्रुटी झाली. कृपया पुन्हा प्रयत्न करा.');
+        }
+    };
+
+    const handlePrintSingleBill = (bill) => {
+        try {
+            printSingleBill(bill);
+        } catch (error) {
+            console.error('Error printing bill:', error);
+            alert('प्रिंट करताना त्रुटी झाली. कृपया पुन्हा प्रयत्न करा.');
+        }
     };
 
     const formatCurrency = (amount) => {
@@ -296,7 +320,7 @@ const BillHistory = () => {
                                 fontSize: '14px'
                             }}
                         >
-                            एक्सपोर्ट करा
+                            📄 PDF एक्सपोर्ट करा
                         </button>
                     </div>
                 </div>
@@ -372,10 +396,27 @@ const BillHistory = () => {
                                                     borderRadius: '3px',
                                                     cursor: 'pointer',
                                                     fontSize: '12px',
-                                                    marginRight: '5px'
+                                                    marginRight: '3px',
+                                                    marginBottom: '3px'
                                                 }}
                                             >
                                                 पहा
+                                            </button>
+                                            <button
+                                                onClick={() => handlePrintSingleBill(bill)}
+                                                style={{
+                                                    padding: '4px 8px',
+                                                    background: '#28a745',
+                                                    color: 'white',
+                                                    border: 'none',
+                                                    borderRadius: '3px',
+                                                    cursor: 'pointer',
+                                                    fontSize: '12px',
+                                                    marginRight: '3px',
+                                                    marginBottom: '3px'
+                                                }}
+                                            >
+                                                🖨️ प्रिंट
                                             </button>
                                             <button
                                                 onClick={() => handleDeleteBill(bill.id)}
@@ -386,7 +427,8 @@ const BillHistory = () => {
                                                     border: 'none',
                                                     borderRadius: '3px',
                                                     cursor: 'pointer',
-                                                    fontSize: '12px'
+                                                    fontSize: '12px',
+                                                    marginBottom: '3px'
                                                 }}
                                             >
                                                 हटवा
@@ -427,22 +469,41 @@ const BillHistory = () => {
                             <h3 style={{ margin: '0', color: user?.hotelId === 'matoshree' ? '#C41E3A' : '#2c3e50' }}>
                                 बिल तपशील - {selectedBill.billNumber}
                             </h3>
-                            <button
-                                onClick={() => {
-                                    setSelectedBill(null);
-                                    setEditingPayment(false);
-                                    setEditPaymentData({ jama: 0, baki: 0 });
-                                }}
-                                style={{
-                                    background: 'none',
-                                    border: 'none',
-                                    fontSize: '24px',
-                                    cursor: 'pointer',
-                                    color: '#666'
-                                }}
-                            >
-                                ×
-                            </button>
+                            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                                <button
+                                    onClick={() => handleExportSingleBill(selectedBill)}
+                                    style={{
+                                        padding: '6px 12px',
+                                        background: '#28a745',
+                                        color: 'white',
+                                        border: 'none',
+                                        borderRadius: '4px',
+                                        cursor: 'pointer',
+                                        fontSize: '12px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '5px'
+                                    }}
+                                >
+                                    📄 PDF डाउनलोड
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        setSelectedBill(null);
+                                        setEditingPayment(false);
+                                        setEditPaymentData({ jama: 0, baki: 0 });
+                                    }}
+                                    style={{
+                                        background: 'none',
+                                        border: 'none',
+                                        fontSize: '24px',
+                                        cursor: 'pointer',
+                                        color: '#666'
+                                    }}
+                                >
+                                    ×
+                                </button>
+                            </div>
                         </div>
 
                         <div style={{ marginBottom: '15px' }}>

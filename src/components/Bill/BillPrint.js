@@ -168,6 +168,49 @@ const BillPrint = () => {
 
     return (
         <div className="bill-print" style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
+            {/* VK Solutions Branding for Print */}
+            <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                padding: '10px 0',
+                borderBottom: '2px solid #667eea',
+                marginBottom: '20px'
+            }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <img 
+                        src="/images/vk-logo.svg" 
+                        alt="VK Solutions" 
+                        style={{ 
+                            height: '40px', 
+                            width: '40px',
+                            borderRadius: '50%',
+                            background: 'white',
+                            padding: '2px'
+                        }}
+                        onError={(e) => {
+                            // Fallback to PNG if SVG doesn't load
+                            e.target.src = '/images/vk-logo.png';
+                            e.target.onerror = () => {
+                                e.target.style.display = 'none';
+                            };
+                        }}
+                    />
+                    <div>
+                        <div style={{ fontSize: '14px', fontWeight: 'bold', color: '#667eea' }}>
+                            Powered by VK Solutions
+                        </div>
+                        <div style={{ fontSize: '11px', color: '#666' }}>
+                            📱 +91 9689517133 | 📧 vikas4kale@gmail.com
+                        </div>
+                    </div>
+                </div>
+                <div style={{ fontSize: '12px', color: '#666', textAlign: 'right' }}>
+                    <div>Professional Software Development</div>
+                    <div>Custom IT Solutions</div>
+                </div>
+            </div>
+
             <div className="bill-header" style={{ textAlign: 'center', marginBottom: '20px' }}>
                 <h1 
                     className={user?.hotelId === 'matoshree' ? 'hotel-matoshree-name' : ''}

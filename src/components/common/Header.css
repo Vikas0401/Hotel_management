@@ -74,3 +74,40 @@
     gap: 1rem;
   }
 }
+
+/* VK Solutions Branding Responsive Styles */
+@media (max-width: 768px) {
+  .developer-branding {
+    flex-direction: column !important;
+    gap: 15px !important;
+    text-align: center;
+  }
+  
+  .developer-branding > div:first-child {
+    gap: 10px !important;
+  }
+  
+  .developer-branding > div:last-child {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+  
+  .developer-branding img {
+    height: 28px !important;
+  }
+  
+  .developer-branding .contact-info {
+    font-size: 12px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .developer-branding {
+    padding: 6px 15px !important;
+    font-size: 11px !important;
+  }
+  
+  .developer-branding > div:last-child {
+    gap: 8px !important;
+  }
+}
