@@ -17,6 +17,7 @@ const BillPrint = () => {
         jama: 0, // received amount
         baki: 0  // remaining balance
     });
+    const [includeGST, setIncludeGST] = useState(false); // GST checkbox state - unchecked by default
 
     useEffect(() => {
         // Load food items from localStorage
@@ -42,6 +43,11 @@ const BillPrint = () => {
             localStorage.setItem('paymentInfo', JSON.stringify(defaultPayment));
         }
 
+        // Clear any existing GST preference and set to false by default
+        localStorage.removeItem('includeGST');
+        setIncludeGST(false);
+        localStorage.setItem('includeGST', JSON.stringify(false));
+
         setUser(getCurrentUser());
     }, []);
 
@@ -50,13 +56,14 @@ const BillPrint = () => {
     };
 
     const calculateTax = (subtotal) => {
-        return subtotal * 0.18; // 18% GST
+        return includeGST ? subtotal * 0.18 : 0; // 18% GST only if checkbox is selected
     };
 
     const calculateTotal = () => {
         const subtotal = calculateSubtotal();
         const tax = calculateTax(subtotal);
-        return subtotal + tax;
+        const total = subtotal + tax;
+        return Math.ceil(total); // Round up to next whole number
     };
 
     const handlePrint = () => {
@@ -107,7 +114,8 @@ const BillPrint = () => {
             subtotal,
             tax,
             total,
-            paymentInfo
+            paymentInfo,
+            includeGST
         };
 
         console.log('Attempting to save bill:', billData);
@@ -124,6 +132,12 @@ const BillPrint = () => {
             alert('बिल सेव्ह करताना काही त्रुटी झाली. कृपया पुन्हा प्रयत्न करा.');
             console.log('Failed to save bill');
         }
+    };
+
+    const handleGSTChange = (e) => {
+        const isChecked = e.target.checked;
+        setIncludeGST(isChecked);
+        localStorage.setItem('includeGST', JSON.stringify(isChecked));
     };
 
     const handleCustomerInfoChange = (e) => {
@@ -146,7 +160,7 @@ const BillPrint = () => {
         
         // Auto-calculate baki when jama changes
         if (name === 'jama') {
-            updatedPaymentInfo.baki = Math.max(0, total - numValue);
+            updatedPaymentInfo.baki = Math.max(0, Math.ceil(total - numValue));
         }
         
         setPaymentInfo(updatedPaymentInfo);
@@ -159,7 +173,7 @@ const BillPrint = () => {
 
     // Update baki when total changes
     useEffect(() => {
-        const newBaki = Math.max(0, total - paymentInfo.jama);
+        const newBaki = Math.max(0, Math.ceil(total - paymentInfo.jama));
         if (newBaki !== paymentInfo.baki) {
             const updatedPaymentInfo = {
                 ...paymentInfo,
@@ -403,7 +417,7 @@ const BillPrint = () => {
                             backgroundColor: '#f8f9fa',
                             textAlign: 'center'
                         }}>
-                            {paymentInfo.baki.toFixed(2)}
+                            {paymentInfo.baki}
                         </div>
                     </div>
                 </div>
@@ -457,18 +471,48 @@ const BillPrint = () => {
                         </tbody>
                     </table>
 
+                    {/* GST Checkbox */}
+                    <div style={{ 
+                        margin: '15px 0', 
+                        padding: '10px', 
+                        backgroundColor: '#f8f9fa', 
+                        borderRadius: '4px',
+                        border: '1px solid #ddd'
+                    }}>
+                        <label style={{ 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            cursor: 'pointer',
+                            fontSize: '14px',
+                            fontWeight: '500'
+                        }}>
+                            <input
+                                type="checkbox"
+                                checked={includeGST}
+                                onChange={handleGSTChange}
+                                style={{ 
+                                    marginRight: '8px',
+                                    transform: 'scale(1.2)'
+                                }}
+                            />
+                            जीएसटी समाविष्ट करा (Include GST 18%)
+                        </label>
+                    </div>
+
                     <div className="bill-summary">
                         <div className="summary-row">
                             <span>उपजोड:</span>
                             <span>₹{subtotal.toFixed(2)}</span>
                         </div>
-                        <div className="summary-row">
-                            <span>जीएसटी (18%):</span>
-                            <span>₹{tax.toFixed(2)}</span>
-                        </div>
+                        {includeGST && (
+                            <div className="summary-row">
+                                <span>जीएसटी (18%):</span>
+                                <span>₹{tax.toFixed(2)}</span>
+                            </div>
+                        )}
                         <div className="total-row">
                             <span>एकूण रक्कम:</span>
-                            <span>₹{total.toFixed(2)}</span>
+                            <span>₹{total}</span>
                         </div>
                         
                         {/* Payment Summary for Print */}
@@ -482,7 +526,7 @@ const BillPrint = () => {
                                 fontWeight: 'bold'
                             }}>
                                 <span>बाकी (Balance):</span>
-                                <span>₹{paymentInfo.baki.toFixed(2)}</span>
+                                <span>₹{paymentInfo.baki}</span>
                             </div>
                         </div>
                     </div>
