@@ -58,11 +58,19 @@ const HotelIcon = () => (
 
 const HomePage = () => {
     const [user, setUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
-        setUser(getCurrentUser());
+        const currentUser = getCurrentUser();
+        setUser(currentUser);
+        setIsLoading(false);
     }, []);
+
+    // Show loading while checking authentication
+    if (isLoading) {
+        return <div style={{ padding: '40px', textAlign: 'center' }}>Loading...</div>;
+    }
 
     // If user is not logged in, show welcome landing page
     if (!user) {

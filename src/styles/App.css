@@ -21,8 +21,8 @@ body {
 
 .main-content {
     flex: 1;
-    padding-top: 140px; /* Account for fixed header height with developer branding */
-    min-height: calc(100vh - 180px); /* Adjust for header and footer */
+    padding-top: 80px; /* Account for fixed header height */
+    min-height: calc(100vh - 140px); /* Adjust for header and footer */
 }
 
 h1, h2, h3 {
