@@ -51,7 +51,7 @@ const Header = ({ isAuthenticated, onLogout }) => {
                 </div>
             )}
             <div className="header-content">
-                <Link to="/" className={`logo ${user?.hotelId === 'matoshree' ? 'hotel-matoshree-name' : ''}`}>
+                <Link to="/dashboard" className={`logo ${user?.hotelId === 'matoshree' ? 'hotel-matoshree-name' : ''}`}>
                     🏨 {user?.hotelName || 'Hotel Management System'}
                 </Link>
                 <nav>

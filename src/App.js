@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Dashboard from './pages/Dashboard';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import MenuPage from './pages/MenuPage';
@@ -44,8 +45,16 @@ const App = () => {
         <Header isAuthenticated={isAuthenticated} onLogout={handleLogout} />
         <main className="main-content">
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            {/* Redirect root to dashboard */}
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            
+            {/* Dashboard - Main landing page */}
+            <Route path="/dashboard" element={<Dashboard />} />
+            
+            {/* Authentication Routes */}
             <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
+            
+            {/* Protected Routes */}
             <Route path="/home" element={isAuthenticated ? <HomePage /> : <LoginPage onLogin={handleLogin} />} />
             <Route path="/menu" element={isAuthenticated ? <MenuPage /> : <LoginPage onLogin={handleLogin} />} />
             <Route path="/bill" element={isAuthenticated ? <BillPage /> : <LoginPage onLogin={handleLogin} />} />
