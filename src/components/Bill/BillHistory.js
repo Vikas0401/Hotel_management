@@ -160,9 +160,9 @@ const BillHistory = () => {
     };
 
     return (
-        <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
+        <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto', paddingTop: '40px' }}>
             {/* Header */}
-            <div style={{ marginBottom: '30px' }}>
+            <div style={{ marginBottom: '30px', marginTop: '20px' }}>
                 <h1 style={{ 
                     color: user?.hotelId === 'matoshree' ? '#C41E3A' : '#2c3e50',
                     textAlign: 'center',
@@ -176,7 +176,8 @@ const BillHistory = () => {
                     display: 'grid', 
                     gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
                     gap: '15px', 
-                    marginBottom: '20px' 
+                    marginBottom: '20px',
+                    marginTop: '30px'
                 }}>
                     <div className={user?.hotelId === 'matoshree' ? 'card' : ''} style={{ 
                         padding: '15px', 
@@ -361,6 +362,7 @@ const BillHistory = () => {
                                     <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #dee2e6' }}>बिल नं.</th>
                                     <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #dee2e6' }}>तारीख</th>
                                     <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #dee2e6' }}>ग्राहक</th>
+                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #dee2e6' }}>ऑर्डर प्रकार</th>
                                     <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #dee2e6' }}>टेबल</th>
                                     <th style={{ padding: '12px', textAlign: 'right', borderBottom: '2px solid #dee2e6' }}>रक्कम</th>
                                     <th style={{ padding: '12px', textAlign: 'right', borderBottom: '2px solid #dee2e6' }}>जमा</th>
@@ -377,6 +379,12 @@ const BillHistory = () => {
                                         <td style={{ padding: '12px' }}>{bill.billNumber}</td>
                                         <td style={{ padding: '12px' }}>{bill.date}</td>
                                         <td style={{ padding: '12px' }}>{bill.customerInfo?.name || '-'}</td>
+                                        <td style={{ padding: '12px', textAlign: 'center' }}>
+                                            {bill.customerInfo?.tableNumber && bill.customerInfo.tableNumber !== '-' ? 
+                                                <span style={{ color: '#3498db', fontSize: '16px' }}>🍽️ टेबल</span> : 
+                                                <span style={{ color: '#e67e22', fontSize: '16px' }}>🛍️ पार्सल</span>
+                                            }
+                                        </td>
                                         <td style={{ padding: '12px' }}>{bill.customerInfo?.tableNumber || '-'}</td>
                                         <td style={{ padding: '12px', textAlign: 'right', fontWeight: 'bold' }}>{formatCurrency(bill.total)}</td>
                                         <td style={{ padding: '12px', textAlign: 'right' }}>{formatCurrency(bill.paymentInfo?.jama || 0)}</td>
@@ -512,6 +520,10 @@ const BillHistory = () => {
                         <div style={{ marginBottom: '15px' }}>
                             <strong>ग्राहक माहिती:</strong>
                             <p>नाव: {selectedBill.customerInfo?.name || '-'}</p>
+                            <p>ऑर्डर प्रकार: {selectedBill.customerInfo?.tableNumber && selectedBill.customerInfo.tableNumber !== '-' ? 
+                                <span style={{ color: '#3498db' }}>🍽️ टेबल ऑर्डर</span> : 
+                                <span style={{ color: '#e67e22' }}>🛍️ पार्सल ऑर्डर</span>
+                            }</p>
                             <p>टेबल: {selectedBill.customerInfo?.tableNumber || '-'}</p>
                             <p>मोबाइल: {selectedBill.customerInfo?.phoneNumber || '-'}</p>
                         </div>

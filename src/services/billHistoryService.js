@@ -228,11 +228,24 @@ export const getBillStatistics = () => {
     const totalReceived = bills.reduce((sum, bill) => sum + (bill.paymentInfo?.jama || 0), 0);
     const totalPending = bills.reduce((sum, bill) => sum + (bill.paymentInfo?.baki || 0), 0);
     
+    // Calculate today's statistics
+    const today = new Date().toLocaleDateString();
+    const todaysBills = bills.filter(bill => {
+        // Check if bill date matches today's date
+        const billDate = new Date(bill.date || bill.savedAt).toLocaleDateString();
+        return billDate === today;
+    });
+    
+    const todaysBillCount = todaysBills.length;
+    const todaysRevenue = todaysBills.reduce((sum, bill) => sum + (bill.total || 0), 0);
+    
     return {
         totalBills,
         totalRevenue,
         totalReceived,
         totalPending,
+        todaysBills: todaysBillCount,
+        todaysRevenue: todaysRevenue,
         averageBillAmount: totalBills > 0 ? totalRevenue / totalBills : 0
     };
 };

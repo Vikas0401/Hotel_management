@@ -131,7 +131,7 @@ const MenuPage = () => {
                 padding: '0 20px' 
             }}>
                 <h1 style={{ color: user?.hotelId === 'matoshree' ? '#C41E3A' : '#2c3e50' }} className={user?.hotelId === 'matoshree' ? 'menu-page-title' : ''}>
-                    <span className={user?.hotelId === 'matoshree' ? 'hotel-matoshree-name' : ''}>{user?.hotelName}</span> - मेनू {showManagement ? 'व्यवस्थापन' : ''}
+                    <span className={user?.hotelId === 'matoshree' ? 'hotel-matoshree-name' : ''}>{user?.hotelName}</span> - पार्सल ऑर्डर {showManagement ? 'व्यवस्थापन' : ''}
                 </h1>
                 {user?.isAdmin && (
                     <button

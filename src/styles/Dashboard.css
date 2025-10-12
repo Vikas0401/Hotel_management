@@ -133,6 +133,7 @@
 /* Card Colors */
 .bill-card { border-left-color: #4CAF50; }
 .menu-card { border-left-color: #2196F3; }
+.parcel-card { border-left-color: #FF5722; }
 .history-card { border-left-color: #FF9800; }
 .user-card { border-left-color: #9C27B0; }
 .mobile-card { border-left-color: #F44336; }

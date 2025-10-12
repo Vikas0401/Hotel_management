@@ -62,7 +62,9 @@ const Header = ({ isAuthenticated, onLogout }) => {
                         )}
                         {isAuthenticated && (
                             <>
-                                <li><Link to="/menu">📋 मेनू</Link></li>
+                                <li><Link to="/menu">🛍️ पार्सल ऑर्डर</Link></li>
+                                <li><Link to="/table-menu">🍽️ टेबल ऑर्डर</Link></li>
+                                <li><Link to="/table-orders">📋 टेबल व्यवस्थापन</Link></li>
                                 <li><Link to="/bill">🧾 बिल</Link></li>
                                 <li><Link to="/bill-history">📊 बिल इतिहास</Link></li>
                                 <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>

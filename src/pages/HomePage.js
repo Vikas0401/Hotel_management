@@ -8,7 +8,7 @@ const MatoshreeLogo = () => (
         className="matoshree-logo" 
         viewBox="0 0 200 200" 
         xmlns="http://www.w3.org/2000/svg"
-        style={{ width: '120px', height: '120px' }}
+        style={{ width: '160px', height: '90px' }}
     >
         {/* Hexagonal background */}
         <polygon 
@@ -357,58 +357,101 @@ const HomePage = () => {
     const hotelInfo = getHotelDescription();
 
     return (
-        <div style={{ padding: '40px 20px', textAlign: 'center', maxWidth: '1000px', margin: '0 auto' }}>
+        <div style={{ 
+            padding: '80px 15px 20px 15px', // Added more top padding to clear header
+            textAlign: 'center', 
+            maxWidth: '1000px', 
+            margin: '0 auto',
+            minHeight: 'calc(100vh - 58px - 200px)' // Ensure footer is visible
+        }}>
             {/* Show Matoshree logo only for Matoshree hotel */}
             {user?.hotelId === 'matoshree' && (
-                <div style={{ marginBottom: '30px' }}>
+                <div style={{ marginBottom: '10px' }}>
                     <MatoshreeLogo />
                 </div>
             )}
             
-                        <h1 style={{ 
+            <h1 style={{ 
                 textAlign: 'center', 
                 color: user?.hotelId === 'matoshree' ? '#C41E3A' : '#2c3e50', 
-                fontSize: '2.5rem', 
-                marginBottom: '30px' 
+                fontSize: '1.6rem', 
+                marginBottom: '15px',
+                lineHeight: '1.1'
             }} className={user?.hotelId === 'matoshree' ? 'marathi-title' : ''}>
                 {hotelInfo.title}
             </h1>
             
             <div className={user?.hotelId === 'matoshree' ? 'card' : ''} style={{ 
                 background: user?.hotelId === 'matoshree' ? 'inherit' : '#f8f9fa', 
-                padding: '30px', 
+                padding: '15px', 
                 borderRadius: '8px', 
                 boxShadow: user?.hotelId === 'matoshree' ? 'inherit' : '0 2px 10px rgba(0,0,0,0.1)',
-                marginBottom: '30px'
+                marginBottom: '15px'
             }}>
-                <p style={{ fontSize: '1.2rem', color: '#555', lineHeight: '1.6' }} className={user?.hotelId === 'matoshree' ? 'marathi-body' : ''}>
+                <p style={{ 
+                    fontSize: '0.85rem', 
+                    color: '#555', 
+                    lineHeight: '1.3',
+                    margin: '0'
+                }} className={user?.hotelId === 'matoshree' ? 'marathi-body' : ''}>
                     {hotelInfo.description}
                 </p>
             </div>
             
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', marginTop: '40px' }}>
+            <div style={{ 
+                display: 'grid', 
+                gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', 
+                gap: '12px', 
+                marginTop: '15px',
+                marginBottom: '15px'
+            }}>
                 {hotelInfo.specialties.map((specialty, index) => (
                     <div key={index} className={user?.hotelId === 'matoshree' ? 'card' : ''} style={{ 
                         background: 'white', 
-                        padding: '20px', 
+                        padding: '12px', 
                         borderRadius: '8px', 
                         boxShadow: user?.hotelId === 'matoshree' ? 'inherit' : '0 2px 10px rgba(0,0,0,0.1)',
                         border: user?.hotelId === 'matoshree' ? 'inherit' : `2px solid ${specialty.color}`
                     }}>
-                        <h3 style={{ color: specialty.color, marginBottom: '15px' }} className={user?.hotelId === 'matoshree' ? 'marathi-header' : ''}>{specialty.title}</h3>
-                        <p style={{ color: '#666' }} className={user?.hotelId === 'matoshree' ? 'marathi-body' : ''}>{specialty.description}</p>
+                        <h3 style={{ 
+                            color: specialty.color, 
+                            marginBottom: '8px',
+                            fontSize: '0.95rem',
+                            lineHeight: '1.1'
+                        }} className={user?.hotelId === 'matoshree' ? 'marathi-header' : ''}>
+                            {specialty.title}
+                        </h3>
+                        <p style={{ 
+                            color: '#666',
+                            fontSize: '0.8rem',
+                            lineHeight: '1.2',
+                            margin: '0'
+                        }} className={user?.hotelId === 'matoshree' ? 'marathi-body' : ''}>
+                            {specialty.description}
+                        </p>
                     </div>
                 ))}
             </div>
             
             <div className={user?.hotelId === 'matoshree' ? 'card' : ''} style={{ 
-                marginTop: '40px', 
-                padding: '20px', 
+                padding: '12px', 
                 background: user?.hotelId === 'matoshree' ? 'inherit' : '#e8f5e8', 
-                borderRadius: '8px' 
+                borderRadius: '8px'
             }}>
-                <h3 style={{ color: '#28a745', marginBottom: '15px' }} className={user?.hotelId === 'matoshree' ? 'marathi-header' : ''}>आमचा मेनू पहा</h3>
-                <p style={{ color: '#555' }} className={user?.hotelId === 'matoshree' ? 'marathi-body' : ''}>
+                <h3 style={{ 
+                    color: '#28a745', 
+                    marginBottom: '8px',
+                    fontSize: '0.95rem',
+                    lineHeight: '1.1'
+                }} className={user?.hotelId === 'matoshree' ? 'marathi-header' : ''}>
+                    आमचा मेनू पहा
+                </h3>
+                <p style={{ 
+                    color: '#555',
+                    fontSize: '0.8rem',
+                    lineHeight: '1.2',
+                    margin: '0'
+                }} className={user?.hotelId === 'matoshree' ? 'marathi-body' : ''}>
                     {hotelInfo.menuNote}
                 </p>
             </div>

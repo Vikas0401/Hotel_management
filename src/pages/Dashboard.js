@@ -35,9 +35,14 @@ const Dashboard = () => {
                             <p>जलद आणि अचूक बिलिंग</p>
                         </div>
                         <div className="feature-card-compact menu-card">
-                            <div className="card-icon-compact">📋</div>
-                            <h3>मेनू व्यवस्थापन</h3>
-                            <p>संपूर्ण फूड मेनू कंट्रोल</p>
+                            <div className="card-icon-compact">🍽️</div>
+                            <h3>टेबल ऑर्डरिंग</h3>
+                            <p>मल्टिपल टेबल व्यवस्थापन</p>
+                        </div>
+                        <div className="feature-card-compact parcel-card">
+                            <div className="card-icon-compact">📦</div>
+                            <h3>पार्सल ऑर्डर</h3>
+                            <p>टेकअवे आणि डिलिव्हरी</p>
                         </div>
                         <div className="feature-card-compact history-card">
                             <div className="card-icon-compact">📊</div>

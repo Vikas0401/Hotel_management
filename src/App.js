@@ -4,6 +4,8 @@ import Dashboard from './pages/Dashboard';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import MenuPage from './pages/MenuPage';
+import TableMenuPage from './pages/TableMenuPage';
+import TableOrdersPage from './pages/TableOrdersPage';
 import BillPage from './pages/BillPage';
 import BillHistoryPage from './pages/BillHistoryPage';
 import Header from './components/common/Header';
@@ -57,6 +59,8 @@ const App = () => {
             {/* Protected Routes */}
             <Route path="/home" element={isAuthenticated ? <HomePage /> : <LoginPage onLogin={handleLogin} />} />
             <Route path="/menu" element={isAuthenticated ? <MenuPage /> : <LoginPage onLogin={handleLogin} />} />
+            <Route path="/table-menu" element={isAuthenticated ? <TableMenuPage /> : <LoginPage onLogin={handleLogin} />} />
+            <Route path="/table-orders" element={isAuthenticated ? <TableOrdersPage /> : <LoginPage onLogin={handleLogin} />} />
             <Route path="/bill" element={isAuthenticated ? <BillPage /> : <LoginPage onLogin={handleLogin} />} />
             <Route path="/bill-history" element={isAuthenticated ? <BillHistoryPage /> : <LoginPage onLogin={handleLogin} />} />
           </Routes>
