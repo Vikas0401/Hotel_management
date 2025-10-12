@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { getHotelMenu } from '../../services/menuService';
 import { getCurrentUser } from '../../services/authService';
 import { addFoodToTable, getActiveTables } from '../../services/tableService';
@@ -16,6 +16,20 @@ const FoodEntry = ({ onFoodSelect, enableTableOrdering = false }) => {
     const [activeTables, setActiveTables] = useState([]);
     const [expandedCategories, setExpandedCategories] = useState({});
 
+    const loadMenu = useCallback(() => {
+        const menu = getHotelMenu();
+        setFoodItems(menu);
+        
+        // Initialize all categories as expanded by default (only for parcel orders)
+        if (!enableTableOrdering) {
+            const categories = {};
+            Object.values(menu).forEach(item => {
+                categories[item.category] = true; // Start expanded
+            });
+            setExpandedCategories(categories);
+        }
+    }, [enableTableOrdering]);
+
     useEffect(() => {
         loadMenu();
         setUser(getCurrentUser());
@@ -29,21 +43,7 @@ const FoodEntry = ({ onFoodSelect, enableTableOrdering = false }) => {
                 localStorage.removeItem('selectedTableForOrder');
             }
         }
-    }, [enableTableOrdering]);
-
-    const loadMenu = () => {
-        const menu = getHotelMenu();
-        setFoodItems(menu);
-        
-        // Initialize all categories as expanded by default (only for parcel orders)
-        if (!enableTableOrdering) {
-            const categories = {};
-            Object.values(menu).forEach(item => {
-                categories[item.category] = true; // Start expanded
-            });
-            setExpandedCategories(categories);
-        }
-    };
+    }, [enableTableOrdering, loadMenu]);
 
     const loadActiveTables = () => {
         const tables = getActiveTables();
