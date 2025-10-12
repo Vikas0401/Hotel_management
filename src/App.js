@@ -41,7 +41,7 @@ const App = () => {
 
   return (
     <div className={`app-container ${shouldApplyMatoshreeTheme ? 'matoshree-theme theme-transition' : 'theme-transition'}`}>
-      <Router>
+      <Router basename={process.env.NODE_ENV === 'production' ? '/Hotel_management' : ''}>
         <Header isAuthenticated={isAuthenticated} onLogout={handleLogout} />
         <main className="main-content">
           <Routes>

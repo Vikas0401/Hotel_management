@@ -1,8 +1,18 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { isAuthenticated } from '../services/authService';
 import '../styles/Dashboard.css';
 
 const Dashboard = () => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        // If user is already logged in, redirect to home page
+        if (isAuthenticated()) {
+            navigate('/home');
+        }
+    }, [navigate]);
+
     return (
         <div className="dashboard">
             {/* Hero Section */}
