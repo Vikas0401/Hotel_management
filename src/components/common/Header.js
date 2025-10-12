@@ -34,10 +34,10 @@ const Header = ({ isAuthenticated, onLogout }) => {
 
     return (
         <header className={`header ${scrolled ? 'header-scrolled' : ''}`}>
-            {/* Signature Line */}
-            {isAuthenticated && (
+            {/* Signature Line - Only for Matoshree Hotel */}
+            {isAuthenticated && user?.hotelId === 'matoshree' && (
                 <div style={{ 
-                    background: user?.hotelId === 'matoshree' ? '#C41E3A' : '#e74c3c',
+                    background: '#C41E3A',
                     color: '#FFD700',
                     textAlign: 'center',
                     padding: '8px 20px',
@@ -47,7 +47,7 @@ const Header = ({ isAuthenticated, onLogout }) => {
                     letterSpacing: '1px',
                     borderBottom: '2px solid #FFD700'
                 }}>
-                    "चविने खानार त्याला हरिभाऊ देणार"
+                    "चविने खानार त्याला हॉटेल मातोश्री देणार"
                 </div>
             )}
             <div className="header-content">

@@ -1,7 +1,82 @@
 // Bill History Service for managing saved bills
 import { getCurrentUser, getCurrentHotelId } from './authService';
-import jsPDF from 'jspdf';
+import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
+
+// Sample bill data for demo purposes
+const getSampleBillData = () => {
+    return [
+        {
+            id: 'BILL_SAMPLE_001',
+            billNumber: 'B123456',
+            date: '10/10/2025',
+            time: '2:30:45 PM',
+            customerInfo: {
+                name: 'Demo Customer 1',
+                tableNumber: 'T5',
+                phoneNumber: '9876543210'
+            },
+            items: [
+                { code: '101', name: 'Sample Special Thali', rate: 250, quantity: 2 },
+                { code: '201', name: 'Vada Pav', rate: 30, quantity: 3 },
+                { code: '601', name: 'Masala Tea', rate: 25, quantity: 2 }
+            ],
+            subtotal: 590,
+            tax: 0,
+            total: 590,
+            paymentInfo: { jama: 600, baki: 0 },
+            hotelName: 'Sample Hotel',
+            savedAt: '2025-10-10T14:30:45.000Z',
+            savedBy: 'sample_user'
+        },
+        {
+            id: 'BILL_SAMPLE_002',
+            billNumber: 'B123457',
+            date: '11/10/2025',
+            time: '7:15:20 PM',
+            customerInfo: {
+                name: 'Demo Customer 2',
+                tableNumber: 'T3',
+                phoneNumber: '9123456789'
+            },
+            items: [
+                { code: '102', name: 'Mini Thali', rate: 150, quantity: 1 },
+                { code: '301', name: 'Veg Pulao', rate: 160, quantity: 1 },
+                { code: '602', name: 'Buttermilk', rate: 35, quantity: 2 }
+            ],
+            subtotal: 380,
+            tax: 0,
+            total: 380,
+            paymentInfo: { jama: 380, baki: 0 },
+            hotelName: 'Sample Hotel',
+            savedAt: '2025-10-11T19:15:20.000Z',
+            savedBy: 'sample_user'
+        },
+        {
+            id: 'BILL_SAMPLE_003',
+            billNumber: 'B123458',
+            date: '12/10/2025',
+            time: '1:45:10 PM',
+            customerInfo: {
+                name: 'Demo Customer 3',
+                tableNumber: 'T7',
+                phoneNumber: '9876512345'
+            },
+            items: [
+                { code: '202', name: 'Bhaji Plate', rate: 80, quantity: 2 },
+                { code: '401', name: 'Roti', rate: 18, quantity: 4 },
+                { code: '501', name: 'Dal Tadka', rate: 120, quantity: 1 }
+            ],
+            subtotal: 292,
+            tax: 0,
+            total: 292,
+            paymentInfo: { jama: 300, baki: 0 },
+            hotelName: 'Sample Hotel',
+            savedAt: '2025-10-12T13:45:10.000Z',
+            savedBy: 'sample_user'
+        }
+    ];
+};
 
 // Save bill to history
 export const saveBillToHistory = (billData) => {
@@ -12,6 +87,12 @@ export const saveBillToHistory = (billData) => {
     
     console.log('Hotel ID:', hotelId);
     console.log('User:', user);
+    
+    // Return fake success for sample hotel (read-only mode)
+    if (hotelId === 'sample') {
+        console.log('Sample hotel detected - returning fake success');
+        return 'BILL_SAMPLE_DEMO';
+    }
     
     if (!hotelId || !billData) {
         console.log('Missing hotelId or billData:', { hotelId, billData });
@@ -60,6 +141,11 @@ export const getBillHistory = () => {
     if (!hotelId) {
         console.log('No hotelId found, returning empty array');
         return [];
+    }
+    
+    // Return sample data for sample hotel
+    if (hotelId === 'sample') {
+        return getSampleBillData();
     }
     
     const storageKey = `bill_history_${hotelId}`;
@@ -156,6 +242,21 @@ export const exportSingleBillToPDF = (bill) => {
     try {
         console.log('Starting PDF export...');
         
+        // Show fake save dialog for sample hotel
+        const hotelId = getCurrentHotelId();
+        if (hotelId === 'sample') {
+            // Create a fake file download experience
+            const link = document.createElement('a');
+            link.download = `sample_bill_${bill.billNumber || 'demo'}.pdf`;
+            link.href = 'data:application/pdf;base64,JVBERi0xLjQKJdPr6eEKMSAwIG9iago8PAovVHlwZSAvQ2F0YWxvZwovUGFnZXMgMiAwIFIKPj4KZW5kb2JqCjIgMCBvYmoKPDwKL1R5cGUgL1BhZ2VzCi9LaWRzIFszIDAgUl0KL0NvdW50IDEKL01lZGlhQm94IFswIDAgNTk1IDg0Ml0KPj4KZW5kb2JqCjMgMCBvYmoKPDwKL1R5cGUgL1BhZ2UKL1BhcmVudCAyIDAgUgovUmVzb3VyY2VzIDw8Cj4+Ci9Db250ZW50cyA0IDAgUgo+PgplbmRvYmoKNCAwIG9iago8PAovTGVuZ3RoIDQ0Cj4+CnN0cmVhbQpCVAovRjEgMTIgVGYKNzIgNzIwIFRkCihTYW1wbGUgQmlsbCBQREYpIFRqCkVUCmVuZHN0cmVhbQplbmRvYmoKeHJlZgowIDUKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDA5IDAwMDAwIG4gCjAwMDAwMDAwNTggMDAwMDAgbiAKMDAwMDAwMDExNSAwMDAwMCBuIAowMDAwMDAwMTk0IDAwMDAwIG4gCnRyYWlsZXIKPDwKL1NpemUgNQovUm9vdCAxIDAgUgo+PgpzdGFydHhyZWYKMjg5CiUlRU9GCg==';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            console.log('Sample hotel: Fake single bill PDF export completed');
+            return true;
+        }
+        
         // Validate bill data
         if (!bill) {
             throw new Error('No bill data provided');
@@ -200,6 +301,22 @@ export const exportBillHistory = () => {
 // Export bills to PDF (for backup/download)
 export const exportBillHistoryToPDF = () => {
     try {
+        const hotelId = getCurrentHotelId();
+        
+        // Show fake save dialog for sample hotel
+        if (hotelId === 'sample') {
+            // Create a fake file download experience
+            const link = document.createElement('a');
+            link.download = 'sample_bill_history.pdf';
+            link.href = 'data:application/pdf;base64,JVBERi0xLjQKJdPr6eEKMSAwIG9iago8PAovVHlwZSAvQ2F0YWxvZwovUGFnZXMgMiAwIFIKPj4KZW5kb2JqCjIgMCBvYmoKPDwKL1R5cGUgL1BhZ2VzCi9LaWRzIFszIDAgUl0KL0NvdW50IDEKL01lZGlhQm94IFswIDAgNTk1IDg0Ml0KPj4KZW5kb2JqCjMgMCBvYmoKPDwKL1R5cGUgL1BhZ2UKL1BhcmVudCAyIDAgUgovUmVzb3VyY2VzIDw8Cj4+Ci9Db250ZW50cyA0IDAgUgo+PgplbmRvYmoKNCAwIG9iago8PAovTGVuZ3RoIDQ0Cj4+CnN0cmVhbQpCVAovRjEgMTIgVGYKNzIgNzIwIFRkCihTYW1wbGUgUERGKSBUagpFVAplbmRzdHJlYW0KZW5kb2JqCnhyZWYKMCA1CjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDAwOSAwMDAwMCBuIAowMDAwMDAwMDU4IDAwMDAwIG4gCjAwMDAwMDAxMTUgMDAwMDAgbiAKMDAwMDAwMDE5NCAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9TaXplIDUKL1Jvb3QgMSAwIFIKPj4Kc3RhcnR4cmVmCjI4OQolJUVPRgo=';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            console.log('Sample hotel: Fake PDF export completed');
+            return true;
+        }
+        
         const bills = getBillHistory();
         const user = getCurrentUser();
         

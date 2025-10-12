@@ -20,6 +20,9 @@ const BillPrint = () => {
     const [includeGST, setIncludeGST] = useState(false); // GST checkbox state - unchecked by default
 
     useEffect(() => {
+        // Set user first
+        setUser(getCurrentUser());
+        
         // Load food items from localStorage
         const savedFoods = localStorage.getItem('selectedFoods');
         if (savedFoods) {
@@ -50,6 +53,29 @@ const BillPrint = () => {
 
         setUser(getCurrentUser());
     }, []);
+
+    // Separate useEffect for sample hotel data - runs only for sample hotel
+    useEffect(() => {
+        if (user?.hotelId === 'sample') {
+            // Only populate if no existing data
+            if (foodItems.length === 0) {
+                const sampleItems = [
+                    { code: '101', name: 'Sample Special Thali', rate: 250, quantity: 1 },
+                    { code: '201', name: 'Vada Pav', rate: 30, quantity: 2 }
+                ];
+                setFoodItems(sampleItems);
+            }
+            
+            if (!customerInfo.name) {
+                const sampleCustomer = {
+                    name: 'Demo Customer',
+                    tableNumber: 'T1',
+                    phoneNumber: '9876543210'
+                };
+                setCustomerInfo(sampleCustomer);
+            }
+        }
+    }, [user?.hotelId, foodItems.length, customerInfo.name]);
 
     const calculateSubtotal = () => {
         return foodItems.reduce((total, item) => total + (item.rate * item.quantity), 0);
@@ -326,8 +352,13 @@ const BillPrint = () => {
                             padding: '10px',
                             border: '1px solid #ddd',
                             borderRadius: '4px',
-                            fontSize: '14px'
+                            fontSize: '14px',
+                            ...(user?.hotelId === 'sample' && {
+                                backgroundColor: '#f8f9fa',
+                                cursor: 'not-allowed'
+                            })
                         }}
+                        {...(user?.hotelId === 'sample' && { readOnly: true })}
                         className={user?.hotelId === 'matoshree' ? 'marathi-body' : ''}
                     />
                     <input
@@ -340,8 +371,13 @@ const BillPrint = () => {
                             padding: '10px',
                             border: '1px solid #ddd',
                             borderRadius: '4px',
-                            fontSize: '14px'
+                            fontSize: '14px',
+                            ...(user?.hotelId === 'sample' && {
+                                backgroundColor: '#f8f9fa',
+                                cursor: 'not-allowed'
+                            })
                         }}
+                        {...(user?.hotelId === 'sample' && { readOnly: true })}
                         className={user?.hotelId === 'matoshree' ? 'marathi-body' : ''}
                     />
                     <input
@@ -354,8 +390,13 @@ const BillPrint = () => {
                             padding: '10px',
                             border: '1px solid #ddd',
                             borderRadius: '4px',
-                            fontSize: '14px'
+                            fontSize: '14px',
+                            ...(user?.hotelId === 'sample' && {
+                                backgroundColor: '#f8f9fa',
+                                cursor: 'not-allowed'
+                            })
                         }}
+                        {...(user?.hotelId === 'sample' && { readOnly: true })}
                         className={user?.hotelId === 'matoshree' ? 'marathi-body' : ''}
                     />
                 </div>
@@ -398,8 +439,13 @@ const BillPrint = () => {
                                 border: '1px solid #ddd',
                                 borderRadius: '4px',
                                 fontSize: '14px',
-                                width: '100%'
+                                width: '100%',
+                                ...(user?.hotelId === 'sample' && {
+                                    backgroundColor: '#f8f9fa',
+                                    cursor: 'not-allowed'
+                                })
                             }}
+                            {...(user?.hotelId === 'sample' && { readOnly: true })}
                             className={user?.hotelId === 'matoshree' ? 'marathi-body' : ''}
                         />
                     </div>

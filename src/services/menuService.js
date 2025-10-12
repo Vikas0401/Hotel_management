@@ -63,6 +63,27 @@ const defaultMenus = {
         '501': { name: 'मसाला चहा', rate: 20, category: 'पेय पदार्थ' },
         '502': { name: 'लस्सी', rate: 40, category: 'पेय पदार्थ' }
         // ... (can add more items as needed)
+    },
+    
+    sample: {
+        // Sample Hotel menu - similar to Matoshree for demo purposes
+        '101': { name: 'Sample Special Thali', rate: 250, category: 'Special Thali' },
+        '102': { name: 'Mini Thali', rate: 150, category: 'Special Thali' },
+        
+        '201': { name: 'Vada Pav', rate: 30, category: 'Snacks' },
+        '202': { name: 'Bhaji Plate', rate: 80, category: 'Snacks' },
+        
+        '301': { name: 'Veg Pulao', rate: 160, category: 'Rice Items' },
+        '302': { name: 'Plain Rice', rate: 80, category: 'Rice Items' },
+        
+        '401': { name: 'Roti', rate: 18, category: 'Bread' },
+        '402': { name: 'Chapati', rate: 15, category: 'Bread' },
+        
+        '501': { name: 'Dal Tadka', rate: 120, category: 'Curry' },
+        '502': { name: 'Mix Veg', rate: 110, category: 'Curry' },
+        
+        '601': { name: 'Masala Tea', rate: 25, category: 'Beverages' },
+        '602': { name: 'Buttermilk', rate: 35, category: 'Beverages' }
     }
 };
 

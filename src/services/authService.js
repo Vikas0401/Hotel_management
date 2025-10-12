@@ -15,6 +15,15 @@ const hotelCredentials = {
         hotelId: "maharashtra",
         isAdmin: true,
         address: "महाराष्ट्र, भारत"
+    },
+    "sample": {
+        username: "sample_user",
+        password: "sample@2025",
+        hotelName: "Sample Hotel",
+        hotelId: "sample",
+        isAdmin: false,
+        address: "Demo Location, India",
+        isReadOnly: true
     }
 };
 
