@@ -14,6 +14,7 @@ const FoodEntry = ({ onFoodSelect, enableTableOrdering = false }) => {
     const [success, setSuccess] = useState('');
     const [user, setUser] = useState(null);
     const [activeTables, setActiveTables] = useState([]);
+    const [expandedCategories, setExpandedCategories] = useState({});
 
     useEffect(() => {
         loadMenu();
@@ -33,6 +34,15 @@ const FoodEntry = ({ onFoodSelect, enableTableOrdering = false }) => {
     const loadMenu = () => {
         const menu = getHotelMenu();
         setFoodItems(menu);
+        
+        // Initialize all categories as expanded by default (only for parcel orders)
+        if (!enableTableOrdering) {
+            const categories = {};
+            Object.values(menu).forEach(item => {
+                categories[item.category] = true; // Start expanded
+            });
+            setExpandedCategories(categories);
+        }
     };
 
     const loadActiveTables = () => {
@@ -62,6 +72,13 @@ const FoodEntry = ({ onFoodSelect, enableTableOrdering = false }) => {
         setSelectedTable('');
         setError('');
         setSuccess('');
+    };
+
+    const toggleCategory = (category) => {
+        setExpandedCategories(prev => ({
+            ...prev,
+            [category]: !prev[category]
+        }));
     };
 
     const handleSubmit = (e) => {
@@ -123,14 +140,16 @@ const FoodEntry = ({ onFoodSelect, enableTableOrdering = false }) => {
         }
     };
 
-    // Group menu items by category
+    // Group menu items by category (only for parcel orders)
     const groupedMenu = {};
-    Object.entries(foodItems).forEach(([code, item]) => {
-        if (!groupedMenu[item.category]) {
-            groupedMenu[item.category] = [];
-        }
-        groupedMenu[item.category].push({ code, ...item });
-    });
+    if (!enableTableOrdering) {
+        Object.entries(foodItems).forEach(([code, item]) => {
+            if (!groupedMenu[item.category]) {
+                groupedMenu[item.category] = [];
+            }
+            groupedMenu[item.category].push({ code, ...item });
+        });
+    }
 
     return (
         <div className="food-entry-container">
@@ -210,24 +229,43 @@ const FoodEntry = ({ onFoodSelect, enableTableOrdering = false }) => {
                 </form>
             </div>
             
-            {/* Menu display below the form */}
-            <div className="menu-display">
-                <h2>{user?.hotelName} - Menu</h2>
-                <div className="menu-categories">
-                    {Object.entries(groupedMenu).map(([category, items]) => (
-                        <div key={category} className="menu-category">
-                            <h3>{category}</h3>
-                            <ul>
-                                {items.map((item) => (
-                                    <li key={item.code}>
-                                        {item.code} - {item.name} - ₹{item.rate}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ))}
+            {/* Menu display below the form - only for parcel orders */}
+            {!enableTableOrdering && (
+                <div className="menu-display">
+                    <h2>{user?.hotelName || 'Hotel'} - Menu</h2>
+                    <div className="menu-categories">
+                        {Object.entries(groupedMenu).map(([category, items]) => (
+                            <div key={category} className="menu-category">
+                                <div 
+                                    className="menu-category-header"
+                                    onClick={() => toggleCategory(category)}
+                                >
+                                    <h3>{category}</h3>
+                                    <div className="category-info">
+                                        <span className="items-count">({items.length} items)</span>
+                                        <span className={`collapse-icon ${expandedCategories[category] ? 'expanded' : ''}`}>
+                                            ▼
+                                        </span>
+                                    </div>
+                                </div>
+                                {expandedCategories[category] && (
+                                    <div className="category-content">
+                                        <ul>
+                                            {items.map((item) => (
+                                                <li key={item.code}>
+                                                    <span className="item-code">{item.code}</span>
+                                                    <span className="item-name">{item.name}</span>
+                                                    <span className="item-price">₹{item.rate}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };

@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
     getActiveTables, 
     getTableOrder, 
     getTableOrderSummary,
-    completeTableOrder,
-    clearTableOrder 
+    completeTableOrder
 } from '../../services/tableService';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/components/TableOrders.css';
@@ -15,14 +14,7 @@ const TableOrders = () => {
     const [tableDetails, setTableDetails] = useState(null);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        loadActiveTables();
-        // Refresh every 30 seconds to show real-time updates
-        const interval = setInterval(loadActiveTables, 30000);
-        return () => clearInterval(interval);
-    }, []);
-
-    const loadActiveTables = () => {
+    const loadActiveTables = useCallback(() => {
         const tables = getActiveTables();
         setActiveTables(tables);
         
@@ -31,7 +23,14 @@ const TableOrders = () => {
             setSelectedTable(null);
             setTableDetails(null);
         }
-    };
+    }, [selectedTable]);
+
+    useEffect(() => {
+        loadActiveTables();
+        // Refresh every 30 seconds to show real-time updates
+        const interval = setInterval(loadActiveTables, 30000);
+        return () => clearInterval(interval);
+    }, [loadActiveTables]);
 
     const handleTableSelect = (tableNumber) => {
         setSelectedTable(tableNumber);
@@ -73,8 +72,7 @@ const TableOrders = () => {
     return (
         <div className="table-orders-container">
             <div className="table-orders-header">
-                <h1>🍽️ Table Orders Management</h1>
-                <p>Active Tables: {activeTables.length}</p>
+                <h1> Table Orders Management - Active: {activeTables.length}</h1>
             </div>
 
             <div className="table-orders-content">
@@ -138,15 +136,6 @@ const TableOrders = () => {
                             <div className="table-details-header">
                                 <h2>Table {selectedTable} - Order Details</h2>
                                 <p>Started: {formatTime(tableDetails.startTime)}</p>
-                            </div>
-
-                            {/* Customer Info */}
-                            <div className="customer-info-section">
-                                <h3>Customer Information</h3>
-                                <div className="customer-details">
-                                    <p><strong>Name:</strong> {tableDetails.customerInfo.name || 'Not provided'}</p>
-                                    <p><strong>Phone:</strong> {tableDetails.customerInfo.phoneNumber || 'Not provided'}</p>
-                                </div>
                             </div>
 
                             {/* Order Items */}

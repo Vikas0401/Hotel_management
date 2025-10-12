@@ -3,7 +3,7 @@ import TableOrders from '../components/TableOrders/TableOrders';
 
 const TableOrdersPage = () => {
     return (
-        <div>
+        <div style={{ paddingTop: '140px' }}>
             <TableOrders />
         </div>
     );

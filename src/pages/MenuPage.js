@@ -122,7 +122,10 @@ const MenuPage = () => {
     };
 
     return (
-        <div>
+        <div style={{ 
+            paddingTop: '140px', // Add space to clear header
+            minHeight: 'calc(100vh - 58px)' // Ensure full height minus header
+        }}>
             <div style={{ 
                 display: 'flex', 
                 justifyContent: 'space-between', 

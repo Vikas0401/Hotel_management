@@ -1,51 +1,49 @@
 /* Table Orders Management Styles */
 .table-orders-container {
-    padding: 20px;
-    max-width: 1400px;
+    padding: 18px; /* 20px - 10% = 18px */
+    max-width: 1260px; /* 1400px - 10% = 1260px */
     margin: 0 auto;
     min-height: calc(100vh - 58px - 200px);
 }
 
 .table-orders-header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 18px; /* Reduced from 27px */
+    padding: 9px 0; /* Reduced padding */
 }
 
 .table-orders-header h1 {
     color: #2c3e50;
-    margin-bottom: 10px;
-}
-
-.table-orders-header p {
-    color: #7f8c8d;
-    font-size: 1.1rem;
+    margin-bottom: 0; /* Removed bottom margin */
+    font-size: 1.35rem; /* Reduced font size */
+    line-height: 1.2;
 }
 
 .table-orders-content {
     display: flex;
-    gap: 30px;
-    height: calc(100vh - 200px);
+    gap: 27px; /* 30px - 10% = 27px */
+    height: calc(100vh - 150px); /* Reduced from 200px to give more space */
 }
 
 /* Left Panel - Tables List */
 .tables-list-panel {
     flex: 1;
     background: white;
-    border-radius: 10px;
-    padding: 20px;
+    border-radius: 9px; /* 10px - 10% = 9px */
+    padding: 18px; /* 20px - 10% = 18px */
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     overflow-y: auto;
 }
 
 .tables-list-panel h2 {
     color: #2c3e50;
-    margin-bottom: 20px;
-    font-size: 1.3rem;
+    margin-bottom: 18px; /* 20px - 10% = 18px */
+    font-size: 1.17rem; /* 1.3rem - 10% = 1.17rem */
 }
 
 .no-tables {
     text-align: center;
-    padding: 40px 20px;
+    padding: 36px 18px; /* 40px - 10% = 36px, 20px - 10% = 18px */
     color: #7f8c8d;
 }
 
@@ -53,11 +51,11 @@
     background: #27ae60;
     color: white;
     border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-size: 1rem;
+    padding: 10.8px 21.6px; /* 12px - 10% = 10.8px, 24px - 10% = 21.6px */
+    border-radius: 7.2px; /* 8px - 10% = 7.2px */
+    font-size: 0.9rem; /* 1rem - 10% = 0.9rem */
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 18px; /* 20px - 10% = 18px */
     transition: background 0.3s ease;
 }
 
@@ -67,15 +65,15 @@
 
 .tables-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* 200px - 10% = 180px */
+    gap: 13.5px; /* 15px - 10% = 13.5px */
 }
 
 .table-card {
     background: #f8f9fa;
     border: 2px solid #e9ecef;
-    border-radius: 10px;
-    padding: 15px;
+    border-radius: 9px; /* 10px - 10% = 9px */
+    padding: 13.5px; /* 15px - 10% = 13.5px */
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
@@ -83,42 +81,42 @@
 
 .table-card:hover {
     border-color: #3498db;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.2);
+    transform: translateY(-1.8px); /* -2px - 10% = -1.8px */
+    box-shadow: 0 3.6px 13.5px rgba(52, 152, 219, 0.2); /* 4px - 10% = 3.6px, 15px - 10% = 13.5px */
 }
 
 .table-card.selected {
     border-color: #3498db;
     background: #ebf3fd;
-    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    box-shadow: 0 3.6px 13.5px rgba(52, 152, 219, 0.3); /* 4px - 10% = 3.6px, 15px - 10% = 13.5px */
 }
 
 .table-number {
-    font-size: 1.5rem;
+    font-size: 1.35rem; /* 1.5rem - 10% = 1.35rem */
     font-weight: bold;
     color: #2c3e50;
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 9px; /* 10px - 10% = 9px */
     background: #3498db;
     color: white;
-    padding: 8px;
+    padding: 7.2px; /* 8px - 10% = 7.2px */
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 45px; /* 50px - 10% = 45px */
+    height: 45px; /* 50px - 10% = 45px */
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 15px;
+    margin: 0 auto 13.5px; /* 15px - 10% = 13.5px */
 }
 
 .table-info {
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 13.5px; /* 15px - 10% = 13.5px */
 }
 
 .table-info p {
-    margin: 5px 0;
-    font-size: 0.9rem;
+    margin: 4.5px 0; /* 5px - 10% = 4.5px */
+    font-size: 0.81rem; /* 0.9rem - 10% = 0.81rem */
 }
 
 .item-count {
@@ -128,12 +126,12 @@
 .table-total {
     color: #27ae60;
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 0.99rem; /* 1.1rem - 10% = 0.99rem */
 }
 
 .start-time {
     color: #95a5a6;
-    font-size: 0.8rem;
+    font-size: 0.72rem; /* 0.8rem - 10% = 0.72rem */
 }
 
 .complete-btn {
@@ -141,9 +139,9 @@
     background: #e74c3c;
     color: white;
     border: none;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 0.9rem;
+    padding: 7.2px 10.8px; /* 8px - 10% = 7.2px, 12px - 10% = 10.8px */
+    border-radius: 5.4px; /* 6px - 10% = 5.4px */
+    font-size: 0.81rem; /* 0.9rem - 10% = 0.81rem */
     cursor: pointer;
     transition: background 0.3s ease;
 }
@@ -156,21 +154,21 @@
 .table-details-panel {
     flex: 2;
     background: white;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 9px; /* 10px - 10% = 9px */
+    padding: 18px; /* 20px - 10% = 18px */
+    box-shadow: 0 1.8px 9px rgba(0,0,0,0.1); /* 2px - 10% = 1.8px, 10px - 10% = 9px */
     overflow-y: auto;
 }
 
 .table-details-header {
-    border-bottom: 2px solid #ecf0f1;
-    padding-bottom: 15px;
-    margin-bottom: 20px;
+    border-bottom: 1.8px solid #ecf0f1; /* 2px - 10% = 1.8px */
+    padding-bottom: 13.5px; /* 15px - 10% = 13.5px */
+    margin-bottom: 18px; /* 20px - 10% = 18px */
 }
 
 .table-details-header h2 {
     color: #2c3e50;
-    margin-bottom: 5px;
+    margin-bottom: 4.5px; /* 5px - 10% = 4.5px */
 }
 
 .table-details-header p {
@@ -180,25 +178,25 @@
 .customer-info-section,
 .order-items-section,
 .order-summary-section {
-    margin-bottom: 25px;
+    margin-bottom: 22.5px; /* 25px - 10% = 22.5px */
 }
 
 .customer-info-section h3,
 .order-items-section h3 {
     color: #2c3e50;
-    margin-bottom: 15px;
-    font-size: 1.1rem;
+    margin-bottom: 13.5px; /* 15px - 10% = 13.5px */
+    font-size: 0.99rem; /* 1.1rem - 10% = 0.99rem */
 }
 
 .customer-details p {
-    margin: 8px 0;
+    margin: 7.2px 0; /* 8px - 10% = 7.2px */
     color: #555;
 }
 
 .no-items {
     text-align: center;
     color: #7f8c8d;
-    padding: 20px;
+    padding: 18px; /* 20px - 10% = 18px */
     font-style: italic;
 }
 
@@ -209,12 +207,12 @@
 .items-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
+    margin-top: 9px; /* 10px - 10% = 9px */
 }
 
 .items-table th,
 .items-table td {
-    padding: 10px;
+    padding: 9px; /* 10px - 10% = 9px */
     text-align: left;
     border-bottom: 1px solid #ecf0f1;
 }
@@ -223,12 +221,12 @@
     background: #f8f9fa;
     color: #2c3e50;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.81rem; /* 0.9rem - 10% = 0.81rem */
 }
 
 .items-table td {
     color: #555;
-    font-size: 0.9rem;
+    font-size: 0.81rem; /* 0.9rem - 10% = 0.81rem */
 }
 
 .items-table tr:hover {
@@ -237,39 +235,39 @@
 
 .order-summary-section {
     background: #f8f9fa;
-    padding: 15px;
-    border-radius: 8px;
-    border-left: 4px solid #3498db;
+    padding: 13.5px; /* 15px - 10% = 13.5px */
+    border-radius: 7.2px; /* 8px - 10% = 7.2px */
+    border-left: 3.6px solid #3498db; /* 4px - 10% = 3.6px */
 }
 
 .summary-row {
     display: flex;
     justify-content: space-between;
-    margin: 8px 0;
+    margin: 7.2px 0; /* 8px - 10% = 7.2px */
     color: #555;
 }
 
 .total-row {
     border-top: 1px solid #ddd;
-    padding-top: 10px;
-    margin-top: 10px;
-    font-size: 1.1rem;
+    padding-top: 9px; /* 10px - 10% = 9px */
+    margin-top: 9px; /* 10px - 10% = 9px */
+    font-size: 0.99rem; /* 1.1rem - 10% = 0.99rem */
     color: #2c3e50;
 }
 
 .action-buttons {
     display: flex;
-    gap: 15px;
-    margin-top: 20px;
+    gap: 13.5px; /* 15px - 10% = 13.5px */
+    margin-top: 18px; /* 20px - 10% = 18px */
 }
 
 .add-items-btn,
 .complete-order-btn {
     flex: 1;
-    padding: 12px 20px;
+    padding: 10.8px 18px; /* 12px - 10% = 10.8px, 20px - 10% = 18px */
     border: none;
-    border-radius: 8px;
-    font-size: 1rem;
+    border-radius: 7.2px; /* 8px - 10% = 7.2px */
+    font-size: 0.9rem; /* 1rem - 10% = 0.9rem */
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -294,12 +292,12 @@
 
 .no-selection {
     text-align: center;
-    padding: 60px 20px;
+    padding: 54px 18px; /* 60px - 10% = 54px, 20px - 10% = 18px */
     color: #7f8c8d;
 }
 
 .no-selection h2 {
-    margin-bottom: 15px;
+    margin-bottom: 13.5px; /* 15px - 10% = 13.5px */
 }
 
 /* Responsive Design */
@@ -315,18 +313,18 @@
     }
     
     .tables-grid {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 10px;
+        grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); /* 150px - 10% = 135px */
+        gap: 9px; /* 10px - 10% = 9px */
     }
     
     .table-card {
-        padding: 12px;
+        padding: 10.8px; /* 12px - 10% = 10.8px */
     }
     
     .table-number {
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
+        width: 36px; /* 40px - 10% = 36px */
+        height: 36px; /* 40px - 10% = 36px */
+        font-size: 1.08rem; /* 1.2rem - 10% = 1.08rem */
     }
     
     .action-buttons {
@@ -334,11 +332,11 @@
     }
     
     .items-table {
-        font-size: 0.8rem;
+        font-size: 0.72rem; /* 0.8rem - 10% = 0.72rem */
     }
     
     .items-table th,
     .items-table td {
-        padding: 8px 4px;
+        padding: 7.2px 3.6px; /* 8px - 10% = 7.2px, 4px - 10% = 3.6px */
     }
 }

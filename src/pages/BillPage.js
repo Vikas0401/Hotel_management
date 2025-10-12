@@ -4,7 +4,7 @@ import '../styles/components/Bill.css';
 
 const BillPage = () => {
     return (
-        <div>
+        <div style={{ paddingTop: '140px' }}>
             <BillPrint />
         </div>
     );

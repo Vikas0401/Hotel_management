@@ -4,86 +4,45 @@ import { getCurrentHotelId } from './authService';
 // Default menus for each hotel
 const defaultMenus = {
     matoshree: {
-        // Matoshree specializes in traditional Maharashtrian vegetarian food
-        '101': { name: 'मातोश्री स्पेशल थाळी', rate: 250, category: 'स्पेशल थाळी' },
-        '102': { name: 'महाराष्ट्रीयन थाळी', rate: 180, category: 'स्पेशल थाळी' },
-        '103': { name: 'मिनी थाळी', rate: 120, category: 'स्पेशल थाळी' },
+        // Vegetarian Items
+        '101': { name: 'वेज बिर्यानी', rate: 180, category: 'शाकाहारी जेवण' },
+        '102': { name: 'पनीर बटर मसाला', rate: 220, category: 'शाकाहारी जेवण' },
+        '103': { name: 'डाळ तडका', rate: 150, category: 'शाकाहारी जेवण' },
+        '104': { name: 'वेज थाळी', rate: 250, category: 'शाकाहारी जेवण' },
         
-        // Traditional Snacks
-        '201': { name: 'मातोश्री वडापाव', rate: 30, category: 'नाश्ता' },
-        '202': { name: 'मिसळपाव स्पेशल', rate: 90, category: 'नाश्ता' },
-        '203': { name: 'साबुदाणा वडा', rate: 60, category: 'नाश्ता' },
-        '204': { name: 'भजिया प्लेट', rate: 80, category: 'नाश्ता' },
-        '205': { name: 'कांदा भजी', rate: 70, category: 'नाश्ता' },
-        
-        // Rice Items
-        '301': { name: 'वेज पुलाव', rate: 160, category: 'भात पदार्थ' },
-        '302': { name: 'जिरा राइस', rate: 130, category: 'भात पदार्थ' },
-        '303': { name: 'दही भात', rate: 100, category: 'भात पदार्थ' },
-        '304': { name: 'साधा भात', rate: 80, category: 'भात पदार्थ' },
-        
-        // Rotis & Breads
-        '401': { name: 'भाकरी', rate: 25, category: 'रोटी आणि ब्रेड' },
-        '402': { name: 'चपाती', rate: 18, category: 'रोटी आणि ब्रेड' },
-        '403': { name: 'ज्वारी भाकरी', rate: 30, category: 'रोटी आणि ब्रेड' },
-        '404': { name: 'थालीपीठ', rate: 70, category: 'रोटी आणि ब्रेड' },
-        
-        // Curry & Sabji
-        '501': { name: 'भरली वांगी', rate: 140, category: 'करी आणि सब्जी' },
-        '502': { name: 'भेंडी मसाला', rate: 120, category: 'करी आणि सब्जी' },
-        '503': { name: 'आलू गोबी', rate: 110, category: 'करी आणि सब्जी' },
-        '504': { name: 'मटकी उसळ', rate: 100, category: 'करी आणि सब्जी' },
-        '505': { name: 'आमटी (महाराष्ट्रीयन डाळ)', rate: 90, category: 'करी आणि सब्जी' },
-        
-        // Beverages
-        '601': { name: 'सोल कढी', rate: 50, category: 'पेय पदार्थ' },
-        '602': { name: 'ताक', rate: 35, category: 'पेय पदार्थ' },
-        '603': { name: 'मसाला चहा', rate: 25, category: 'पेय पदार्थ' },
-        '604': { name: 'फिल्टर कॉफी', rate: 30, category: 'पेय पदार्थ' },
-        
-        // Sweets
-        '701': { name: 'पुरणपोळी', rate: 80, category: 'मिठाई' },
-        '702': { name: 'मोदक', rate: 60, category: 'मिठाई' },
-        '703': { name: 'श्रीखंड', rate: 90, category: 'मिठाई' },
-        '704': { name: 'बासुंदी', rate: 85, category: 'मिठाई' }
+        // Non-Vegetarian Items  
+        '201': { name: 'चिकन बिर्यानी', rate: 280, category: 'मांसाहारी जेवण' },
+        '202': { name: 'मटण करी', rate: 350, category: 'मांसाहारी जेवण' },
+        '203': { name: 'चिकन टिक्का', rate: 320, category: 'मांसाहारी जेवण' },
+        '204': { name: 'फिश करी', rate: 300, category: 'मांसाहारी जेवण' }
     },
     
     maharashtra: {
-        // Original Maharashtra Hotel menu (from previous implementation)
-        '101': { name: 'वेज बिर्यानी', rate: 180, category: 'मुख्य जेवण' },
-        '102': { name: 'चिकन बिर्यानी', rate: 220, category: 'मुख्य जेवण' },
-        '103': { name: 'मटण बिर्यानी', rate: 280, category: 'मुख्य जेवण' },
-        '201': { name: 'वडापाव', rate: 25, category: 'नाश्ता' },
-        '202': { name: 'मिसळपाव', rate: 80, category: 'नाश्ता' },
-        '301': { name: 'डाळ तडका', rate: 110, category: 'करी' },
-        '302': { name: 'पनीर बटर मसाला', rate: 160, category: 'करी' },
-        '303': { name: 'चिकन करी', rate: 180, category: 'करी' },
-        '401': { name: 'रोटी', rate: 15, category: 'रोटी' },
-        '402': { name: 'नान', rate: 35, category: 'रोटी' },
-        '501': { name: 'मसाला चहा', rate: 20, category: 'पेय पदार्थ' },
-        '502': { name: 'लस्सी', rate: 40, category: 'पेय पदार्थ' }
-        // ... (can add more items as needed)
+        // Vegetarian Items
+        '101': { name: 'वेज बिर्यानी', rate: 180, category: 'शाकाहारी जेवण' },
+        '102': { name: 'पनीर बटर मसाला', rate: 200, category: 'शाकाहारी जेवण' },
+        '103': { name: 'डाळ तडका', rate: 110, category: 'शाकाहारी जेवण' },
+        '104': { name: 'वेज थाळी', rate: 220, category: 'शाकाहारी जेवण' },
+        
+        // Non-Vegetarian Items
+        '201': { name: 'चिकन बिर्यानी', rate: 250, category: 'मांसाहारी जेवण' },
+        '202': { name: 'मटण करी', rate: 320, category: 'मांसाहारी जेवण' },
+        '203': { name: 'चिकन करी', rate: 180, category: 'मांसाहारी जेवण' },
+        '204': { name: 'फिश फ्राय', rate: 280, category: 'मांसाहारी जेवण' }
     },
     
     sample: {
-        // Sample Hotel menu - similar to Matoshree for demo purposes
-        '101': { name: 'Sample Special Thali', rate: 250, category: 'Special Thali' },
-        '102': { name: 'Mini Thali', rate: 150, category: 'Special Thali' },
+        // Vegetarian Items
+        '101': { name: 'Veg Biryani', rate: 160, category: 'Vegetarian' },
+        '102': { name: 'Paneer Butter Masala', rate: 180, category: 'Vegetarian' },
+        '103': { name: 'Dal Tadka', rate: 100, category: 'Vegetarian' },
+        '104': { name: 'Veg Thali', rate: 200, category: 'Vegetarian' },
         
-        '201': { name: 'Vada Pav', rate: 30, category: 'Snacks' },
-        '202': { name: 'Bhaji Plate', rate: 80, category: 'Snacks' },
-        
-        '301': { name: 'Veg Pulao', rate: 160, category: 'Rice Items' },
-        '302': { name: 'Plain Rice', rate: 80, category: 'Rice Items' },
-        
-        '401': { name: 'Roti', rate: 18, category: 'Bread' },
-        '402': { name: 'Chapati', rate: 15, category: 'Bread' },
-        
-        '501': { name: 'Dal Tadka', rate: 120, category: 'Curry' },
-        '502': { name: 'Mix Veg', rate: 110, category: 'Curry' },
-        
-        '601': { name: 'Masala Tea', rate: 25, category: 'Beverages' },
-        '602': { name: 'Buttermilk', rate: 35, category: 'Beverages' }
+        // Non-Vegetarian Items
+        '201': { name: 'Chicken Biryani', rate: 220, category: 'Non-Vegetarian' },
+        '202': { name: 'Mutton Curry', rate: 280, category: 'Non-Vegetarian' },
+        '203': { name: 'Chicken Tikka', rate: 250, category: 'Non-Vegetarian' },
+        '204': { name: 'Fish Curry', rate: 240, category: 'Non-Vegetarian' }
     }
 };
 
@@ -92,12 +51,12 @@ export const getHotelMenu = () => {
     const hotelId = getCurrentHotelId();
     if (!hotelId) return {};
     
-    // Check if we need to force reset due to language change
+    // Check if we need to force reset due to menu structure change
     const languageVersion = localStorage.getItem(`menu_language_version_${hotelId}`);
-    if (languageVersion !== 'marathi_v1') {
-        // Reset to new Marathi menu
+    if (languageVersion !== 'veg_nonveg_v1') {
+        // Reset to new Veg/Non-Veg menu structure
         localStorage.removeItem(`menu_${hotelId}`);
-        localStorage.setItem(`menu_language_version_${hotelId}`, 'marathi_v1');
+        localStorage.setItem(`menu_language_version_${hotelId}`, 'veg_nonveg_v1');
     }
     
     // Check if custom menu exists in localStorage
