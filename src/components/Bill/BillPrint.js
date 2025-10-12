@@ -215,15 +215,15 @@ const BillPrint = () => {
         if (user?.hotelId === 'matoshree') {
             return {
                 address: user?.address || "वांबोरी, राहुरी, जिल्हा - अहिल्यानगर, महाराष्ट्र - ४१३७०४",
-                phone: "+91 9876543210",
-                email: "info@hotelmatoshree.com",
+                phone: "+91 9130195459",
+                email: "pratikkale202@gmail.com",
                 gstin: "27ABCDE1234F1Z5"
             };
         } else {
             return {
                 address: user?.address || "महाराष्ट्र, भारत",
-                phone: "+91 9876543210",
-                email: "info@maharashtrahotel.com",
+                phone: "+91 9130195459",
+                email: "pratikkale202@gmail.com",
                 gstin: "27ABCDE1234F1Z5"
             };
         }
