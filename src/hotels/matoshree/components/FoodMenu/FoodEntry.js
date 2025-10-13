@@ -4,7 +4,7 @@ import { getCurrentUser } from '../../services/authService';
 import { addFoodToTable, getActiveTables } from '../../services/tableService';
 import '../../styles/components/FoodMenu.css';
 
-const FoodEntry = ({ onFoodSelect, enableTableOrdering = false, selectedFoods = [] }) => {
+const FoodEntry = ({ onFoodSelect, enableTableOrdering = false }) => {
     const [foodItems, setFoodItems] = useState({});
     const [foodCode, setFoodCode] = useState('');
     const [quantity, setQuantity] = useState(1);
@@ -79,10 +79,6 @@ const FoodEntry = ({ onFoodSelect, enableTableOrdering = false, selectedFoods = 
             ...prev,
             [category]: !prev[category]
         }));
-    };
-
-    const getParcelOrderCount = () => {
-        return selectedFoods.reduce((total, food) => total + food.quantity, 0);
     };
 
     const handleSubmit = (e) => {
@@ -225,29 +221,9 @@ const FoodEntry = ({ onFoodSelect, enableTableOrdering = false, selectedFoods = 
                             />
                         </label>
                     </div>
-                    <div className="button-container">
-                        <button type="submit" className="add-button compact">
-                            {enableTableOrdering ? 'Add to Table' : 'ADD TO PARCEL ORDER'}
-                        </button>
-                        {!enableTableOrdering && (
-                            <button 
-                                type="button" 
-                                className="cart-counter-button"
-                                onClick={() => {
-                                    const selectedItemsSection = document.querySelector('.food-selection-container');
-                                    if (selectedItemsSection) {
-                                        selectedItemsSection.scrollIntoView({ 
-                                            behavior: 'smooth',
-                                            block: 'start'
-                                        });
-                                    }
-                                }}
-                            >
-                                <span className="cart-icon">🛒</span>
-                                <span className="cart-count">{getParcelOrderCount()}</span>
-                            </button>
-                        )}
-                    </div>
+                    <button type="submit" className="add-button">
+                        {enableTableOrdering ? 'Add to Table' : 'Add to Parcel Order'}
+                    </button>
                     {error && <p className="error-message">{error}</p>}
                     {success && <p className="success-message">{success}</p>}
                 </form>

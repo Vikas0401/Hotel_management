@@ -152,11 +152,7 @@ const MenuPage = () => {
                 <MenuManagement onMenuUpdate={handleMenuUpdate} />
             ) : (
                 <>
-                    <FoodEntry 
-                        key={menuKey} 
-                        onFoodSelect={handleFoodSelect}
-                        selectedFoods={selectedFoods}
-                    />
+                    <FoodEntry key={menuKey} onFoodSelect={handleFoodSelect} />
                     <FoodSelection 
                         selectedFoods={selectedFoods} 
                         onRemoveFood={handleRemoveFood}

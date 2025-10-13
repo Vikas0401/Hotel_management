@@ -627,10 +627,8 @@ select.form-input {
 /* Food Selection Table */
 .food-selection-container {
     padding: 20px;
-    width: 100%; /* Take full width of parent */
-    max-width: 800px; /* Match the main container max-width */
-    margin: 20px 330px; /* Align to left side */
-    box-sizing: border-box;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 .food-selection-table {
@@ -689,37 +687,6 @@ select.form-input {
     background-color: #c82333;
 }
 
-/* Action Buttons Container */
-.action-buttons {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-/* Bill Button */
-.bill-button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-}
-
-.bill-button:hover {
-    background-color: #218838;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(40, 167, 69, 0.3);
-}
-
 @media (max-width: 768px) {
     .food-entry-container {
         flex-direction: column;
@@ -775,109 +742,5 @@ select.form-input {
     .item-price {
         align-self: flex-end;
         font-size: 0.95rem;
-    }
-    
-    /* Mobile responsive for action buttons */
-    .action-buttons {
-        flex-direction: column;
-        gap: 5px;
-    }
-    
-    .remove-button,
-    .bill-button {
-        width: 100%;
-        padding: 8px 12px;
-        font-size: 11px;
-    }
-}
-
-/* Button Container for Compact Layout */
-.button-container {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-top: 10px;
-}
-
-/* Compact Add Button */
-.add-button.compact {
-    width: auto;
-    flex: 1;
-    min-width: 200px;
-    padding: 12px 20px;
-    font-size: 14px;
-    letter-spacing: 0.3px;
-}
-
-/* Cart Counter Button */
-.cart-counter-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 12px 16px;
-    background: linear-gradient(135deg, #3498db, #2980b9);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 600;
-    min-width: 80px;
-    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
-}
-
-.cart-counter-button:hover {
-    background: linear-gradient(135deg, #2980b9, #1f639a);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
-}
-
-.cart-icon {
-    font-size: 18px;
-    animation: bounce 2s infinite;
-}
-
-.cart-count {
-    background: #e74c3c;
-    color: white;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: bold;
-    min-width: 24px;
-}
-
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-    }
-    40% {
-        transform: translateY(-5px);
-    }
-    60% {
-        transform: translateY(-3px);
-    }
-}
-
-/* Mobile responsive for button container */
-@media (max-width: 480px) {
-    .button-container {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .add-button.compact {
-        width: 100%;
-        min-width: auto;
-    }
-    
-    .cart-counter-button {
-        align-self: center;
-        min-width: 120px;
     }
 }

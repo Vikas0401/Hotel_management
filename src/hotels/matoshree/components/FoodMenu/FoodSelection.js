@@ -1,8 +1,6 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const FoodSelection = ({ selectedFoods, onRemoveFood }) => {
-    const navigate = useNavigate();
     const calculateAmount = (rate, quantity) => {
         return rate * quantity;
     };
@@ -13,11 +11,11 @@ const FoodSelection = ({ selectedFoods, onRemoveFood }) => {
 
     return (
         <div className="food-selection-container">
-            {selectedFoods.length > 0 && <h2>Selected Food Items</h2>}
+            <h2>Selected Food Items</h2>
             {selectedFoods.length === 0 ? (
-                <div style={{ textAlign: 'center', color: '#666', fontSize: '1.1rem', padding: '20px', display: 'none' }}>
-                    {/* Hidden when no items - header also hidden */}
-                </div>
+                <p style={{ textAlign: 'center', color: '#666', fontSize: '1.1rem', padding: '20px' }}>
+                    No items selected. Please add items from the menu above.
+                </p>
             ) : (
                 <>
                     <table className="food-selection-table">
@@ -40,21 +38,12 @@ const FoodSelection = ({ selectedFoods, onRemoveFood }) => {
                                     <td>{food.quantity}</td>
                                     <td>₹{calculateAmount(food.rate, food.quantity)}</td>
                                     <td>
-                                        <div className="action-buttons">
-                                            <button 
-                                                className="remove-button"
-                                                onClick={() => onRemoveFood(index)}
-                                            >
-                                                Remove
-                                            </button>
-                                            <button 
-                                                className="bill-button"
-                                                onClick={() => navigate('/bill')}
-                                                title="Go to Bill Section"
-                                            >
-                                                📄 Bill
-                                            </button>
-                                        </div>
+                                        <button 
+                                            className="remove-button"
+                                            onClick={() => onRemoveFood(index)}
+                                        >
+                                            Remove
+                                        </button>
                                     </td>
                                 </tr>
                             ))}
