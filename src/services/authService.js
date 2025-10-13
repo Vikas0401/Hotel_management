@@ -57,6 +57,15 @@ export const logout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("hotel_name_version");
     sessionStorage.removeItem("user_session");
+    
+    // Clear browser history to prevent back navigation
+    // Replace current history entry with login page
+    window.history.replaceState(null, null, '/login');
+    
+    // Clear forward/back history by replacing the entire history
+    if (window.history.length > 1) {
+        window.history.go(-(window.history.length - 1));
+    }
 };
 
 export const isAuthenticated = () => {

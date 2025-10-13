@@ -5,7 +5,7 @@ const Footer = () => {
         <footer style={{
             background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
             color: 'white',
-            padding: '30px 20px 20px 20px',
+            padding: '10px 10px 10px 10px',
             marginTop: 'auto',
             boxShadow: '0 -4px 15px rgba(0,0,0,0.1)'
         }}>
@@ -14,7 +14,7 @@ const Footer = () => {
                 margin: '0 auto',
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-                gap: '30px',
+                gap: '20px',
                 alignItems: 'center'
             }}>
                 {/* VK Solutions Branding */}

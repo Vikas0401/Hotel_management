@@ -20,11 +20,11 @@ const FoodEntry = ({ onFoodSelect, enableTableOrdering = false }) => {
         const menu = getHotelMenu();
         setFoodItems(menu);
         
-        // Initialize all categories as expanded by default (only for parcel orders)
+        // Initialize all categories as collapsed by default (only for parcel orders)
         if (!enableTableOrdering) {
             const categories = {};
             Object.values(menu).forEach(item => {
-                categories[item.category] = true; // Start expanded
+                categories[item.category] = false; // Start collapsed
             });
             setExpandedCategories(categories);
         }

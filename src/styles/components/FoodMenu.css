@@ -626,10 +626,10 @@ select.form-input {
 
 /* Food Selection Table */
 .food-selection-container {
-    padding: 20px;
-    width: 100%; /* Take full width of parent */
-    max-width: 800px; /* Match the main container max-width */
-    margin: 20px 330px; /* Align to left side */
+    padding: 15px; /* Match the food-entry-container padding */
+    width: 100%;
+    max-width: 1400px; /* Match the food-entry-container max-width */
+    margin: 0 auto; /* Center the container like food-entry-container */
     box-sizing: border-box;
 }
 
@@ -654,6 +654,7 @@ select.form-input {
 .food-selection-table td {
     padding: 12px 15px;
     border-bottom: 1px solid #eee;
+    text-align: left; /* Ensure all table cells are left-aligned */
 }
 
 .food-selection-table tr:hover {
@@ -662,6 +663,16 @@ select.form-input {
 
 .food-selection-table tr:last-child td {
     border-bottom: none;
+}
+
+/* Ensure Action column (last column) is left-aligned */
+.food-selection-table td:last-child {
+    text-align: left !important;
+}
+
+/* Specifically target the cell containing action buttons */
+.food-selection-table td:has(.action-buttons) {
+    text-align: left !important;
 }
 
 .total-amount {
@@ -694,8 +705,14 @@ select.form-input {
     display: flex;
     gap: 8px;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start; /* Align buttons to the left */
     flex-wrap: wrap;
+}
+
+/* More specific rule for table action buttons */
+.food-selection-table .action-buttons {
+    justify-content: flex-start !important;
+    text-align: left !important;
 }
 
 /* Bill Button */
@@ -724,6 +741,21 @@ select.form-input {
     .food-entry-container {
         flex-direction: column;
         gap: 20px;
+        padding: 10px; /* Reduce padding on mobile */
+    }
+    
+    .food-selection-container {
+        padding: 10px; /* Match the food-entry-container mobile padding */
+        margin: 0 auto; /* Ensure centering on mobile */
+    }
+    
+    .food-selection-table {
+        font-size: 0.9rem; /* Slightly smaller text on mobile */
+    }
+    
+    .food-selection-table th,
+    .food-selection-table td {
+        padding: 10px 8px; /* Reduce padding on mobile */
     }
     
     .menu-categories {
@@ -781,6 +813,7 @@ select.form-input {
     .action-buttons {
         flex-direction: column;
         gap: 5px;
+        align-items: flex-start; /* Ensure left alignment on mobile too */
     }
     
     .remove-button,
@@ -866,6 +899,24 @@ select.form-input {
 
 /* Mobile responsive for button container */
 @media (max-width: 480px) {
+    .food-entry-container {
+        padding: 5px; /* Even less padding on very small screens */
+    }
+    
+    .food-selection-container {
+        padding: 5px; /* Match the food-entry-container padding */
+        margin: 0; /* Remove auto margin on very small screens */
+    }
+    
+    .food-selection-table {
+        font-size: 0.8rem; /* Even smaller text on very small screens */
+    }
+    
+    .food-selection-table th,
+    .food-selection-table td {
+        padding: 8px 5px; /* Minimal padding on very small screens */
+    }
+    
     .button-container {
         flex-direction: column;
         gap: 10px;
