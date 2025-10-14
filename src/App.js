@@ -26,6 +26,11 @@ const AppContent = () => {
     setIsAuthenticated(authStatus);
     if (authStatus) {
       setCurrentUser(getCurrentUser());
+      
+      // Check for auto-export on first day of month
+      import('./services/billHistoryService').then(({ autoExportMonthlyReport }) => {
+        autoExportMonthlyReport();
+      });
     }
   }, []);
 

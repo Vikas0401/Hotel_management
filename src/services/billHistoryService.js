@@ -311,8 +311,62 @@ export const exportBillHistory = () => {
     return JSON.stringify(exportData, null, 2);
 };
 
+// Auto-export function for monthly reports
+export const autoExportMonthlyReport = () => {
+    const today = new Date();
+    const isFirstDayOfMonth = today.getDate() === 1;
+    
+    if (isFirstDayOfMonth) {
+        // Get previous month's data
+        const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+        const startDate = lastMonth.toISOString().split('T')[0];
+        const endDate = new Date(today.getFullYear(), today.getMonth(), 0).toISOString().split('T')[0];
+        
+        // Filter bills for last month
+        const allBills = getBillHistory();
+        const monthlyBills = allBills.filter(bill => {
+            const billDate = new Date(bill.date.split('/').reverse().join('-'));
+            return billDate >= new Date(startDate) && billDate <= new Date(endDate);
+        });
+        
+        if (monthlyBills.length > 0) {
+            const doc = generateMonthlyPDF(monthlyBills, lastMonth);
+            const monthName = lastMonth.toLocaleString('default', { month: 'long', year: 'numeric' });
+            const fileName = `Monthly_Report_${monthName.replace(' ', '_')}.pdf`;
+            doc.save(fileName);
+            
+            console.log(`Auto-exported monthly report: ${fileName}`);
+            return true;
+        }
+    }
+    return false;
+};
+
+// Generate PDF for monthly reports
+const generateMonthlyPDF = (bills, month) => {
+    const user = getCurrentUser();
+    const doc = new jsPDF();
+    
+    // Header
+    doc.setFontSize(16);
+    doc.setFont(undefined, 'bold');
+    const hotelDisplayName = user?.hotelName === 'हॉटेल मातोश्री' ? 'Hotel Matoshree' : 
+                           user?.hotelName === 'हॉटेल गुरुकृपा' ? 'Hotel Gurukrupa' : 
+                           (user?.hotelName || 'Hotel');
+    
+    const monthYear = month.toLocaleString('default', { month: 'long', year: 'numeric' });
+    doc.text(`${hotelDisplayName} - Monthly Report`, 20, 20);
+    doc.setFontSize(12);
+    doc.text(`Month: ${monthYear}`, 20, 35);
+    doc.text(`Generated: ${new Date().toLocaleDateString()}`, 20, 45);
+    doc.text(`Total Bills: ${bills.length}`, 20, 55);
+    
+    // Use the same table format as regular export
+    return generateBillTable(doc, bills, 65);
+};
+
 // Export bills to PDF (for backup/download)
-export const exportBillHistoryToPDF = () => {
+export const exportBillHistoryToPDF = (monthlyFilter = null) => {
     try {
         const hotelId = getCurrentHotelId();
         
@@ -330,8 +384,17 @@ export const exportBillHistoryToPDF = () => {
             return true;
         }
         
-        const bills = getBillHistory();
+        let bills = getBillHistory();
         const user = getCurrentUser();
+        
+        // Apply monthly filter if provided
+        if (monthlyFilter) {
+            const { year, month } = monthlyFilter;
+            bills = bills.filter(bill => {
+                const billDate = new Date(bill.date.split('/').reverse().join('-'));
+                return billDate.getFullYear() === year && billDate.getMonth() === month;
+            });
+        }
         
         if (bills.length === 0) {
             throw new Error('No bills to export');
@@ -340,28 +403,113 @@ export const exportBillHistoryToPDF = () => {
         // Create new PDF document
         const doc = new jsPDF();
         
-        // Add basic header
-        doc.text('VK Solutions', 20, 20);
-        doc.text(`${user?.hotelName || 'Hotel'} - Bill History`, 20, 30);
-        doc.text(`Export Date: ${new Date().toLocaleDateString()}`, 20, 40);
-        doc.text(`Total Bills: ${bills.length}`, 20, 50);
+        // Add header with better styling - removed VK Solutions as requested
+        doc.setFontSize(16);
+        doc.setFont(undefined, 'bold');
         
-        // Add bills summary
-        let yPos = 70;
-        bills.slice(0, 10).forEach((bill, index) => { // Limit to first 10 bills
-            doc.text(`${index + 1}. Bill ${bill.billNumber} - ${bill.date} - Rs. ${(bill.total || 0).toFixed(2)}`, 20, yPos);
-            yPos += 10;
-        });
+        // Convert hotel name to readable format for PDF
+        const hotelDisplayName = user?.hotelName === 'हॉटेल मातोश्री' ? 'Hotel Matoshree' : 
+                               user?.hotelName === 'हॉटेल गुरुकृपा' ? 'Hotel Gurukrupa' : 
+                               (user?.hotelName || 'Hotel');
+        doc.text(`${hotelDisplayName} - Bill History`, 20, 20);
         
-        if (bills.length > 10) {
-            doc.text(`... and ${bills.length - 10} more bills`, 20, yPos);
-        }
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'normal');
+        doc.text(`Export Date: ${new Date().toLocaleDateString()}`, 20, 35);
+        doc.text(`Total Bills: ${bills.length}`, 20, 45);
+        
+        // Generate the bill table
+        generateBillTable(doc, bills, 60);
         
         return doc;
     } catch (error) {
         console.error('Error generating PDF:', error);
         throw error;
     }
+};
+
+// Helper function to generate bill table
+const generateBillTable = (doc, bills, startYPos) => {
+    let yPos = startYPos;
+    
+    // Add summary table headers - adjusted column positions to fit in page
+    doc.setFont(undefined, 'bold');
+    doc.setFontSize(9);
+    doc.text('Sr.', 15, yPos);
+    doc.text('Bill No.', 25, yPos);
+    doc.text('Date', 55, yPos);
+    doc.text('Customer', 85, yPos);
+    doc.text('Type', 120, yPos);
+    doc.text('Total', 140, yPos);
+    doc.text('Received', 165, yPos);
+    doc.text('Balance', 190, yPos);
+    yPos += 5;
+    
+    // Draw line under headers - adjusted width to fit page
+    doc.line(15, yPos, 210, yPos);
+    yPos += 5;
+    
+    // Add bills summary in table format
+    doc.setFont(undefined, 'normal');
+    doc.setFontSize(8);
+    
+    bills.forEach((bill, index) => {
+        // Check if we need a new page
+        if (yPos > 270) {
+            doc.addPage();
+            yPos = 20;
+            
+            // Repeat headers on new page
+            doc.setFont(undefined, 'bold');
+            doc.setFontSize(9);
+            doc.text('Sr.', 15, yPos);
+            doc.text('Bill No.', 25, yPos);
+            doc.text('Date', 55, yPos);
+            doc.text('Customer', 85, yPos);
+            doc.text('Type', 120, yPos);
+            doc.text('Total', 140, yPos);
+            doc.text('Received', 165, yPos);
+            doc.text('Balance', 190, yPos);
+            yPos += 5;
+            doc.line(15, yPos, 210, yPos);
+            yPos += 5;
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(8);
+        }
+        
+        const customerName = (bill.customerInfo?.name || 'Walk-in').substring(0, 12);
+        const orderType = (bill.customerInfo?.tableNumber && bill.customerInfo.tableNumber !== '-') ? 'Table' : 'Parcel';
+        const jama = bill.paymentInfo?.jama || 0;
+        const baki = bill.paymentInfo?.baki || bill.total || 0;
+        
+        doc.text((index + 1).toString(), 15, yPos);
+        doc.text(bill.billNumber, 25, yPos);
+        doc.text(bill.date, 55, yPos);
+        doc.text(customerName, 85, yPos);
+        doc.text(orderType, 120, yPos);
+        doc.text(`${(bill.total || 0).toFixed(0)}`, 140, yPos);
+        doc.text(`${jama.toFixed(0)}`, 165, yPos);
+        doc.text(`${baki.toFixed(0)}`, 190, yPos);
+        yPos += 5;
+    });
+    
+    // Add totals at the end
+    yPos += 3;
+    doc.line(140, yPos, 210, yPos);
+    yPos += 5;
+    
+    const totalAmount = bills.reduce((sum, bill) => sum + (bill.total || 0), 0);
+    const totalJama = bills.reduce((sum, bill) => sum + (bill.paymentInfo?.jama || 0), 0);
+    const totalBaki = bills.reduce((sum, bill) => sum + (bill.paymentInfo?.baki || bill.total || 0), 0);
+    
+    doc.setFont(undefined, 'bold');
+    doc.setFontSize(9);
+    doc.text('TOTALS:', 110, yPos);
+    doc.text(`Rs.${totalAmount.toFixed(0)}`, 140, yPos);
+    doc.text(`Rs.${totalJama.toFixed(0)}`, 165, yPos);
+    doc.text(`Rs.${totalBaki.toFixed(0)}`, 190, yPos);
+    
+    return doc;
 };
 
 // Print single bill (for browser print)
