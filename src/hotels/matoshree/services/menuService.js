@@ -9,12 +9,34 @@ const defaultMenus = {
         '102': { name: 'पनीर बटर मसाला', rate: 220, category: 'शाकाहारी जेवण' },
         '103': { name: 'डाळ तडका', rate: 150, category: 'शाकाहारी जेवण' },
         '104': { name: 'वेज थाळी', rate: 250, category: 'शाकाहारी जेवण' },
+        '105': { name: 'आलू गोबी', rate: 160, category: 'शाकाहारी जेवण' },
+        '106': { name: 'मिक्स व्हेज', rate: 170, category: 'शाकाहारी जेवण' },
+        '107': { name: 'चना मसाला', rate: 140, category: 'शाकाहारी जेवण' },
+        '108': { name: 'भिंडी फ्राय', rate: 130, category: 'शाकाहारी जेवण' },
         
         // Non-Vegetarian Items  
         '201': { name: 'चिकन बिर्यानी', rate: 280, category: 'मांसाहारी जेवण' },
         '202': { name: 'मटण करी', rate: 350, category: 'मांसाहारी जेवण' },
         '203': { name: 'चिकन टिक्का', rate: 320, category: 'मांसाहारी जेवण' },
-        '204': { name: 'फिश करी', rate: 300, category: 'मांसाहारी जेवण' }
+        '204': { name: 'फिश करी', rate: 300, category: 'मांसाहारी जेवण' },
+        '205': { name: 'चिकन करी', rate: 250, category: 'मांसाहारी जेवण' },
+        '206': { name: 'मटण बिर्यानी', rate: 380, category: 'मांसाहारी जेवण' },
+        '207': { name: 'प्रॉन करी', rate: 320, category: 'मांसाहारी जेवण' },
+        '208': { name: 'चिकन फ्राय', rate: 290, category: 'मांसाहारी जेवण' },
+        
+        // Beverages
+        '301': { name: 'चहा', rate: 15, category: 'पेय पदार्थ' },
+        '302': { name: 'कॉफी', rate: 20, category: 'पेय पदार्थ' },
+        '303': { name: 'कोल्ड ड्रिंक', rate: 25, category: 'पेय पदार्थ' },
+        '304': { name: 'लस्सी', rate: 35, category: 'पेय पदार्थ' },
+        '305': { name: 'जूस', rate: 40, category: 'पेय पदार्थ' },
+        
+        // Roti/Rice
+        '401': { name: 'चपाती', rate: 8, category: 'भाकरी/भात' },
+        '402': { name: 'नान', rate: 25, category: 'भाकरी/भात' },
+        '403': { name: 'बटर नान', rate: 35, category: 'भाकरी/भात' },
+        '404': { name: 'जीरा राइस', rate: 80, category: 'भाकरी/भात' },
+        '405': { name: 'प्लेन राइस', rate: 60, category: 'भाकरी/भात' }
     },
     
     maharashtra: {

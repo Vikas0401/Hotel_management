@@ -75,7 +75,23 @@ const BillHistory = () => {
     const handleExportHistory = () => {
         try {
             const doc = exportBillHistoryToPDF();
-            const fileName = `${user?.hotelName || 'Hotel'}_bill_history_${new Date().toISOString().split('T')[0]}.pdf`;
+            
+            // Get hotel name in English for filename
+            const getHotelNameForFile = (user) => {
+                if (!user) return 'Hotel';
+                switch (user.hotelId) {
+                    case 'matoshree':
+                        return 'Hotel_Matoshree';
+                    case 'jagdamba':
+                        return 'Hotel_Jagdamba';
+                    case 'samplehotel':
+                        return 'Sample_Hotel';
+                    default:
+                        return 'Hotel';
+                }
+            };
+            
+            const fileName = `${getHotelNameForFile(user)}_bill_history_${new Date().toISOString().split('T')[0]}.pdf`;
             doc.save(fileName);
             
             // Show success message
@@ -89,7 +105,23 @@ const BillHistory = () => {
     const handleExportSingleBill = (bill) => {
         try {
             const doc = exportSingleBillToPDF(bill);
-            const fileName = `${user?.hotelName || 'Hotel'}_bill_${bill.billNumber}_${bill.date.replace(/\//g, '-')}.pdf`;
+            
+            // Get hotel name in English for filename
+            const getHotelNameForFile = (user) => {
+                if (!user) return 'Hotel';
+                switch (user.hotelId) {
+                    case 'matoshree':
+                        return 'Hotel_Matoshree';
+                    case 'jagdamba':
+                        return 'Hotel_Jagdamba';
+                    case 'samplehotel':
+                        return 'Sample_Hotel';
+                    default:
+                        return 'Hotel';
+                }
+            };
+            
+            const fileName = `${getHotelNameForFile(user)}_bill_${bill.billNumber}_${bill.date.replace(/\//g, '-')}.pdf`;
             doc.save(fileName);
             
             // Show success message

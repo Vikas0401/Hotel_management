@@ -1,0 +1,202 @@
+/* Import beautiful Marathi fonts from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800;900&family=Mukti:wght@400;700&display=swap');
+
+/* Marathi Font Classes */
+.marathi-title {
+    font-family: 'Kalam', 'Noto Sans Devanagari', cursive, sans-serif;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 1px;
+}
+
+.marathi-elegant {
+    font-family: 'Noto Sans Devanagari', 'Kalam', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.marathi-header {
+    font-family: 'Kalam', 'Noto Sans Devanagari', cursive, sans-serif;
+    font-weight: 700;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.marathi-body {
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+.marathi-bold {
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-weight: 700;
+}
+
+/* Special styling for Hotel Matoshree name */
+.hotel-matoshree-name {
+    font-family: 'Kalam', 'Noto Sans Devanagari', cursive, sans-serif;
+    font-weight: 700;
+    background: linear-gradient(45deg, #C41E3A, #FFD700, #C41E3A);
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease-in-out infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 2px 2px 4px rgba(196, 30, 58, 0.3);
+    letter-spacing: 1.5px;
+    font-size: 1.2em;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Fallback for browsers that don't support background-clip */
+@supports not (-webkit-background-clip: text) {
+    .hotel-matoshree-name {
+        background: none;
+        color: #C41E3A;
+        text-shadow: 2px 2px 4px rgba(255, 215, 0, 0.5);
+    }
+}
+
+/* Matoshree theme specific font styling */
+.matoshree-theme .marathi-title,
+.matoshree-theme .marathi-header {
+    color: #C41E3A;
+    text-shadow: 1px 1px 2px rgba(255, 215, 0, 0.3);
+}
+
+.matoshree-theme .marathi-elegant {
+    color: #8B0000;
+}
+
+/* Bill header special styling */
+.bill-header .hotel-matoshree-name {
+    font-size: 2.5em;
+    margin: 10px 0;
+    text-align: center;
+}
+
+/* Header logo special styling */
+.header .hotel-matoshree-name {
+    font-size: 1.8em;
+    text-decoration: none;
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.header .hotel-matoshree-name:hover {
+    transform: scale(1.05);
+    text-shadow: 3px 3px 6px rgba(196, 30, 58, 0.4);
+}
+
+/* Menu page title styling */
+.menu-page-title .hotel-matoshree-name {
+    font-size: 2.2em;
+    margin-right: 10px;
+}
+
+/* Responsive font sizes */
+@media (max-width: 768px) {
+    .hotel-matoshree-name {
+        font-size: 1em;
+        letter-spacing: 1px;
+    }
+    
+    .bill-header .hotel-matoshree-name {
+        font-size: 2em;
+    }
+    
+    .header .hotel-matoshree-name {
+        font-size: 1.5em;
+    }
+    
+    .menu-page-title .hotel-matoshree-name {
+        font-size: 1.8em;
+    }
+}
+
+@media (max-width: 480px) {
+    .hotel-matoshree-name {
+        font-size: 0.9em;
+        letter-spacing: 0.5px;
+    }
+    
+    .bill-header .hotel-matoshree-name {
+        font-size: 1.8em;
+    }
+    
+    .header .hotel-matoshree-name {
+        font-size: 1.3em;
+    }
+}
+
+/* Print-specific styles for clear text rendering */
+@media print {
+    /* Hide signature line and entire header in print to prevent overlap */
+    .header,
+    .app-container > header,
+    header {
+        display: none !important;
+    }
+    
+    /* Hide any navigation elements */
+    nav,
+    .nav-menu {
+        display: none !important;
+    }
+    
+    .hotel-matoshree-name {
+        /* Remove all animations and effects for print */
+        background: none !important;
+        -webkit-background-clip: unset !important;
+        background-clip: unset !important;
+        -webkit-text-fill-color: unset !important;
+        animation: none !important;
+        text-shadow: none !important;
+        
+        /* Use solid color for print */
+        color: #C41E3A !important;
+        font-family: 'Kalam', 'Noto Sans Devanagari', sans-serif !important;
+        font-weight: 700 !important;
+        letter-spacing: 1px !important;
+    }
+    
+    .bill-header .hotel-matoshree-name {
+        font-size: 24px !important;
+        margin: 0 !important;
+        text-align: center !important;
+        color: #C41E3A !important;
+        line-height: 1.2 !important;
+    }
+    
+    /* Ensure all Marathi text is clear in print */
+    .marathi-title,
+    .marathi-header,
+    .marathi-body,
+    .marathi-elegant,
+    .marathi-bold {
+        color: #000 !important;
+        text-shadow: none !important;
+        background: none !important;
+        -webkit-background-clip: unset !important;
+        background-clip: unset !important;
+        -webkit-text-fill-color: unset !important;
+        print-color-adjust: exact !important;
+    }
+    
+    /* Specific bill header styling for print */
+    .bill-header h1 {
+        color: #C41E3A !important;
+        text-shadow: none !important;
+        background: none !important;
+        -webkit-background-clip: unset !important;
+        background-clip: unset !important;
+        -webkit-text-fill-color: unset !important;
+    }
+}

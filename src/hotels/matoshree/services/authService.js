@@ -1,109 +1,52 @@
-// Hotel credentials and their respective menus
-const hotelCredentials = {
-    "matoshree": {
-        username: "matoshree_admin",
-        password: "matoshree@2025",
-        hotelName: "हॉटेल मातोश्री",
-        hotelId: "matoshree",
-        isAdmin: true,
-        address: "वांबोरी, राहुरी, जिल्हा - अहिल्यानगर, महाराष्ट्र - ४१३७०४"
-    },
-    "maharashtra": {
-        username: "maharashtra_admin", 
-        password: "maharashtra@2025",
-        hotelName: "Maharashtra Hotel",
-        hotelId: "maharashtra",
-        isAdmin: true,
-        address: "महाराष्ट्र, भारत"
-    },
-    "sample": {
-        username: "sample_user",
-        password: "sample@2025",
-        hotelName: "Sample Hotel",
-        hotelId: "sample",
-        isAdmin: false,
-        address: "Demo Location, India",
-        isReadOnly: true
-    }
-};
+// Matoshree Hotel Authentication Service
+// This service imports from the shared multi-hotel auth service
+import { 
+    login as sharedLogin, 
+    logout as sharedLogout, 
+    isAuthenticated as sharedIsAuthenticated, 
+    getCurrentUser as sharedGetCurrentUser, 
+    getCurrentHotelId as sharedGetCurrentHotelId
+} from '../../../shared/services/multiHotelAuthService';
 
+// Re-export shared functions with hotel-specific validation
 export const login = (username, password) => {
-    // Find matching hotel credentials
-    const hotel = Object.values(hotelCredentials).find(
-        h => h.username === username && h.password === password
-    );
-
-    if (hotel) {
-        const userSession = {
-            username: hotel.username,
-            hotelName: hotel.hotelName,
-            hotelId: hotel.hotelId,
-            isAdmin: hotel.isAdmin,
-            address: hotel.address,
-            loginTime: new Date().toISOString()
-        };
-        localStorage.setItem("user", JSON.stringify(userSession));
-        localStorage.setItem("hotel_name_version", "marathi_v1");
-        
-        // Set session flag to indicate this is a new session
-        sessionStorage.setItem("user_session", "active");
-        
-        return true;
+    const result = sharedLogin(username, password);
+    if (result) {
+        const user = sharedGetCurrentUser();
+        // Ensure only matoshree users can login through this service
+        if (user && user.hotelId === 'matoshree') {
+            return true;
+        } else {
+            sharedLogout();
+            return false;
+        }
     }
     return false;
 };
 
-export const logout = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("hotel_name_version");
-    sessionStorage.removeItem("user_session");
-};
+export const logout = sharedLogout;
 
 export const isAuthenticated = () => {
-    const user = localStorage.getItem("user");
-    const sessionActive = sessionStorage.getItem("user_session");
-    
-    if (user && sessionActive === "active") {
-        // Check if we need to update hotel name to Marathi version
-        const nameVersion = localStorage.getItem("hotel_name_version");
-        if (nameVersion !== "marathi_v1") {
-            // Force logout to refresh with new Marathi names
-            localStorage.removeItem("user");
-            localStorage.removeItem("hotel_name_version");
-            sessionStorage.removeItem("user_session");
-            return false;
-        }
-        return true;
+    const isAuth = sharedIsAuthenticated();
+    if (isAuth) {
+        const user = sharedGetCurrentUser();
+        // Only return true if user belongs to matoshree
+        return user && user.hotelId === 'matoshree';
     }
     return false;
 };
 
 export const getCurrentUser = () => {
-    const user = localStorage.getItem("user");
-    const sessionActive = sessionStorage.getItem("user_session");
-    
-    if (user && sessionActive === "active") {
-        const userData = JSON.parse(user);
-        
-        // Check if we need to update hotel name to Marathi version
-        const nameVersion = localStorage.getItem("hotel_name_version");
-        if (nameVersion !== "marathi_v1") {
-            // Force logout to refresh with new Marathi names
-            localStorage.removeItem("user");
-            localStorage.removeItem("hotel_name_version");
-            sessionStorage.removeItem("user_session");
-            return null;
-        }
-        
-        return userData;
+    const user = sharedGetCurrentUser();
+    // Only return user if they belong to matoshree
+    if (user && user.hotelId === 'matoshree') {
+        return user;
     }
     return null;
 };
 
 export const getCurrentHotelId = () => {
-    const user = getCurrentUser();
-    console.log("🏨 getCurrentHotelId() Debug:");
-    console.log("- Current user:", user);
-    console.log("- HotelId:", user ? user.hotelId : "null");
-    return user ? user.hotelId : null;
+    const hotelId = sharedGetCurrentHotelId();
+    // Only return hotel ID if it's matoshree
+    return hotelId === 'matoshree' ? hotelId : null;
 };

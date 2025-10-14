@@ -1,0 +1,746 @@
+/* Food Menu Styles - Mobile First */
+.food-entry-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 15px;
+    max-width: 1400px; /* Restored for parcel orders with menu */
+    margin: 0 auto;
+}
+
+/* Form styling */
+.food-entry-form {
+    background: white;
+    padding: 30px; /* Increased from 25px for more spacious feel */
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 2px solid #e74c3c;
+    width: 100%; /* Take full width of container */
+}
+
+/* Conditional sizing for table orders vs parcel orders */
+.food-entry-container:has(.menu-display) {
+    max-width: 1400px; /* Full width when menu is present */
+}
+
+.food-entry-container:not(:has(.menu-display)) {
+    max-width: 800px; /* Reduced width when no menu (table orders) */
+}
+
+.food-entry-container:not(:has(.menu-display)) .food-entry-form {
+    max-width: none; /* Remove restriction for table orders */
+}
+
+.food-entry-form h2 {
+    color: #2c3e50;
+    margin-bottom: 25px; /* Increased from 20px */
+    text-align: center;
+    font-size: 1.3rem; /* Slightly smaller for better fit */
+    font-weight: 600;
+    border-bottom: 2px solid #e74c3c; /* Added underline */
+    padding-bottom: 10px;
+}
+
+/* Table Selection Section */
+.table-selection-section {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef); /* Gradient background */
+    padding: 20px; /* Increased from 15px */
+    border-radius: 10px; /* Increased from 8px */
+    margin-bottom: 25px; /* Increased from 20px */
+    border-left: 4px solid #3498db;
+    border-top: 1px solid #dee2e6; /* Added subtle top border */
+}
+
+.table-selection-section h3 {
+    color: #2c3e50;
+    margin-bottom: 18px; /* Increased from 15px */
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.table-selection-section h3::before {
+    content: "🍽️";
+    font-size: 1.2rem;
+}
+
+.table-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Increased from 10px */
+}
+
+/* Desktop styles for better form layout */
+@media (min-width: 768px) {
+    .food-entry-container {
+        padding: 30px; /* Increased padding for desktop */
+    }
+    
+    /* Side-by-side layout for parcel orders with menu */
+    .food-entry-container:has(.menu-display) {
+        flex-direction: row;
+        gap: 30px;
+    }
+    
+    .food-entry-container:has(.menu-display) .food-entry-form {
+        flex: 1;
+        height: fit-content;
+        position: sticky;
+        top: 20px;
+        order: 2; /* Move to right on desktop */
+        max-width: 400px; /* Restrict width when menu is present */
+    }
+    
+    .food-entry-container:has(.menu-display) .menu-display {
+        flex: 2;
+        order: 1; /* Move to left on desktop */
+    }
+    
+    .table-options {
+        gap: 20px; /* Increased from 18px */
+    }
+    
+    .food-entry-form {
+        padding: 35px; /* Even more spacious on desktop */
+    }
+}
+
+/* Menu Display Styles */
+.menu-display {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.menu-display h2 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+.menu-categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+}
+
+.menu-category {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+/* Collapsible Category Header */
+.menu-category-header {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    padding: 15px 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.menu-category-header:hover {
+    background: linear-gradient(135deg, #c0392b, #a93226);
+    transform: translateY(-1px);
+}
+
+.menu-category-header h3 {
+    color: white;
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.category-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.items-count {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+.collapse-icon {
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+    font-weight: bold;
+}
+
+.collapse-icon.expanded {
+    transform: rotate(180deg);
+}
+
+/* Category Content */
+.category-content {
+    padding: 0;
+    background: white;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 500px;
+    }
+}
+
+.menu-category ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-category li {
+    padding: 12px 20px;
+    font-size: 0.95rem;
+    border-bottom: 1px solid #f0f0f0;
+    color: #2c3e50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s ease;
+}
+
+.menu-category li:hover {
+    background-color: #f8f9fa;
+}
+
+.menu-category li:last-child {
+    border-bottom: none;
+}
+
+.item-code {
+    font-weight: bold;
+    color: #e74c3c;
+    background: #fef2f2;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    min-width: 50px;
+    text-align: center;
+}
+
+.item-name {
+    flex: 1;
+    margin: 0 15px;
+    font-weight: 500;
+}
+
+.item-price {
+    font-weight: bold;
+    color: #27ae60;
+    font-size: 1rem;
+}
+
+/* Form Group Styles */
+.form-group {
+    margin-bottom: 20px; /* Increased from 15px */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px; /* Increased from 5px */
+    color: #2c3e50; /* Darker color */
+    font-weight: 600; /* Increased from 500 */
+    font-size: 0.95rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 15px; /* Increased padding */
+    border: 2px solid #e0e0e0; /* Thicker border */
+    border-radius: 8px; /* Increased from 4px */
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    background: #fafafa; /* Light background */
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #3498db; /* Changed to blue */
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15); /* Enhanced shadow */
+    background: white;
+    transform: translateY(-1px); /* Subtle lift effect */
+}
+
+/* Special styling for select dropdowns */
+.form-input[type="text"]::placeholder {
+    color: #95a5a6;
+    font-style: italic;
+}
+
+select.form-input {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px;
+    padding-right: 40px;
+}
+
+.add-button {
+    width: 100%;
+    padding: 15px; /* Increased from 12px */
+    background: linear-gradient(135deg, #27ae60, #2ecc71); /* Gradient background */
+    color: white;
+    border: none;
+    border-radius: 8px; /* Increased from 4px */
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 10px;
+}
+
+.add-button:hover {
+    background: linear-gradient(135deg, #219a52, #27ae60);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-top: 15px;
+    text-align: center;
+    background: #fdf2f2;
+    padding: 10px;
+    border-radius: 6px;
+    border-left: 4px solid #e74c3c;
+}
+
+.success-message {
+    color: #27ae60;
+    font-size: 14px;
+    margin-top: 15px;
+    text-align: center;
+    background: #f0f9f4;
+    padding: 10px;
+    border-radius: 6px;
+    border-left: 4px solid #27ae60;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.menu-display h2 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+.menu-categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+}
+
+.menu-category {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+/* Collapsible Category Header */
+.menu-category-header {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    padding: 15px 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.menu-category-header:hover {
+    background: linear-gradient(135deg, #c0392b, #a93226);
+    transform: translateY(-1px);
+}
+
+.menu-category-header h3 {
+    color: white;
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.category-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.items-count {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+.collapse-icon {
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+    font-weight: bold;
+}
+
+.collapse-icon.expanded {
+    transform: rotate(180deg);
+}
+
+/* Category Content */
+.category-content {
+    padding: 0;
+    background: white;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 500px;
+    }
+}
+
+.menu-category ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-category li {
+    padding: 12px 20px;
+    font-size: 0.95rem;
+    border-bottom: 1px solid #f0f0f0;
+    color: #2c3e50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s ease;
+}
+
+.menu-category li:hover {
+    background-color: #f8f9fa;
+}
+
+.menu-category li:last-child {
+    border-bottom: none;
+}
+
+.item-code {
+    font-weight: bold;
+    color: #e74c3c;
+    background: #fef2f2;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    min-width: 50px;
+    text-align: center;
+}
+
+.item-name {
+    flex: 1;
+    margin: 0 15px;
+    font-weight: 500;
+}
+
+.item-price {
+    font-weight: bold;
+    color: #27ae60;
+    font-size: 1rem;
+}
+
+.food-entry-form {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+}
+
+.food-entry-form h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px; /* Increased from 15px */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px; /* Increased from 5px */
+    color: #2c3e50; /* Darker color */
+    font-weight: 600; /* Increased from 500 */
+    font-size: 0.95rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 15px; /* Increased padding */
+    border: 2px solid #e0e0e0; /* Thicker border */
+    border-radius: 8px; /* Increased from 4px */
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    background: #fafafa; /* Light background */
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #3498db; /* Changed to blue */
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15); /* Enhanced shadow */
+    background: white;
+    transform: translateY(-1px); /* Subtle lift effect */
+}
+
+/* Special styling for select dropdowns */
+.form-input[type="text"]::placeholder {
+    color: #95a5a6;
+    font-style: italic;
+}
+
+select.form-input {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px;
+    padding-right: 40px;
+}
+
+.add-button {
+    width: 100%;
+    padding: 15px; /* Increased from 12px */
+    background: linear-gradient(135deg, #27ae60, #2ecc71); /* Gradient background */
+    color: white;
+    border: none;
+    border-radius: 8px; /* Increased from 4px */
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 10px;
+}
+
+.add-button:hover {
+    background: linear-gradient(135deg, #219a52, #27ae60);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-top: 15px;
+    text-align: center;
+    background: #fdf2f2;
+    padding: 10px;
+    border-radius: 6px;
+    border-left: 4px solid #e74c3c;
+}
+
+.success-message {
+    color: #27ae60;
+    font-size: 14px;
+    margin-top: 15px;
+    text-align: center;
+    background: #f0f9f4;
+    padding: 10px;
+    border-radius: 6px;
+    border-left: 4px solid #27ae60;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.success-message {
+    color: #28a745;
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
+    background: #d4edda;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #c3e6cb;
+}
+
+/* Food Selection Table */
+.food-selection-container {
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.food-selection-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.food-selection-table th {
+    background-color: #2c3e50;
+    color: white;
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.food-selection-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.food-selection-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.food-selection-table tr:last-child td {
+    border-bottom: none;
+}
+
+.total-amount {
+    background-color: #e8f5e8;
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-top: 20px;
+    padding: 15px;
+    text-align: right;
+    border-radius: 6px;
+    color: #28a745;
+}
+
+.remove-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.remove-button:hover {
+    background-color: #c82333;
+}
+
+@media (max-width: 768px) {
+    .food-entry-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .menu-categories {
+        grid-template-columns: 1fr; /* Single column on mobile */
+    }
+    
+    .food-entry-form {
+        position: static;
+    }
+    
+    /* Mobile styles for collapsible categories */
+    .menu-category-header {
+        padding: 12px 15px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    
+    .menu-category-header h3 {
+        font-size: 1.1rem;
+        text-align: center;
+    }
+    
+    .category-info {
+        justify-content: space-between;
+        margin-top: 5px;
+    }
+    
+    .items-count {
+        font-size: 0.8rem;
+    }
+    
+    .menu-category li {
+        padding: 10px 15px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .item-code {
+        align-self: flex-start;
+    }
+    
+    .item-name {
+        margin: 0;
+        font-size: 0.9rem;
+    }
+    
+    .item-price {
+        align-self: flex-end;
+        font-size: 0.95rem;
+    }
+}

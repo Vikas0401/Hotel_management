@@ -3,7 +3,8 @@ import {
     getActiveTables, 
     getTableOrder, 
     getTableOrderSummary,
-    completeTableOrder
+    completeTableOrder,
+    removeFoodFromTable
 } from '../../services/tableService';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/components/TableOrders.css';
@@ -12,6 +13,7 @@ const TableOrders = () => {
     const [activeTables, setActiveTables] = useState([]);
     const [selectedTable, setSelectedTable] = useState(null);
     const [tableDetails, setTableDetails] = useState(null);
+    const [selectedItems, setSelectedItems] = useState([]); // For item removal
     const navigate = useNavigate();
 
     const loadActiveTables = useCallback(() => {
@@ -27,13 +29,22 @@ const TableOrders = () => {
 
     useEffect(() => {
         loadActiveTables();
-        // Refresh every 30 seconds to show real-time updates
-        const interval = setInterval(loadActiveTables, 30000);
-        return () => clearInterval(interval);
+        // Refresh every 10 seconds for more real-time updates
+        const interval = setInterval(loadActiveTables, 10000);
+        
+        // Also refresh when window gets focus (user switches back to tab)
+        const handleFocus = () => loadActiveTables();
+        window.addEventListener('focus', handleFocus);
+        
+        return () => {
+            clearInterval(interval);
+            window.removeEventListener('focus', handleFocus);
+        };
     }, [loadActiveTables]);
 
     const handleTableSelect = (tableNumber) => {
         setSelectedTable(tableNumber);
+        setSelectedItems([]); // Clear selected items when changing tables
         const details = getTableOrder(tableNumber);
         setTableDetails(details);
     };
@@ -50,8 +61,44 @@ const TableOrders = () => {
             }));
             
             // Navigate to bill page
-            navigate('/bill');
+            // Navigate to bill page using relative path
+            navigate('../bill');
         }
+    };
+
+    const handleItemSelection = (itemIndex) => {
+        setSelectedItems(prev => {
+            if (prev.includes(itemIndex)) {
+                return prev.filter(index => index !== itemIndex);
+            } else {
+                return [...prev, itemIndex];
+            }
+        });
+    };
+
+    const handleRemoveSelectedItems = () => {
+        if (selectedItems.length === 0) {
+            alert('Please select items to remove');
+            return;
+        }
+
+        const confirmRemove = window.confirm(`Are you sure you want to remove ${selectedItems.length} item(s)?`);
+        if (!confirmRemove) return;
+
+        // Sort in descending order to remove from end to avoid index issues
+        const sortedIndexes = [...selectedItems].sort((a, b) => b - a);
+        
+        sortedIndexes.forEach(itemIndex => {
+            removeFoodFromTable(selectedTable, itemIndex);
+        });
+
+        // Refresh table details and clear selection
+        const updatedDetails = getTableOrder(selectedTable);
+        setTableDetails(updatedDetails);
+        setSelectedItems([]);
+        
+        // Refresh active tables list
+        loadActiveTables();
     };
 
     const calculateItemTotal = (item) => {
@@ -84,7 +131,7 @@ const TableOrders = () => {
                             <p>No active table orders</p>
                             <button 
                                 className="new-order-btn"
-                                onClick={() => navigate('/menu')}
+                                onClick={() => navigate('../menu')}
                             >
                                 Start New Order
                             </button>
@@ -148,6 +195,7 @@ const TableOrders = () => {
                                         <table className="items-table">
                                             <thead>
                                                 <tr>
+                                                    <th>Select</th>
                                                     <th>Code</th>
                                                     <th>Item</th>
                                                     <th>Rate</th>
@@ -159,6 +207,13 @@ const TableOrders = () => {
                                             <tbody>
                                                 {tableDetails.items.map((item, index) => (
                                                     <tr key={index}>
+                                                        <td>
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={selectedItems.includes(index)}
+                                                                onChange={() => handleItemSelection(index)}
+                                                            />
+                                                        </td>
                                                         <td>{item.code}</td>
                                                         <td>{item.name}</td>
                                                         <td>₹{item.rate}</td>
@@ -187,12 +242,21 @@ const TableOrders = () => {
 
                             {/* Action Buttons */}
                             <div className="action-buttons">
+                                {selectedItems.length > 0 && (
+                                    <button 
+                                        className="remove-items-btn"
+                                        onClick={handleRemoveSelectedItems}
+                                        style={{ backgroundColor: '#dc3545', color: 'white', marginRight: '10px' }}
+                                    >
+                                        Remove Selected ({selectedItems.length})
+                                    </button>
+                                )}
                                 <button 
                                     className="add-items-btn"
                                     onClick={() => {
-                                        // Set selected table in localStorage for menu page
+                                        // Set selected table in localStorage for table menu page
                                         localStorage.setItem('selectedTableForOrder', selectedTable);
-                                        navigate('/menu');
+                                        navigate('../table-menu');
                                     }}
                                 >
                                     Add More Items

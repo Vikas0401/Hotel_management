@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../../services/authService';
+import { login, getCurrentUser } from '../../shared/services/multiHotelAuthService';
 import './Login.css';
 
 const Login = ({ onLogin }) => {
@@ -17,10 +17,16 @@ const Login = ({ onLogin }) => {
         try {
             const loginSuccess = login(username, password);
             if (loginSuccess) {
+                const user = getCurrentUser();
                 if (onLogin) {
                     onLogin(); // Update authentication state in parent
                 }
-                navigate('/home'); // Redirect to home page after successful login
+                // Redirect to hotel-specific home page
+                if (user && user.hotelId) {
+                    navigate(`/hotels/${user.hotelId}/home`);
+                } else {
+                    navigate('/home'); // Fallback
+                }
             } else {
                 setError('Invalid username or password');
             }

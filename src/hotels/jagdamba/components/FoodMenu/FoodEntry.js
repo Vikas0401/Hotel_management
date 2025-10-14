@@ -4,7 +4,7 @@ import { getCurrentUser } from '../../services/authService';
 import { addFoodToTable, getActiveTables } from '../../services/tableService';
 import '../../styles/components/FoodMenu.css';
 
-const FoodEntry = ({ onFoodSelect, enableTableOrdering = false }) => {
+const FoodEntry = ({ onFoodSelect, enableTableOrdering = false, onTableDataChange }) => {
     const [foodItems, setFoodItems] = useState({});
     const [foodCode, setFoodCode] = useState('');
     const [quantity, setQuantity] = useState(1);
@@ -115,6 +115,11 @@ const FoodEntry = ({ onFoodSelect, enableTableOrdering = false }) => {
                 
                 // Refresh active tables list
                 loadActiveTables();
+                
+                // Notify parent component about table data change
+                if (onTableDataChange) {
+                    onTableDataChange();
+                }
                 
                 // Reset form
                 setFoodCode('');

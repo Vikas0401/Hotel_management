@@ -21,9 +21,17 @@ const TableMenuPage = () => {
         setUser(getCurrentUser());
         loadTableData();
         
-        // Refresh table data every 30 seconds
-        const interval = setInterval(loadTableData, 30000);
-        return () => clearInterval(interval);
+        // Refresh table data every 10 seconds for more real-time updates
+        const interval = setInterval(loadTableData, 10000);
+        
+        // Also refresh when window gets focus
+        const handleFocus = () => loadTableData();
+        window.addEventListener('focus', handleFocus);
+        
+        return () => {
+            clearInterval(interval);
+            window.removeEventListener('focus', handleFocus);
+        };
     }, []);
 
     const loadTableData = () => {
@@ -42,7 +50,7 @@ const TableMenuPage = () => {
     };
 
     const handleViewTableOrders = () => {
-        navigate('/table-orders');
+        navigate('../table-orders');
     };
 
     return (
@@ -84,6 +92,7 @@ const TableMenuPage = () => {
                             <FoodEntry 
                                 enableTableOrdering={true}
                                 onFoodSelect={null} // Not used in table mode
+                                onTableDataChange={loadTableData} // Refresh table data when items are added
                             />
                         </div>
                     )}
@@ -165,13 +174,13 @@ const TableMenuPage = () => {
                                     </button>
                                     <button 
                                         className="action-btn secondary"
-                                        onClick={() => navigate('/menu')}
+                                        onClick={() => navigate('../menu')}
                                     >
                                         📦 Parcel Order Mode
                                     </button>
                                     <button 
                                         className="action-btn secondary"
-                                        onClick={() => navigate('/bill-history')}
+                                        onClick={() => navigate('../bill-history')}
                                     >
                                         📊 Bill History
                                     </button>

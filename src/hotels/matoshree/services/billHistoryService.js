@@ -279,10 +279,28 @@ export const exportSingleBillToPDF = (bill) => {
         // Create new PDF document
         const doc = new jsPDF();
         
+        // Get hotel name in English/Latin characters for PDF compatibility
+        const user = getCurrentUser();
+        const getHotelNameForPDF = (user) => {
+            if (!user) return 'Hotel';
+            switch (user.hotelId) {
+                case 'matoshree':
+                    return 'Hotel Matoshree';
+                case 'jagdamba':
+                    return 'Hotel Jagdamba';
+                case 'samplehotel':
+                    return 'Sample Hotel';
+                default:
+                    return 'Hotel';
+            }
+        };
+        
+        const hotelNamePDF = getHotelNameForPDF(user);
+        
         console.log('Adding basic text to PDF...');
         // Add very basic content
         doc.text('VK Solutions', 20, 20);
-        doc.text('Hotel Management System', 20, 30);
+        doc.text(hotelNamePDF, 20, 30);
         doc.text(`Bill Number: ${bill.billNumber || 'N/A'}`, 20, 50);
         doc.text(`Date: ${bill.date || 'N/A'}`, 20, 60);
         doc.text(`Total: Rs. ${(bill.total || 0).toFixed(2)}`, 20, 70);
@@ -340,22 +358,102 @@ export const exportBillHistoryToPDF = () => {
         // Create new PDF document
         const doc = new jsPDF();
         
-        // Add basic header
-        doc.text('VK Solutions', 20, 20);
-        doc.text(`${user?.hotelName || 'Hotel'} - Bill History`, 20, 30);
-        doc.text(`Export Date: ${new Date().toLocaleDateString()}`, 20, 40);
-        doc.text(`Total Bills: ${bills.length}`, 20, 50);
+        // Get hotel name in English/Latin characters for PDF compatibility
+        const getHotelNameForPDF = (user) => {
+            if (!user) return 'Hotel';
+            switch (user.hotelId) {
+                case 'matoshree':
+                    return 'Hotel Matoshree';
+                case 'jagdamba':
+                    return 'Hotel Jagdamba';
+                case 'samplehotel':
+                    return 'Sample Hotel';
+                default:
+                    return 'Hotel';
+            }
+        };
         
-        // Add bills summary
-        let yPos = 70;
-        bills.slice(0, 10).forEach((bill, index) => { // Limit to first 10 bills
-            doc.text(`${index + 1}. Bill ${bill.billNumber} - ${bill.date} - Rs. ${(bill.total || 0).toFixed(2)}`, 20, yPos);
-            yPos += 10;
-        });
+        const hotelNamePDF = getHotelNameForPDF(user);
         
-        if (bills.length > 10) {
-            doc.text(`... and ${bills.length - 10} more bills`, 20, yPos);
+        // Add header
+        doc.setFontSize(16);
+        doc.text('VK Solutions', 105, 20, { align: 'center' });
+        doc.setFontSize(14);
+        doc.text(`${hotelNamePDF} - Bill History`, 105, 30, { align: 'center' });
+        doc.setFontSize(10);
+        doc.text(`Export Date: ${new Date().toLocaleDateString()}`, 105, 40, { align: 'center' });
+        doc.text(`Total Bills: ${bills.length}`, 105, 50, { align: 'center' });
+        
+        // Prepare table data
+        const tableColumns = [
+            'Bill No.',
+            'Date', 
+            'Customer',
+            'Order Type',
+            'Table',
+            'Amount',
+            'Paid',
+            'Balance'
+        ];
+        
+        const tableRows = bills.map(bill => [
+            bill.billNumber || 'N/A',
+            bill.date || 'N/A',
+            bill.customerInfo?.name || 'Walk-in Customer',
+            bill.orderType || (bill.customerInfo?.tableNumber ? 'Dine-in' : 'Takeaway'),
+            bill.customerInfo?.tableNumber || '-',
+            `Rs. ${(bill.total || 0).toFixed(2)}`,
+            `Rs. ${(bill.paymentInfo?.jama || 0).toFixed(2)}`,
+            `Rs. ${(bill.paymentInfo?.baki || 0).toFixed(2)}`
+        ]);
+        
+        // Add table using autoTable
+        let yPos = 80; // Declare yPos in outer scope
+        try {
+            doc.autoTable({
+                startY: 60,
+                head: [tableColumns],
+                body: tableRows,
+                styles: {
+                    fontSize: 8,
+                    cellPadding: 2
+                },
+                headStyles: {
+                    fillColor: [196, 30, 58],
+                    textColor: [255, 255, 255]
+                },
+                margin: { left: 10, right: 10 }
+            });
+        } catch (tableError) {
+            console.error('AutoTable error:', tableError);
+            // Fallback to simple text layout
+            doc.setFontSize(12);
+            doc.text('Bill History', 20, yPos);
+            yPos += 20;
+            
+            bills.forEach((bill, index) => {
+                if (yPos > 250) { // New page if needed
+                    doc.addPage();
+                    yPos = 30;
+                }
+                doc.setFontSize(10);
+                const billText = `${index + 1}. ${bill.billNumber || 'N/A'} - ${bill.date || 'N/A'} - ${bill.customerInfo?.name || 'Walk-in'} - Rs. ${(bill.total || 0).toFixed(2)}`;
+                doc.text(billText, 20, yPos);
+                yPos += 10;
+            });
         }
+        
+        // Add summary at the bottom
+        const finalY = doc.lastAutoTable?.finalY || yPos || 200;
+        const totalAmount = bills.reduce((sum, bill) => sum + (bill.total || 0), 0);
+        const totalPaid = bills.reduce((sum, bill) => sum + (bill.paymentInfo?.jama || 0), 0);
+        const totalBalance = bills.reduce((sum, bill) => sum + (bill.paymentInfo?.baki || 0), 0);
+        
+        doc.setFontSize(10);
+        doc.text(`Summary:`, 20, finalY + 20);
+        doc.text(`Total Amount: Rs. ${totalAmount.toFixed(2)}`, 20, finalY + 30);
+        doc.text(`Total Paid: Rs. ${totalPaid.toFixed(2)}`, 20, finalY + 40);
+        doc.text(`Total Balance: Rs. ${totalBalance.toFixed(2)}`, 20, finalY + 50);
         
         return doc;
     } catch (error) {

@@ -51,22 +51,22 @@ const Header = ({ isAuthenticated, onLogout }) => {
                 </div>
             )}
             <div className="header-content">
-                <Link to="/dashboard" className={`logo ${user?.hotelId === 'matoshree' ? 'hotel-matoshree-name' : ''}`}>
+                <Link to="/" className={`logo ${user?.hotelId === 'matoshree' ? 'hotel-matoshree-name' : ''}`}>
                     🏨 {user?.hotelName || 'Hotel Management System'}
                 </Link>
                 <nav>
                     <ul className="nav-menu">
                         {/* Only show home link if not on login page and authenticated */}
-                        {isAuthenticated && location.pathname !== '/home' && (
-                            <li><Link to="/home">🏠 मुख्यपृष्ठ</Link></li>
+                        {isAuthenticated && !location.pathname.includes('/home') && !location.pathname.endsWith('/') && (
+                            <li><Link to="home">🏠 मुख्यपृष्ठ</Link></li>
                         )}
                         {isAuthenticated && (
                             <>
-                                <li><Link to="/menu">🛍️ पार्सल ऑर्डर</Link></li>
-                                <li><Link to="/table-menu">🍽️ टेबल ऑर्डर</Link></li>
-                                <li><Link to="/table-orders">📋 टेबल व्यवस्थापन</Link></li>
-                                <li><Link to="/bill">🧾 बिल</Link></li>
-                                <li><Link to="/bill-history">📊 बिल इतिहास</Link></li>
+                                <li><Link to="menu">🛍️ पार्सल ऑर्डर</Link></li>
+                                <li><Link to="table-menu">🍽️ टेबल ऑर्डर</Link></li>
+                                <li><Link to="table-orders">📋 टेबल व्यवस्थापन</Link></li>
+                                <li><Link to="bill">🧾 बिल</Link></li>
+                                <li><Link to="bill-history">📊 बिल इतिहास</Link></li>
                                 <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                     <span style={{ fontSize: '14px', opacity: '0.8' }}>
                                         स्वागत आहे, {user?.hotelName}
