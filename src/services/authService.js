@@ -70,11 +70,11 @@ export const logout = () => {
 
 export const isAuthenticated = () => {
     const user = localStorage.getItem("user");
-    const sessionActive = sessionStorage.getItem("user_session");
     
-    if (user && sessionActive === "active") {
+    if (user) {
         // Check if we need to update hotel name to Marathi version
         const nameVersion = localStorage.getItem("hotel_name_version");
+        
         if (nameVersion !== "marathi_v1") {
             // Force logout to refresh with new Marathi names
             localStorage.removeItem("user");
@@ -89,9 +89,8 @@ export const isAuthenticated = () => {
 
 export const getCurrentUser = () => {
     const user = localStorage.getItem("user");
-    const sessionActive = sessionStorage.getItem("user_session");
     
-    if (user && sessionActive === "active") {
+    if (user) {
         const userData = JSON.parse(user);
         
         // Check if we need to update hotel name to Marathi version

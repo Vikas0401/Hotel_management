@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
@@ -18,44 +18,31 @@ import './styles/MarathiFonts.css';
 const AppContent = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     // Check if user is already logged in when app loads
+    setIsLoading(true);
     const authStatus = checkAuth();
     setIsAuthenticated(authStatus);
     if (authStatus) {
-      setCurrentUser(getCurrentUser());
+      const user = getCurrentUser();
+      setCurrentUser(user);
       
       // Check for auto-export on first day of month
       import('./services/billHistoryService').then(({ autoExportMonthlyReport }) => {
         autoExportMonthlyReport();
       });
+    } else {
+      setCurrentUser(null);
     }
+    setIsLoading(false); // Authentication check complete
   }, []);
 
-  // Prevent back navigation to protected pages after logout
-  useEffect(() => {
-    if (!isAuthenticated) {
-      const preventBack = (event) => {
-        const currentPath = window.location.pathname;
-        const protectedPaths = ['/home', '/menu', '/table-menu', '/table-orders', '/bill', '/bill-history'];
-        
-        // If user is not authenticated and tries to access protected route
-        if (protectedPaths.includes(currentPath)) {
-          event.preventDefault();
-          navigate('/login', { replace: true });
-        }
-      };
-
-      // Add popstate listener to handle back/forward navigation
-      window.addEventListener('popstate', preventBack);
-      
-      return () => {
-        window.removeEventListener('popstate', preventBack);
-      };
-    }
-  }, [isAuthenticated, navigate]);
+  // Note: Removed the automatic redirect logic that was causing refresh issues
+  // Protected routes are handled by the route definitions below
 
   const handleLogin = () => {
     setIsAuthenticated(true);
@@ -91,9 +78,55 @@ const AppContent = () => {
   // Apply Matoshree theme if user is from Matoshree hotel
   const shouldApplyMatoshreeTheme = isAuthenticated && currentUser?.hotelId === 'matoshree';
 
+  // Show loading screen while checking authentication
+  if (isLoading) {
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        backgroundColor: '#f8f9fa'
+      }}>
+        <style>
+          {`
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          `}
+        </style>
+        <div style={{
+          textAlign: 'center',
+          padding: '20px'
+        }}>
+          <div style={{
+            fontSize: '18px',
+            color: '#2c3e50',
+            marginBottom: '10px'
+          }}>
+            Loading Hotel Management System...
+          </div>
+          <div style={{
+            width: '40px',
+            height: '40px',
+            border: '4px solid #e3e3e3',
+            borderTop: '4px solid #3498db',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite',
+            margin: '0 auto'
+          }}></div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={`app-container ${shouldApplyMatoshreeTheme ? 'matoshree-theme theme-transition' : 'theme-transition'}`}>
-      <Header isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+      {/* Hide header only on login page */}
+      {location.pathname !== '/login' && (
+        <Header isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+      )}
       <main className="main-content">
         <Routes>
           {/* Redirect root to dashboard */}
