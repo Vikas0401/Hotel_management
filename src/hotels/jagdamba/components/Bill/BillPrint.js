@@ -226,12 +226,19 @@ const BillPrint = () => {
                 email: "pratikkale202@gmail.com",
                 gstin: "27ABCDE1234F1Z5"
             };
+        } else if (user?.hotelId === 'jagdamba') {
+            return {
+                address: user?.address || "वांबोरी, राहुरी, जिल्हा - अहिल्यानगर, महाराष्ट्र - ४१३७०४",
+                phone: "+91 8329376759",
+                email: "xxxxxxxx@gmail.com",
+                gstin: "xxxxxxxxxxx"
+            };
         } else {
             return {
                 address: user?.address || "महाराष्ट्र, भारत",
-                phone: "+91 9130195459",
-                email: "pratikkale202@gmail.com",
-                gstin: "27ABCDE1234F1Z5"
+                phone: "+91 9999999999",
+                email: "xxxxxxx@gmail.com",
+                gstin: "xxxxxxxxxx"
             };
         }
     };
