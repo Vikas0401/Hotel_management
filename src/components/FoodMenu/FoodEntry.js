@@ -227,7 +227,7 @@ const FoodEntry = ({ onFoodSelect, enableTableOrdering = false, selectedFoods = 
                     </div>
                     <div className="button-container">
                         <button type="submit" className="add-button compact">
-                            {enableTableOrdering ? 'Add to Table' : 'ADD TO PARCEL ORDER'}
+                            {enableTableOrdering ? 'Add to Table' : 'add to parcel order'}
                         </button>
                         {!enableTableOrdering && (
                             <button 
@@ -243,8 +243,8 @@ const FoodEntry = ({ onFoodSelect, enableTableOrdering = false, selectedFoods = 
                                     }
                                 }}
                             >
-                                <span className="cart-icon">🛒</span>
-                                <span className="cart-count">{getParcelOrderCount()}</span>
+                                <span style={{fontSize: '16px'}}>🛒</span>
+                                <span className="cart-count-badge">({getParcelOrderCount()})</span>
                             </button>
                         )}
                     </div>

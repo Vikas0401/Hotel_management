@@ -13,7 +13,7 @@
 }
 
 .table-orders-header h1 {
-    color: #2c3e50;
+    color: var(--color-text);
     margin-bottom: 0; /* Removed bottom margin */
     font-size: 1.35rem; /* Reduced font size */
     line-height: 1.2;
@@ -36,7 +36,7 @@
 }
 
 .tables-list-panel h2 {
-    color: #2c3e50;
+    color: var(--color-text);
     margin-bottom: 18px; /* 20px - 10% = 18px */
     font-size: 1.17rem; /* 1.3rem - 10% = 1.17rem */
 }
@@ -70,7 +70,7 @@
 }
 
 .table-card {
-    background: #f8f9fa;
+    background: var(--color-surface);
     border: 2px solid #e9ecef;
     border-radius: 9px; /* 10px - 10% = 9px */
     padding: 13.5px; /* 15px - 10% = 13.5px */
@@ -94,7 +94,7 @@
 .table-number {
     font-size: 1.35rem; /* 1.5rem - 10% = 1.35rem */
     font-weight: bold;
-    color: #2c3e50;
+    color: var(--color-text);
     text-align: center;
     margin-bottom: 9px; /* 10px - 10% = 9px */
     background: #3498db;
@@ -136,7 +136,7 @@
 
 .complete-btn {
     width: 100%;
-    background: #e74c3c;
+    background: var(--color-primary);
     color: white;
     border: none;
     padding: 7.2px 10.8px; /* 8px - 10% = 7.2px, 12px - 10% = 10.8px */
@@ -167,7 +167,7 @@
 }
 
 .table-details-header h2 {
-    color: #2c3e50;
+    color: var(--color-text);
     margin-bottom: 4.5px; /* 5px - 10% = 4.5px */
 }
 
@@ -183,7 +183,7 @@
 
 .customer-info-section h3,
 .order-items-section h3 {
-    color: #2c3e50;
+    color: var(--color-text);
     margin-bottom: 13.5px; /* 15px - 10% = 13.5px */
     font-size: 0.99rem; /* 1.1rem - 10% = 0.99rem */
 }
@@ -218,8 +218,8 @@
 }
 
 .items-table th {
-    background: #f8f9fa;
-    color: #2c3e50;
+    background: var(--color-surface);
+    color: var(--color-text);
     font-weight: 600;
     font-size: 0.81rem; /* 0.9rem - 10% = 0.81rem */
 }
@@ -230,11 +230,11 @@
 }
 
 .items-table tr:hover {
-    background: #f8f9fa;
+    background: var(--color-surface);
 }
 
 .order-summary-section {
-    background: #f8f9fa;
+    background: var(--color-surface);
     padding: 13.5px; /* 15px - 10% = 13.5px */
     border-radius: 7.2px; /* 8px - 10% = 7.2px */
     border-left: 3.6px solid #3498db; /* 4px - 10% = 3.6px */
@@ -252,7 +252,7 @@
     padding-top: 9px; /* 10px - 10% = 9px */
     margin-top: 9px; /* 10px - 10% = 9px */
     font-size: 0.99rem; /* 1.1rem - 10% = 0.99rem */
-    color: #2c3e50;
+    color: var(--color-text);
 }
 
 .action-buttons {

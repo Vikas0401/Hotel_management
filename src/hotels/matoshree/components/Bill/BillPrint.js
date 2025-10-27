@@ -232,7 +232,7 @@ const BillPrint = () => {
     const hotelInfo = getHotelAddress();
 
     return (
-        <div className="bill-print" style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
+        <div className="bill-print page-wrapper" style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
             {/* VK Solutions Branding for Print */}
             <div style={{
                 display: 'flex',
@@ -278,9 +278,9 @@ const BillPrint = () => {
 
             <div className="bill-header" style={{ textAlign: 'center', marginBottom: '20px' }}>
                 <h1 
-                    className={user?.hotelId === 'matoshree' ? 'hotel-matoshree-name' : ''}
+                    className={user?.hotelId === 'matoshree' ? 'hotel-matoshree-name themed-title' : 'themed-title'}
                     style={{
-                        color: user?.hotelId === 'matoshree' ? '#C41E3A' : '#2c3e50',
+                        color: 'var(--color-primary)',
                         textShadow: 'none',
                         background: 'none',
                         WebkitBackgroundClip: 'unset',
@@ -305,7 +305,7 @@ const BillPrint = () => {
                 justifyContent: 'space-between', 
                 marginBottom: '20px',
                 padding: '10px 0',
-                borderBottom: '1px solid #ddd',
+                borderBottom: '1px solid var(--color-border)',
                 fontSize: '14px'
             }}>
                 <div>
@@ -323,18 +323,14 @@ const BillPrint = () => {
             </div>
 
             {/* Customer Information */}
-            <div className="customer-info" style={{ 
+            <div className="customer-info card" style={{ 
                 marginBottom: '20px', 
-                padding: '15px', 
-                background: '#f8f9fa', 
-                borderRadius: '6px',
-                border: '1px solid #ddd'
+                padding: '15px'
             }}>
-                <h3 style={{ 
-                    color: user?.hotelId === 'matoshree' ? '#C41E3A' : '#2c3e50', 
+                <h3 className={user?.hotelId === 'matoshree' ? 'marathi-header themed-title' : 'themed-title'} style={{ 
                     marginBottom: '15px',
                     fontSize: '18px'
-                }} className={user?.hotelId === 'matoshree' ? 'marathi-header' : ''}>
+                }}>
                     ग्राहक माहिती
                 </h3>
                 <div style={{ 
@@ -350,11 +346,13 @@ const BillPrint = () => {
                         onChange={handleCustomerInfoChange}
                         style={{
                             padding: '10px',
-                            border: '1px solid #ddd',
+                            border: '1px solid var(--color-border)',
                             borderRadius: '4px',
                             fontSize: '14px',
+                            background: 'var(--color-surface)',
+                            color: 'var(--color-text)',
                             ...(user?.hotelId === 'sample' && {
-                                backgroundColor: '#f8f9fa',
+                                backgroundColor: 'var(--color-row-alt)',
                                 cursor: 'not-allowed'
                             })
                         }}
@@ -369,11 +367,13 @@ const BillPrint = () => {
                         onChange={handleCustomerInfoChange}
                         style={{
                             padding: '10px',
-                            border: '1px solid #ddd',
+                            border: '1px solid var(--color-border)',
                             borderRadius: '4px',
                             fontSize: '14px',
+                            background: 'var(--color-surface)',
+                            color: 'var(--color-text)',
                             ...(user?.hotelId === 'sample' && {
-                                backgroundColor: '#f8f9fa',
+                                backgroundColor: 'var(--color-row-alt)',
                                 cursor: 'not-allowed'
                             })
                         }}
@@ -388,11 +388,13 @@ const BillPrint = () => {
                         onChange={handleCustomerInfoChange}
                         style={{
                             padding: '10px',
-                            border: '1px solid #ddd',
+                            border: '1px solid var(--color-border)',
                             borderRadius: '4px',
                             fontSize: '14px',
+                            background: 'var(--color-surface)',
+                            color: 'var(--color-text)',
                             ...(user?.hotelId === 'sample' && {
-                                backgroundColor: '#f8f9fa',
+                                backgroundColor: 'var(--color-row-alt)',
                                 cursor: 'not-allowed'
                             })
                         }}
@@ -403,18 +405,16 @@ const BillPrint = () => {
             </div>
 
             {/* Payment Information Section for Input */}
-            <div className="payment-input-section" style={{ 
+            <div className="payment-input-section card" style={{ 
                 marginBottom: '20px', 
-                padding: '15px', 
-                background: '#e8f4fd', 
-                borderRadius: '6px',
-                border: '1px solid #0066cc'
+                padding: '15px',
+                background: 'linear-gradient(135deg, var(--color-surface), var(--color-row-alt))',
+                border: '1px solid var(--color-info)'
             }}>
-                <h3 style={{ 
-                    color: user?.hotelId === 'matoshree' ? '#C41E3A' : '#2c3e50', 
+                <h3 className={user?.hotelId === 'matoshree' ? 'marathi-header themed-title' : 'themed-title'} style={{ 
                     marginBottom: '15px',
                     fontSize: '18px'
-                }} className={user?.hotelId === 'matoshree' ? 'marathi-header' : ''}>
+                }}>
                     पेमेंट माहिती
                 </h3>
                 <div style={{ 
@@ -436,12 +436,14 @@ const BillPrint = () => {
                             step="0.01"
                             style={{
                                 padding: '10px',
-                                border: '1px solid #ddd',
+                                border: '1px solid var(--color-border)',
                                 borderRadius: '4px',
                                 fontSize: '14px',
                                 width: '100%',
+                                background: 'var(--color-surface)',
+                                color: 'var(--color-text)',
                                 ...(user?.hotelId === 'sample' && {
-                                    backgroundColor: '#f8f9fa',
+                                    backgroundColor: 'var(--color-row-alt)',
                                     cursor: 'not-allowed'
                                 })
                             }}
@@ -455,12 +457,12 @@ const BillPrint = () => {
                         </label>
                         <div style={{
                             padding: '10px',
-                            border: '1px solid #ddd',
+                            border: '1px solid var(--color-border)',
                             borderRadius: '4px',
                             fontSize: '14px',
                             fontWeight: 'bold',
-                            color: paymentInfo.baki > 0 ? '#dc3545' : '#28a745',
-                            backgroundColor: '#f8f9fa',
+                            color: paymentInfo.baki > 0 ? 'var(--color-danger)' : 'var(--color-success)',
+                            backgroundColor: 'var(--color-row-alt)',
                             textAlign: 'center'
                         }}>
                             {paymentInfo.baki}
@@ -476,7 +478,7 @@ const BillPrint = () => {
                         <div className="print-customer-info" style={{ 
                             marginBottom: '15px', 
                             padding: '10px 0',
-                            borderBottom: '1px solid #ddd',
+                            borderBottom: '1px solid var(--color-border)',
                             fontSize: '16px',
                             fontWeight: '500'
                         }}>
@@ -518,12 +520,9 @@ const BillPrint = () => {
                     </table>
 
                     {/* GST Checkbox */}
-                    <div style={{ 
+                    <div className="card" style={{ 
                         margin: '15px 0', 
-                        padding: '10px', 
-                        backgroundColor: '#f8f9fa', 
-                        borderRadius: '4px',
-                        border: '1px solid #ddd'
+                        padding: '10px'
                     }}>
                         <label style={{ 
                             display: 'flex', 
@@ -568,7 +567,7 @@ const BillPrint = () => {
                                 <span>₹{paymentInfo.jama.toFixed(2)}</span>
                             </div>
                             <div className="summary-row" style={{ 
-                                color: paymentInfo.baki > 0 ? '#dc3545' : '#28a745',
+                                color: paymentInfo.baki > 0 ? 'var(--color-danger)' : 'var(--color-success)',
                                 fontWeight: 'bold'
                             }}>
                                 <span>बाकी (Balance):</span>
@@ -577,27 +576,19 @@ const BillPrint = () => {
                         </div>
                     </div>
 
-                    <div style={{ textAlign: 'center', marginTop: '20px', fontSize: '14px', color: '#666' }}>
+                    <div style={{ textAlign: 'center', marginTop: '20px', fontSize: '14px', color: 'var(--color-text)', opacity: '0.8' }}>
                         <p>{user?.hotelName} ला भेट दिल्याबद्दल धन्यवाद!</p>
                         <p>पुन्हा लवकर भेट द्या!</p>
                     </div>
 
                     <div style={{ textAlign: 'center', marginTop: '20px', display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                        <button onClick={handleSaveBill} className="save-button" style={{
-                            backgroundColor: user?.hotelId === 'matoshree' ? '#C41E3A' : '#28a745',
-                            color: 'white',
-                            border: 'none',
-                            padding: '10px 20px',
-                            borderRadius: '5px',
-                            cursor: 'pointer',
-                            fontSize: '14px'
-                        }}>
+                        <button onClick={handleSaveBill} className="btn btn-primary">
                             बिल सेव्ह करा
                         </button>
-                        <button onClick={handlePrint} className="print-button">
+                        <button onClick={handlePrint} className="btn btn-info">
                             बिल प्रिंट करा
                         </button>
-                        <button onClick={handleClearBill} className="clear-button">
+                        <button onClick={handleClearBill} className="btn btn-danger">
                             बिल क्लियर करा
                         </button>
                     </div>

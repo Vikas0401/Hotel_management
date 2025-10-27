@@ -23,6 +23,8 @@ import HotelRoute from './shared/components/HotelRoute';
 
 import './styles/MatoshreeTheme.css';
 import './styles/MarathiFonts.css';
+import './styles/themes.css';
+import { ThemeProvider, useTheme } from './shared/services/ThemeContext';
 
 // Main App Content Component
 const AppContent = () => {
@@ -86,6 +88,9 @@ const AppContent = () => {
         }, 1000);
     };
 
+    // Theme hook (only inside ThemeProvider) - must be before any conditional returns
+    const { theme } = useTheme();
+
     // Show loading screen while checking authentication
     if (isLoading) {
         return (
@@ -126,7 +131,7 @@ const AppContent = () => {
     }
 
     return (
-        <div className="app">
+        <div className={`app theme-${theme}`}>
             <Routes>
                 {/* Common Routes */}
                 <Route path="/" element={<Dashboard />} />
@@ -167,7 +172,9 @@ const App = () => {
     return (
         <Router>
             <HotelProvider>
-                <AppContent />
+                <ThemeProvider>
+                    <AppContent />
+                </ThemeProvider>
             </HotelProvider>
         </Router>
     );

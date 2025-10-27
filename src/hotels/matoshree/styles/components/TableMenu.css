@@ -161,7 +161,8 @@
 
 .food-entry-section,
 .active-tables-section {
-    background: transparent;
+    background: var(--color-success);
+    color: white;
     border-radius: 10px;
     padding: 0;
     box-shadow: 0 2px 15px rgba(0,0,0,0.1);

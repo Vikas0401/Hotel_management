@@ -64,7 +64,7 @@
 }
 
 .stat-card {
-    background: linear-gradient(135deg, #3498db, #2980b9);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-accent));
     color: white;
     padding: 8px 12px; /* Reduced from 10px 15px */
     border-radius: 6px; /* Reduced from 8px */
@@ -94,7 +94,7 @@
     align-items: center;
     cursor: pointer;
     padding: 15px 20px;
-    background: linear-gradient(135deg, #3498db, #2980b9);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-accent));
     color: white;
     border-radius: 10px;
     margin-bottom: 0;
@@ -103,7 +103,7 @@
 }
 
 .section-header-collapsible:hover {
-    background: linear-gradient(135deg, #2980b9, #1f618d);
+    background: linear-gradient(135deg, var(--color-primary-accent), var(--color-primary-dark));
     transform: translateY(-1px);
 }
 
@@ -210,7 +210,7 @@
 }
 
 .view-details-btn {
-    background: #3498db;
+    background: var(--color-primary);
     color: white;
     border: none;
     padding: 10px 20px;
@@ -221,7 +221,7 @@
 }
 
 .view-details-btn:hover {
-    background: #2980b9;
+    background: var(--color-primary-accent);
 }
 
 .tables-summary-grid {
@@ -239,7 +239,7 @@
 }
 
 .table-summary-card:hover {
-    border-color: #3498db;
+    border-color: var(--color-primary);
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(52, 152, 219, 0.2);
 }

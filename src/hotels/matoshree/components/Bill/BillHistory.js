@@ -196,10 +196,10 @@ const BillHistory = () => {
             {/* Header */}
             <div style={{ marginBottom: '30px', marginTop: '20px' }}>
                 <h1 style={{ 
-                    color: user?.hotelId === 'matoshree' ? '#C41E3A' : '#2c3e50',
+                    color: 'var(--color-primary)',
                     textAlign: 'center',
                     marginBottom: '20px'
-                }} className={user?.hotelId === 'matoshree' ? 'marathi-title' : ''}>
+                }} className={user?.hotelId === 'matoshree' ? 'marathi-title themed-title' : 'themed-title'}>
                     बिल इतिहास
                 </h1>
 
@@ -211,59 +211,44 @@ const BillHistory = () => {
                     marginBottom: '20px',
                     marginTop: '30px'
                 }}>
-                    <div className={user?.hotelId === 'matoshree' ? 'card' : ''} style={{ 
+                    <div className="card" style={{ 
                         padding: '15px', 
-                        background: 'white', 
-                        borderRadius: '8px', 
-                        boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
                         textAlign: 'center'
                     }}>
-                        <h3 style={{ color: '#007bff', margin: '0 0 10px 0' }}>एकूण बिल</h3>
+                        <h3 style={{ color: 'var(--color-info)', margin: '0 0 10px 0' }}>एकूण बिल</h3>
                         <p style={{ fontSize: '24px', fontWeight: 'bold', margin: '0' }}>{statistics.totalBills}</p>
                     </div>
-                    <div className={user?.hotelId === 'matoshree' ? 'card' : ''} style={{ 
+                    <div className="card" style={{ 
                         padding: '15px', 
-                        background: 'white', 
-                        borderRadius: '8px', 
-                        boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
                         textAlign: 'center'
                     }}>
-                        <h3 style={{ color: '#28a745', margin: '0 0 10px 0' }}>एकूण कमाई</h3>
+                        <h3 style={{ color: 'var(--color-success)', margin: '0 0 10px 0' }}>एकूण कमाई</h3>
                         <p style={{ fontSize: '24px', fontWeight: 'bold', margin: '0' }}>{formatCurrency(statistics.totalRevenue || 0)}</p>
                     </div>
-                    <div className={user?.hotelId === 'matoshree' ? 'card' : ''} style={{ 
+                    <div className="card" style={{ 
                         padding: '15px', 
-                        background: 'white', 
-                        borderRadius: '8px', 
-                        boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
                         textAlign: 'center'
                     }}>
-                        <h3 style={{ color: '#ffc107', margin: '0 0 10px 0' }}>आजचे बिल</h3>
+                        <h3 style={{ color: 'var(--color-warning)', margin: '0 0 10px 0' }}>आजचे बिल</h3>
                         <p style={{ fontSize: '24px', fontWeight: 'bold', margin: '0' }}>{statistics.todaysBills}</p>
                     </div>
-                    <div className={user?.hotelId === 'matoshree' ? 'card' : ''} style={{ 
+                    <div className="card" style={{ 
                         padding: '15px', 
-                        background: 'white', 
-                        borderRadius: '8px', 
-                        boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
                         textAlign: 'center'
                     }}>
-                        <h3 style={{ color: '#dc3545', margin: '0 0 10px 0' }}>आजची कमाई</h3>
+                        <h3 style={{ color: 'var(--color-danger)', margin: '0 0 10px 0' }}>आजची कमाई</h3>
                         <p style={{ fontSize: '24px', fontWeight: 'bold', margin: '0' }}>{formatCurrency(statistics.todaysRevenue || 0)}</p>
                     </div>
                 </div>
             </div>
 
             {/* Filters */}
-            <div className={user?.hotelId === 'matoshree' ? 'card' : ''} style={{ 
+            <div className="card" style={{ 
                 padding: '20px', 
-                background: 'white', 
-                borderRadius: '8px', 
-                boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
                 marginBottom: '20px'
             }}>
                 <h3 style={{ 
-                    color: user?.hotelId === 'matoshree' ? '#C41E3A' : '#2c3e50', 
+                    color: 'var(--color-primary)', 
                     marginBottom: '15px' 
                 }} className={user?.hotelId === 'matoshree' ? 'marathi-header' : ''}>
                     फिल्टर
@@ -330,31 +315,13 @@ const BillHistory = () => {
                         />
                     </div>
                     <div style={{ display: 'flex', gap: '10px' }}>
-                        <button
+                        <button className="btn btn-secondary"
                             onClick={clearFilters}
-                            style={{
-                                padding: '8px 16px',
-                                background: '#6c757d',
-                                color: 'white',
-                                border: 'none',
-                                borderRadius: '4px',
-                                cursor: 'pointer',
-                                fontSize: '14px'
-                            }}
                         >
                             फिल्टर साफ करा
                         </button>
-                        <button
+                        <button className="btn btn-primary"
                             onClick={handleExportHistory}
-                            style={{
-                                padding: '8px 16px',
-                                background: user?.hotelId === 'matoshree' ? '#C41E3A' : '#007bff',
-                                color: 'white',
-                                border: 'none',
-                                borderRadius: '4px',
-                                cursor: 'pointer',
-                                fontSize: '14px'
-                            }}
                         >
                             📄 PDF एक्सपोर्ट करा
                         </button>
@@ -363,15 +330,12 @@ const BillHistory = () => {
             </div>
 
             {/* Bills List */}
-            <div className={user?.hotelId === 'matoshree' ? 'card' : ''} style={{ 
-                background: 'white', 
-                borderRadius: '8px', 
-                boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
+            <div className="card" style={{ 
                 overflow: 'hidden'
             }}>
                 <div style={{ padding: '20px', borderBottom: '1px solid #eee' }}>
                     <h3 style={{ 
-                        color: user?.hotelId === 'matoshree' ? '#C41E3A' : '#2c3e50', 
+                        color: 'var(--color-primary)', 
                         margin: '0' 
                     }} className={user?.hotelId === 'matoshree' ? 'marathi-header' : ''}>
                         बिल यादी ({filteredBills.length})
@@ -390,31 +354,30 @@ const BillHistory = () => {
                             fontSize: '14px'
                         }}>
                             <thead>
-                                <tr style={{ background: '#f8f9fa' }}>
-                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #dee2e6' }}>बिल नं.</th>
-                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #dee2e6' }}>तारीख</th>
-                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #dee2e6' }}>ग्राहक</th>
-                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #dee2e6' }}>ऑर्डर प्रकार</th>
-                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #dee2e6' }}>टेबल</th>
-                                    <th style={{ padding: '12px', textAlign: 'right', borderBottom: '2px solid #dee2e6' }}>रक्कम</th>
-                                    <th style={{ padding: '12px', textAlign: 'right', borderBottom: '2px solid #dee2e6' }}>जमा</th>
-                                    <th style={{ padding: '12px', textAlign: 'right', borderBottom: '2px solid #dee2e6' }}>बाकी</th>
-                                    <th style={{ padding: '12px', textAlign: 'center', borderBottom: '2px solid #dee2e6' }}>कृती</th>
+                                <tr>
+                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid var(--color-border)' }}>बिल नं.</th>
+                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid var(--color-border)' }}>तारीख</th>
+                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid var(--color-border)' }}>ग्राहक</th>
+                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid var(--color-border)' }}>ऑर्डर प्रकार</th>
+                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid var(--color-border)' }}>टेबल</th>
+                                    <th style={{ padding: '12px', textAlign: 'right', borderBottom: '2px solid var(--color-border)' }}>रक्कम</th>
+                                    <th style={{ padding: '12px', textAlign: 'right', borderBottom: '2px solid var(--color-border)' }}>जमा</th>
+                                    <th style={{ padding: '12px', textAlign: 'right', borderBottom: '2px solid var(--color-border)' }}>बाकी</th>
+                                    <th style={{ padding: '12px', textAlign: 'center', borderBottom: '2px solid var(--color-border)' }}>कृती</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {filteredBills.map((bill, index) => (
                                     <tr key={bill.id} style={{ 
-                                        borderBottom: '1px solid #eee',
-                                        background: index % 2 === 0 ? 'white' : '#f8f9fa'
+                                        borderBottom: '1px solid var(--color-border)'
                                     }}>
                                         <td style={{ padding: '12px' }}>{bill.billNumber}</td>
                                         <td style={{ padding: '12px' }}>{bill.date}</td>
                                         <td style={{ padding: '12px' }}>{bill.customerInfo?.name || '-'}</td>
                                         <td style={{ padding: '12px', textAlign: 'center' }}>
                                             {bill.customerInfo?.tableNumber && bill.customerInfo.tableNumber !== '-' ? 
-                                                <span style={{ color: '#3498db', fontSize: '16px' }}>🍽️ टेबल</span> : 
-                                                <span style={{ color: '#e67e22', fontSize: '16px' }}>🛍️ पार्सल</span>
+                                                <span style={{ color: 'var(--color-info)', fontSize: '16px' }}>🍽️ टेबल</span> : 
+                                                <span style={{ color: 'var(--color-warning)', fontSize: '16px' }}>🛍️ पार्सल</span>
                                             }
                                         </td>
                                         <td style={{ padding: '12px' }}>{bill.customerInfo?.tableNumber || '-'}</td>
@@ -423,56 +386,24 @@ const BillHistory = () => {
                                         <td style={{ 
                                             padding: '12px', 
                                             textAlign: 'right', 
-                                            color: (bill.paymentInfo?.baki || bill.total) > 0 ? '#dc3545' : '#28a745',
+                                            color: (bill.paymentInfo?.baki || bill.total) > 0 ? 'var(--color-danger)' : 'var(--color-success)',
                                             fontWeight: 'bold'
                                         }}>
                                             {formatCurrency(bill.paymentInfo?.baki || bill.total)}
                                         </td>
                                         <td style={{ padding: '12px', textAlign: 'center' }}>
-                                            <button
+                                            <button className="btn btn-info"
                                                 onClick={() => setSelectedBill(bill)}
-                                                style={{
-                                                    padding: '4px 8px',
-                                                    background: '#007bff',
-                                                    color: 'white',
-                                                    border: 'none',
-                                                    borderRadius: '3px',
-                                                    cursor: 'pointer',
-                                                    fontSize: '12px',
-                                                    marginRight: '3px',
-                                                    marginBottom: '3px'
-                                                }}
                                             >
                                                 पहा
                                             </button>
-                                            <button
+                                            <button className="btn btn-success"
                                                 onClick={() => handlePrintSingleBill(bill)}
-                                                style={{
-                                                    padding: '4px 8px',
-                                                    background: '#28a745',
-                                                    color: 'white',
-                                                    border: 'none',
-                                                    borderRadius: '3px',
-                                                    cursor: 'pointer',
-                                                    fontSize: '12px',
-                                                    marginRight: '3px',
-                                                    marginBottom: '3px'
-                                                }}
                                             >
                                                 🖨️ प्रिंट
                                             </button>
-                                            <button
+                                            <button className="btn btn-danger"
                                                 onClick={() => handleDeleteBill(bill.id)}
-                                                style={{
-                                                    padding: '4px 8px',
-                                                    background: '#dc3545',
-                                                    color: 'white',
-                                                    border: 'none',
-                                                    borderRadius: '3px',
-                                                    cursor: 'pointer',
-                                                    fontSize: '12px',
-                                                    marginBottom: '3px'
-                                                }}
                                             >
                                                 हटवा
                                             </button>
@@ -568,7 +499,7 @@ const BillHistory = () => {
 
                         <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '15px' }}>
                             <thead>
-                                <tr style={{ background: '#f8f9fa' }}>
+                                <tr style={{ background: 'linear-gradient(135deg, var(--color-primary), var(--color-primary-accent))', color: 'white' }}>
                                     <th style={{ padding: '8px', border: '1px solid #ddd' }}>आयटम</th>
                                     <th style={{ padding: '8px', border: '1px solid #ddd' }}>दर</th>
                                     <th style={{ padding: '8px', border: '1px solid #ddd' }}>संख्या</th>

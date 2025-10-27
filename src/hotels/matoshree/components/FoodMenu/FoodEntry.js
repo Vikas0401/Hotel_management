@@ -4,7 +4,7 @@ import { getCurrentUser } from '../../services/authService';
 import { addFoodToTable, getActiveTables } from '../../services/tableService';
 import '../../styles/components/FoodMenu.css';
 
-const FoodEntry = ({ onFoodSelect, enableTableOrdering = false, onTableDataChange }) => {
+const FoodEntry = ({ onFoodSelect, enableTableOrdering = false, selectedFoods = [] }) => {
     const [foodItems, setFoodItems] = useState({});
     const [foodCode, setFoodCode] = useState('');
     const [quantity, setQuantity] = useState(1);
@@ -81,6 +81,10 @@ const FoodEntry = ({ onFoodSelect, enableTableOrdering = false, onTableDataChang
         }));
     };
 
+    const getParcelOrderCount = () => {
+        return selectedFoods.reduce((total, food) => total + food.quantity, 0);
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setError('');
@@ -115,11 +119,6 @@ const FoodEntry = ({ onFoodSelect, enableTableOrdering = false, onTableDataChang
                 
                 // Refresh active tables list
                 loadActiveTables();
-                
-                // Notify parent component about table data change
-                if (onTableDataChange) {
-                    onTableDataChange();
-                }
                 
                 // Reset form
                 setFoodCode('');
@@ -226,9 +225,30 @@ const FoodEntry = ({ onFoodSelect, enableTableOrdering = false, onTableDataChang
                             />
                         </label>
                     </div>
-                    <button type="submit" className="add-button">
-                        {enableTableOrdering ? 'Add to Table' : 'Add to Parcel Order'}
-                    </button>
+                    <div className="button-container">
+                        <button type="submit" className="add-button compact">
+                            {enableTableOrdering ? 'Add to Table' : 'add to parcel order'}
+                        </button>
+                        {!enableTableOrdering && (
+                            <button 
+                                type="button" 
+                                className="cart-counter-button"
+                                onClick={() => {
+                                    const selectedItemsSection = document.querySelector('.food-selection-container');
+                                    if (selectedItemsSection) {
+                                        selectedItemsSection.scrollIntoView({ 
+                                            behavior: 'smooth',
+                                            block: 'start'
+                                        });
+                                    }
+                                }}
+                            >
+                                <span style={{fontSize: '16px'}}>🛒</span>
+                                <span className="cart-text">Cart</span>
+                                <span className="cart-count-badge">({getParcelOrderCount()})</span>
+                            </button>
+                        )}
+                    </div>
                     {error && <p className="error-message">{error}</p>}
                     {success && <p className="success-message">{success}</p>}
                 </form>

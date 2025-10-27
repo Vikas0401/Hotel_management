@@ -14,7 +14,7 @@
     padding: 30px; /* Increased from 25px for more spacious feel */
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    border: 2px solid #e74c3c;
+    border: 2px solid var(--color-primary);
     width: 100%; /* Take full width of container */
 }
 
@@ -32,27 +32,27 @@
 }
 
 .food-entry-form h2 {
-    color: #2c3e50;
+    color: var(--color-text);
     margin-bottom: 25px; /* Increased from 20px */
     text-align: center;
     font-size: 1.3rem; /* Slightly smaller for better fit */
     font-weight: 600;
-    border-bottom: 2px solid #e74c3c; /* Added underline */
+    border-bottom: 2px solid var(--color-primary); /* Added underline */
     padding-bottom: 10px;
 }
 
 /* Table Selection Section */
 .table-selection-section {
-    background: linear-gradient(135deg, #f8f9fa, #e9ecef); /* Gradient background */
+    background: linear-gradient(135deg, var(--color-surface), #e9ecef); /* Gradient background */
     padding: 20px; /* Increased from 15px */
     border-radius: 10px; /* Increased from 8px */
     margin-bottom: 25px; /* Increased from 20px */
-    border-left: 4px solid #3498db;
+    border-left: 4px solid var(--color-info);
     border-top: 1px solid #dee2e6; /* Added subtle top border */
 }
 
 .table-selection-section h3 {
-    color: #2c3e50;
+    color: var(--color-text);
     margin-bottom: 18px; /* Increased from 15px */
     font-size: 1.1rem;
     font-weight: 600;
@@ -109,14 +109,14 @@
 
 /* Menu Display Styles */
 .menu-display {
-    background: #f8f9fa;
+    background: var(--color-surface);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .menu-display h2 {
-    color: #2c3e50;
+    color: var(--color-text);
     text-align: center;
     margin-bottom: 20px;
     font-size: 1.8rem;
@@ -138,7 +138,7 @@
 
 /* Collapsible Category Header */
 .menu-category-header {
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary));
     color: white;
     padding: 15px 20px;
     cursor: pointer;
@@ -150,7 +150,7 @@
 }
 
 .menu-category-header:hover {
-    background: linear-gradient(135deg, #c0392b, #a93226);
+    background: linear-gradient(135deg, var(--color-primary), #a93226);
     transform: translateY(-1px);
 }
 
@@ -214,8 +214,8 @@
 .menu-category li {
     padding: 12px 20px;
     font-size: 0.95rem;
-    border-bottom: 1px solid #f0f0f0;
-    color: #2c3e50;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -223,7 +223,7 @@
 }
 
 .menu-category li:hover {
-    background-color: #f8f9fa;
+    background-color: var(--color-surface);
 }
 
 .menu-category li:last-child {
@@ -232,7 +232,7 @@
 
 .item-code {
     font-weight: bold;
-    color: #e74c3c;
+    color: var(--color-primary);
     background: #fef2f2;
     padding: 4px 8px;
     border-radius: 4px;
@@ -249,7 +249,7 @@
 
 .item-price {
     font-weight: bold;
-    color: #27ae60;
+    color: var(--color-success);
     font-size: 1rem;
 }
 
@@ -261,7 +261,7 @@
 .form-group label {
     display: block;
     margin-bottom: 8px; /* Increased from 5px */
-    color: #2c3e50; /* Darker color */
+    color: var(--color-text); /* Darker color */
     font-weight: 600; /* Increased from 500 */
     font-size: 0.95rem;
 }
@@ -279,7 +279,7 @@
 
 .form-input:focus {
     outline: none;
-    border-color: #3498db; /* Changed to blue */
+    border-color: var(--color-info); /* Changed to blue */
     box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15); /* Enhanced shadow */
     background: white;
     transform: translateY(-1px); /* Subtle lift effect */
@@ -303,7 +303,7 @@ select.form-input {
 .add-button {
     width: 100%;
     padding: 15px; /* Increased from 12px */
-    background: linear-gradient(135deg, #27ae60, #2ecc71); /* Gradient background */
+    background: linear-gradient(135deg, var(--color-success), #2ecc71); /* Gradient background */
     color: white;
     border: none;
     border-radius: 8px; /* Increased from 4px */
@@ -317,31 +317,31 @@ select.form-input {
 }
 
 .add-button:hover {
-    background: linear-gradient(135deg, #219a52, #27ae60);
+    background: linear-gradient(135deg, #219a52, var(--color-success));
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
 }
 
 .error-message {
-    color: #e74c3c;
+    color: var(--color-primary);
     font-size: 14px;
     margin-top: 15px;
     text-align: center;
     background: #fdf2f2;
     padding: 10px;
     border-radius: 6px;
-    border-left: 4px solid #e74c3c;
+    border-left: 4px solid var(--color-primary);
 }
 
 .success-message {
-    color: #27ae60;
+    color: var(--color-success);
     font-size: 14px;
     margin-top: 15px;
     text-align: center;
     background: #f0f9f4;
     padding: 10px;
     border-radius: 6px;
-    border-left: 4px solid #27ae60;
+    border-left: 4px solid var(--color-success);
     animation: slideIn 0.3s ease;
 }
 
@@ -357,7 +357,7 @@ select.form-input {
 }
 
 .menu-display h2 {
-    color: #2c3e50;
+    color: var(--color-text);
     text-align: center;
     margin-bottom: 20px;
     font-size: 1.8rem;
@@ -379,7 +379,7 @@ select.form-input {
 
 /* Collapsible Category Header */
 .menu-category-header {
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary));
     color: white;
     padding: 15px 20px;
     cursor: pointer;
@@ -391,7 +391,7 @@ select.form-input {
 }
 
 .menu-category-header:hover {
-    background: linear-gradient(135deg, #c0392b, #a93226);
+    background: linear-gradient(135deg, var(--color-primary), #a93226);
     transform: translateY(-1px);
 }
 
@@ -455,8 +455,8 @@ select.form-input {
 .menu-category li {
     padding: 12px 20px;
     font-size: 0.95rem;
-    border-bottom: 1px solid #f0f0f0;
-    color: #2c3e50;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -464,7 +464,7 @@ select.form-input {
 }
 
 .menu-category li:hover {
-    background-color: #f8f9fa;
+    background-color: var(--color-surface);
 }
 
 .menu-category li:last-child {
@@ -473,7 +473,7 @@ select.form-input {
 
 .item-code {
     font-weight: bold;
-    color: #e74c3c;
+    color: var(--color-primary);
     background: #fef2f2;
     padding: 4px 8px;
     border-radius: 4px;
@@ -490,7 +490,7 @@ select.form-input {
 
 .item-price {
     font-weight: bold;
-    color: #27ae60;
+    color: var(--color-success);
     font-size: 1rem;
 }
 
@@ -506,7 +506,7 @@ select.form-input {
 }
 
 .food-entry-form h2 {
-    color: #2c3e50;
+    color: var(--color-text);
     margin-bottom: 20px;
     text-align: center;
 }
@@ -518,7 +518,7 @@ select.form-input {
 .form-group label {
     display: block;
     margin-bottom: 8px; /* Increased from 5px */
-    color: #2c3e50; /* Darker color */
+    color: var(--color-text); /* Darker color */
     font-weight: 600; /* Increased from 500 */
     font-size: 0.95rem;
 }
@@ -536,7 +536,7 @@ select.form-input {
 
 .form-input:focus {
     outline: none;
-    border-color: #3498db; /* Changed to blue */
+    border-color: var(--color-info); /* Changed to blue */
     box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15); /* Enhanced shadow */
     background: white;
     transform: translateY(-1px); /* Subtle lift effect */
@@ -560,7 +560,7 @@ select.form-input {
 .add-button {
     width: 100%;
     padding: 15px; /* Increased from 12px */
-    background: linear-gradient(135deg, #27ae60, #2ecc71); /* Gradient background */
+    background: linear-gradient(135deg, var(--color-success), #2ecc71); /* Gradient background */
     color: white;
     border: none;
     border-radius: 8px; /* Increased from 4px */
@@ -574,31 +574,31 @@ select.form-input {
 }
 
 .add-button:hover {
-    background: linear-gradient(135deg, #219a52, #27ae60);
+    background: linear-gradient(135deg, #219a52, var(--color-success));
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
 }
 
 .error-message {
-    color: #e74c3c;
+    color: var(--color-primary);
     font-size: 14px;
     margin-top: 15px;
     text-align: center;
     background: #fdf2f2;
     padding: 10px;
     border-radius: 6px;
-    border-left: 4px solid #e74c3c;
+    border-left: 4px solid var(--color-primary);
 }
 
 .success-message {
-    color: #27ae60;
+    color: var(--color-success);
     font-size: 14px;
     margin-top: 15px;
     text-align: center;
     background: #f0f9f4;
     padding: 10px;
     border-radius: 6px;
-    border-left: 4px solid #27ae60;
+    border-left: 4px solid var(--color-success);
     animation: slideIn 0.3s ease;
 }
 
@@ -642,7 +642,7 @@ select.form-input {
 }
 
 .food-selection-table th {
-    background-color: #2c3e50;
+    background-color: var(--color-text);
     color: white;
     padding: 15px;
     text-align: left;
@@ -655,7 +655,7 @@ select.form-input {
 }
 
 .food-selection-table tr:hover {
-    background-color: #f8f9fa;
+    background-color: var(--color-surface);
 }
 
 .food-selection-table tr:last-child td {
@@ -743,4 +743,73 @@ select.form-input {
         align-self: flex-end;
         font-size: 0.95rem;
     }
+}
+
+/* Button Container and Cart Button Styling for Horizontal Layout */
+.button-container {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 15px;
+    align-items: stretch;
+    margin-top: 20px;
+    width: 100%;
+    justify-content: flex-start;
+}
+
+/* Main Add Button - Reduced size for horizontal layout */
+.button-container .add-button.compact,
+.food-entry-container .add-button.compact {
+    flex: 1;
+    min-width: 160px;
+    max-width: 200px;
+    padding: 16px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-radius: 10px;
+    text-transform: lowercase;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-accent)) !important;
+    color: white !important;
+    border: none !important;
+    width: auto !important;
+    height: auto;
+}
+
+.button-container .add-button.compact:hover,
+.food-entry-container .add-button.compact:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(var(--color-primary-rgb), 0.4);
+    background: linear-gradient(135deg, var(--color-primary-accent), var(--color-primary)) !important;
+}
+
+/* Cart Counter Button - Matches ADD TO PARCEL ORDER button styling */
+.cart-counter-button {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-accent)) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 14px;
+    min-width: 120px;
+    max-width: 140px;
+    height: auto;
+    flex: 1;
+    box-shadow: 0 4px 12px rgba(var(--color-primary-rgb), 0.3);
+    text-decoration: none;
+    text-transform: lowercase;
+    letter-spacing: 0.5px;
+}
+
+.cart-counter-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(var(--color-primary-rgb), 0.4);
+    background: linear-gradient(135deg, var(--color-primary-accent), var(--color-primary)) !important;
 }

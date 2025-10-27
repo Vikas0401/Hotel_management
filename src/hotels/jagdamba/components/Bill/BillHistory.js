@@ -358,16 +358,16 @@ const BillHistory = () => {
                             fontSize: '14px'
                         }}>
                             <thead>
-                                <tr style={{ background: '#f8f9fa' }}>
-                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #dee2e6' }}>बिल नं.</th>
-                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #dee2e6' }}>तारीख</th>
-                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #dee2e6' }}>ग्राहक</th>
-                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #dee2e6' }}>ऑर्डर प्रकार</th>
-                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #dee2e6' }}>टेबल</th>
-                                    <th style={{ padding: '12px', textAlign: 'right', borderBottom: '2px solid #dee2e6' }}>रक्कम</th>
-                                    <th style={{ padding: '12px', textAlign: 'right', borderBottom: '2px solid #dee2e6' }}>जमा</th>
-                                    <th style={{ padding: '12px', textAlign: 'right', borderBottom: '2px solid #dee2e6' }}>बाकी</th>
-                                    <th style={{ padding: '12px', textAlign: 'center', borderBottom: '2px solid #dee2e6' }}>कृती</th>
+                                <tr style={{ background: 'linear-gradient(135deg, var(--color-primary), var(--color-primary-accent))', color: 'white' }}>
+                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid var(--color-border)' }}>बिल नं.</th>
+                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid var(--color-border)' }}>तारीख</th>
+                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid var(--color-border)' }}>ग्राहक</th>
+                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid var(--color-border)' }}>ऑर्डर प्रकार</th>
+                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid var(--color-border)' }}>टेबल</th>
+                                    <th style={{ padding: '12px', textAlign: 'right', borderBottom: '2px solid var(--color-border)' }}>रक्कम</th>
+                                    <th style={{ padding: '12px', textAlign: 'right', borderBottom: '2px solid var(--color-border)' }}>जमा</th>
+                                    <th style={{ padding: '12px', textAlign: 'right', borderBottom: '2px solid var(--color-border)' }}>बाकी</th>
+                                    <th style={{ padding: '12px', textAlign: 'center', borderBottom: '2px solid var(--color-border)' }}>कृती</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -536,7 +536,7 @@ const BillHistory = () => {
 
                         <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '15px' }}>
                             <thead>
-                                <tr style={{ background: '#f8f9fa' }}>
+                                <tr style={{ background: 'linear-gradient(135deg, var(--color-primary), var(--color-primary-accent))', color: 'white' }}>
                                     <th style={{ padding: '8px', border: '1px solid #ddd' }}>आयटम</th>
                                     <th style={{ padding: '8px', border: '1px solid #ddd' }}>दर</th>
                                     <th style={{ padding: '8px', border: '1px solid #ddd' }}>संख्या</th>

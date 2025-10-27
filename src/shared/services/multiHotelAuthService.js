@@ -18,7 +18,7 @@ const hotelCredentials = {
         hotelName: "हॉटेल जगदंबा",
         hotelId: "jagdamba",
         isAdmin: true,
-        address: "जगदंबा हॉटेल, महाराष्ट्र, भारत",
+        address: "वांबोरी, राहुरी, जिल्हा - अहिल्यानगर, महाराष्ट्र - ४१३७०४",
         theme: "jagdamba",
         language: "marathi"
     },

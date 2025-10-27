@@ -36,17 +36,7 @@ const Header = ({ isAuthenticated, onLogout }) => {
         <header className={`header ${scrolled ? 'header-scrolled' : ''}`}>
             {/* Signature Line - Only for Jagdamba Hotel */}
             {isAuthenticated && user?.hotelId === 'jagdamba' && (
-                <div style={{ 
-                    background: '#C41E3A',
-                    color: '#FFD700',
-                    textAlign: 'center',
-                    padding: '8px 20px',
-                    fontSize: '16px',
-                    fontWeight: 'bold',
-                    fontStyle: 'italic',
-                    letterSpacing: '1px',
-                    borderBottom: '2px solid #FFD700'
-                }}>
+                <div className="signature-line">
                     "स्वादिष्ट आणि गुणवत्तापूर्ण अन्न - हॉटेल जगदंबा"
                 </div>
             )}

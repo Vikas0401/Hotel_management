@@ -50,82 +50,16 @@ const MenuPage = () => {
         setMenuKey(prev => prev + 1);
     };
 
-    const getButtonStyle = () => {
-        const baseStyle = {
-            padding: '10px 20px',
-            color: 'white',
-            border: 'none',
-            borderRadius: '6px',
-            cursor: 'pointer',
-            fontSize: '16px',
-            fontWeight: '500',
-            transition: 'all 0.3s ease',
-            textTransform: 'uppercase',
-            letterSpacing: '0.5px'
-        };
-
-        if (user?.hotelId === 'matoshree') {
-            if (showManagement) {
-                // Back to Menu button (secondary style for Matoshree)
-                return {
-                    ...baseStyle,
-                    background: 'linear-gradient(135deg, #FFD700, #FF8C00)',
-                    color: '#2C1810',
-                    border: '2px solid #C41E3A',
-                    boxShadow: '0 4px 15px rgba(255, 215, 0, 0.3)'
-                };
-            } else {
-                // Manage Menu button (primary style for Matoshree)
-                return {
-                    ...baseStyle,
-                    background: 'linear-gradient(135deg, #C41E3A, #A01B32)',
-                    border: '2px solid #FFD700',
-                    boxShadow: '0 4px 15px rgba(196, 30, 58, 0.3)'
-                };
-            }
-        } else {
-            // Default hotel styling
-            return {
-                ...baseStyle,
-                backgroundColor: showManagement ? '#dc3545' : '#007bff'
-            };
+    // Determine button classes based on state (theme-driven gradients)
+    const getButtonClass = () => {
+        if (showManagement) {
+            return 'btn btn-gradient-secondary';
         }
-    };
-
-    const handleButtonHover = (e, isHover) => {
-        if (user?.hotelId === 'matoshree') {
-            if (showManagement) {
-                // Back to Menu hover
-                e.target.style.background = isHover 
-                    ? 'linear-gradient(135deg, #FF8C00, #FFD700)' 
-                    : 'linear-gradient(135deg, #FFD700, #FF8C00)';
-                e.target.style.transform = isHover ? 'translateY(-2px)' : 'translateY(0)';
-                e.target.style.boxShadow = isHover 
-                    ? '0 6px 20px rgba(255, 140, 0, 0.4)' 
-                    : '0 4px 15px rgba(255, 215, 0, 0.3)';
-            } else {
-                // Manage Menu hover
-                e.target.style.background = isHover 
-                    ? 'linear-gradient(135deg, #A01B32, #C41E3A)' 
-                    : 'linear-gradient(135deg, #C41E3A, #A01B32)';
-                e.target.style.transform = isHover ? 'translateY(-2px)' : 'translateY(0)';
-                e.target.style.boxShadow = isHover 
-                    ? '0 6px 20px rgba(196, 30, 58, 0.4)' 
-                    : '0 4px 15px rgba(196, 30, 58, 0.3)';
-            }
-        } else {
-            // Default hotel hover
-            e.target.style.backgroundColor = isHover 
-                ? (showManagement ? '#c82333' : '#0056b3')
-                : (showManagement ? '#dc3545' : '#007bff');
-        }
+        return 'btn btn-gradient-primary';
     };
 
     return (
-        <div style={{ 
-            paddingTop: '140px', // Add space to clear header
-            minHeight: 'calc(100vh - 58px)' // Ensure full height minus header
-        }}>
+        <div className="page-wrapper">
             <div style={{ 
                 display: 'flex', 
                 justifyContent: 'space-between', 
@@ -133,15 +67,13 @@ const MenuPage = () => {
                 margin: '20px 0', 
                 padding: '0 20px' 
             }}>
-                <h1 style={{ color: user?.hotelId === 'matoshree' ? '#C41E3A' : '#2c3e50' }} className={user?.hotelId === 'matoshree' ? 'menu-page-title' : ''}>
+                <h1 className={`themed-title ${user?.hotelId === 'matoshree' ? 'menu-page-title' : ''}`}>
                     <span className={user?.hotelId === 'matoshree' ? 'hotel-matoshree-name' : ''}>{user?.hotelName}</span> - पार्सल ऑर्डर {showManagement ? 'व्यवस्थापन' : ''}
                 </h1>
                 {user?.isAdmin && (
                     <button
                         onClick={() => setShowManagement(!showManagement)}
-                        style={getButtonStyle()}
-                        onMouseEnter={(e) => handleButtonHover(e, true)}
-                        onMouseLeave={(e) => handleButtonHover(e, false)}
+                        className={getButtonClass()}
                     >
                         {showManagement ? 'मेनूवर परत जा' : 'मेनू व्यवस्थापन'}
                     </button>
@@ -152,7 +84,11 @@ const MenuPage = () => {
                 <MenuManagement onMenuUpdate={handleMenuUpdate} />
             ) : (
                 <>
-                    <FoodEntry key={menuKey} onFoodSelect={handleFoodSelect} />
+                    <FoodEntry 
+                        key={menuKey} 
+                        onFoodSelect={handleFoodSelect}
+                        selectedFoods={selectedFoods}
+                    />
                     <FoodSelection 
                         selectedFoods={selectedFoods} 
                         onRemoveFood={handleRemoveFood}

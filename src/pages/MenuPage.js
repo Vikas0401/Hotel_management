@@ -122,10 +122,7 @@ const MenuPage = () => {
     };
 
     return (
-        <div style={{ 
-            paddingTop: '140px', // Add space to clear header
-            minHeight: 'calc(100vh - 58px)' // Ensure full height minus header
-        }}>
+        <div className="page-wrapper">
             <div style={{ 
                 display: 'flex', 
                 justifyContent: 'space-between', 
@@ -133,7 +130,7 @@ const MenuPage = () => {
                 margin: '20px 0', 
                 padding: '0 20px' 
             }}>
-                <h1 style={{ color: user?.hotelId === 'matoshree' ? '#C41E3A' : '#2c3e50' }} className={user?.hotelId === 'matoshree' ? 'menu-page-title' : ''}>
+                <h1 className="themed-title">
                     <span className={user?.hotelId === 'matoshree' ? 'hotel-matoshree-name' : ''}>{user?.hotelName}</span> - पार्सल ऑर्डर {showManagement ? 'व्यवस्थापन' : ''}
                 </h1>
                 {user?.isAdmin && (

@@ -48,7 +48,7 @@
 }
 
 .new-order-btn {
-    background: #27ae60;
+    background: var(--color-success);
     color: white;
     border: none;
     padding: 10.8px 21.6px; /* 12px - 10% = 10.8px, 24px - 10% = 21.6px */
@@ -60,7 +60,7 @@
 }
 
 .new-order-btn:hover {
-    background: #219a52;
+    background: var(--color-success);
 }
 
 .tables-grid {
@@ -80,13 +80,13 @@
 }
 
 .table-card:hover {
-    border-color: #3498db;
+    border-color: var(--color-primary);
     transform: translateY(-1.8px); /* -2px - 10% = -1.8px */
     box-shadow: 0 3.6px 13.5px rgba(52, 152, 219, 0.2); /* 4px - 10% = 3.6px, 15px - 10% = 13.5px */
 }
 
 .table-card.selected {
-    border-color: #3498db;
+    border-color: var(--color-primary);
     background: #ebf3fd;
     box-shadow: 0 3.6px 13.5px rgba(52, 152, 219, 0.3); /* 4px - 10% = 3.6px, 15px - 10% = 13.5px */
 }
@@ -97,7 +97,7 @@
     color: #2c3e50;
     text-align: center;
     margin-bottom: 9px; /* 10px - 10% = 9px */
-    background: #3498db;
+    background: var(--color-primary);
     color: white;
     padding: 7.2px; /* 8px - 10% = 7.2px */
     border-radius: 50%;
@@ -136,7 +136,7 @@
 
 .complete-btn {
     width: 100%;
-    background: #e74c3c;
+    background: var(--color-danger);
     color: white;
     border: none;
     padding: 7.2px 10.8px; /* 8px - 10% = 7.2px, 12px - 10% = 10.8px */
@@ -147,7 +147,7 @@
 }
 
 .complete-btn:hover {
-    background: #c0392b;
+    background: var(--color-danger);
 }
 
 /* Right Panel - Table Details */
@@ -218,10 +218,11 @@
 }
 
 .items-table th {
-    background: #f8f9fa;
-    color: #2c3e50;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-accent));
+    color: white;
     font-weight: 600;
     font-size: 0.81rem; /* 0.9rem - 10% = 0.81rem */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .items-table td {
@@ -237,7 +238,7 @@
     background: #f8f9fa;
     padding: 13.5px; /* 15px - 10% = 13.5px */
     border-radius: 7.2px; /* 8px - 10% = 7.2px */
-    border-left: 3.6px solid #3498db; /* 4px - 10% = 3.6px */
+    border-left: 3.6px solid var(--color-primary); /* 4px - 10% = 3.6px */
 }
 
 .summary-row {
@@ -261,6 +262,7 @@
     margin-top: 18px; /* 20px - 10% = 18px */
 }
 
+.remove-items-btn,
 .add-items-btn,
 .complete-order-btn {
     flex: 1;
@@ -272,22 +274,31 @@
     transition: all 0.3s ease;
 }
 
+.remove-items-btn {
+    background: var(--color-primary);
+    color: white;
+}
+
+.remove-items-btn:hover {
+    background: var(--color-primary-accent);
+}
+
 .add-items-btn {
-    background: #3498db;
+    background: var(--color-primary);
     color: white;
 }
 
 .add-items-btn:hover {
-    background: #2980b9;
+    background: var(--color-primary-accent);
 }
 
 .complete-order-btn {
-    background: #27ae60;
+    background: var(--color-success);
     color: white;
 }
 
 .complete-order-btn:hover {
-    background: #219a52;
+    background: var(--color-success);
 }
 
 .no-selection {
