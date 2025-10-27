@@ -39,7 +39,8 @@ export const getTableOrder = (tableNumber) => {
 export const addFoodToTable = (tableNumber, foodItem) => {
     const allOrders = getTableOrders();
     
-    if (!allOrders[tableNumber]) {
+    if (!allOrders[tableNumber] || allOrders[tableNumber].status === 'completed') {
+        // Create new table order or restart a completed table
         allOrders[tableNumber] = {
             tableNumber,
             items: [],

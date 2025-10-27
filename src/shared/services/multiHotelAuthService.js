@@ -22,6 +22,16 @@ const hotelCredentials = {
         theme: "jagdamba",
         language: "marathi"
     },
+    "shreehari": {
+        username: "shreehari_admin",
+        password: "shreehari@2025#secure",
+        hotelName: "हॉटेल श्री हरी",
+        hotelId: "shreehari",
+        isAdmin: true,
+        address: "वांबोरी, राहुरी, जिल्हा - अहिल्यानगर, महाराष्ट्र - ४१३७०४",
+        theme: "shreehari",
+        language: "marathi"
+    },
     "samplehotel": {
         username: "sample_demo_user",
         password: "sample$demo%2025",

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getCurrentUser } from '../../services/authService';
 import { saveBillToHistory } from '../../services/billHistoryService';
+import { clearTableOrder } from '../../services/tableService';
 
 const BillPrint = () => {
     const [foodItems, setFoodItems] = useState([]);
@@ -112,6 +113,12 @@ const BillPrint = () => {
         localStorage.removeItem('selectedFoods');
         localStorage.removeItem('customerInfo');
         localStorage.removeItem('paymentInfo');
+        
+        // Clear table order if this was a table order
+        if (customerInfo.tableNumber) {
+            clearTableOrder(customerInfo.tableNumber);
+            console.log('Table order cleared for table:', customerInfo.tableNumber);
+        }
         
         // Reset state
         setFoodItems([]);

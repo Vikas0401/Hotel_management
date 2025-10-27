@@ -9,6 +9,7 @@ import LoginPage from './pages/LoginPage';
 import MatoshreeApp from './hotels/matoshree/MatoshreeApp';
 import JagdambaApp from './hotels/jagdamba/JagdambaApp';
 import SampleHotelApp from './hotels/samplehotel/SampleHotelApp';
+import ShreeHariApp from './hotels/shreehari/ShreeHariApp';
 
 // Multi-hotel authentication
 import { 
@@ -147,6 +148,12 @@ const AppContent = () => {
                 <Route path="/hotels/jagdamba/*" element={
                     <HotelRoute>
                         <JagdambaApp onLogout={handleLogout} />
+                    </HotelRoute>
+                } />
+                
+                <Route path="/hotels/shreehari/*" element={
+                    <HotelRoute>
+                        <ShreeHariApp onLogout={handleLogout} />
                     </HotelRoute>
                 } />
                 
