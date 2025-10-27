@@ -291,25 +291,6 @@ const FoodEntry = ({ onFoodSelect, enableTableOrdering = false, selectedFoods = 
                     </div>
                 </div>
             )}
-
-            {/* Cart Button for Parcel Orders */}
-            {!enableTableOrdering && getParcelOrderCount() > 0 && (
-                <button 
-                    className="cart-button"
-                    onClick={() => {
-                        const foodSelectionContainer = document.querySelector('.food-selection-container');
-                        if (foodSelectionContainer) {
-                            foodSelectionContainer.scrollIntoView({ 
-                                behavior: 'smooth', 
-                                block: 'start' 
-                            });
-                        }
-                    }}
-                >
-                    🛒 View Cart
-                    <span className="cart-count">{getParcelOrderCount()}</span>
-                </button>
-            )}
         </div>
     );
 };

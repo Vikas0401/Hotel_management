@@ -31,18 +31,81 @@ const defaultMenus = {
         '204': { name: 'फिश फ्राय', rate: 280, category: 'मांसाहारी जेवण' }
     },
     
-    sample: {
-        // Vegetarian Items
-        '101': { name: 'Veg Biryani', rate: 160, category: 'Vegetarian' },
-        '102': { name: 'Paneer Butter Masala', rate: 180, category: 'Vegetarian' },
-        '103': { name: 'Dal Tadka', rate: 100, category: 'Vegetarian' },
-        '104': { name: 'Veg Thali', rate: 200, category: 'Vegetarian' },
+    samplehotel: {
+        // Vegetarian Main Course
+        '101': { name: 'Veg Biryani', rate: 160, category: 'Vegetarian Main Course' },
+        '102': { name: 'Paneer Butter Masala', rate: 180, category: 'Vegetarian Main Course' },
+        '103': { name: 'Dal Tadka', rate: 100, category: 'Vegetarian Main Course' },
+        '104': { name: 'Veg Thali', rate: 200, category: 'Vegetarian Main Course' },
+        '105': { name: 'Palak Paneer', rate: 170, category: 'Vegetarian Main Course' },
+        '106': { name: 'Aloo Gobi', rate: 140, category: 'Vegetarian Main Course' },
+        '107': { name: 'Chole Bhature', rate: 120, category: 'Vegetarian Main Course' },
+        '108': { name: 'Rajma Rice', rate: 130, category: 'Vegetarian Main Course' },
+        '109': { name: 'Veg Pulao', rate: 150, category: 'Vegetarian Main Course' },
+        '110': { name: 'Mixed Veg Curry', rate: 140, category: 'Vegetarian Main Course' },
         
-        // Non-Vegetarian Items
-        '201': { name: 'Chicken Biryani', rate: 220, category: 'Non-Vegetarian' },
-        '202': { name: 'Mutton Curry', rate: 280, category: 'Non-Vegetarian' },
-        '203': { name: 'Chicken Tikka', rate: 250, category: 'Non-Vegetarian' },
-        '204': { name: 'Fish Curry', rate: 240, category: 'Non-Vegetarian' }
+        // Non-Vegetarian Main Course
+        '201': { name: 'Chicken Biryani', rate: 220, category: 'Non-Vegetarian Main Course' },
+        '202': { name: 'Mutton Curry', rate: 280, category: 'Non-Vegetarian Main Course' },
+        '203': { name: 'Chicken Tikka', rate: 250, category: 'Non-Vegetarian Main Course' },
+        '204': { name: 'Fish Curry', rate: 240, category: 'Non-Vegetarian Main Course' },
+        '205': { name: 'Chicken Curry', rate: 200, category: 'Non-Vegetarian Main Course' },
+        '206': { name: 'Egg Curry', rate: 120, category: 'Non-Vegetarian Main Course' },
+        '207': { name: 'Chicken Fried Rice', rate: 180, category: 'Non-Vegetarian Main Course' },
+        '208': { name: 'Mutton Biryani', rate: 320, category: 'Non-Vegetarian Main Course' },
+        '209': { name: 'Prawn Curry', rate: 260, category: 'Non-Vegetarian Main Course' },
+        '210': { name: 'Chicken Masala', rate: 230, category: 'Non-Vegetarian Main Course' },
+        
+        // Appetizers & Snacks
+        '301': { name: 'Samosa (2 pcs)', rate: 30, category: 'Appetizers & Snacks' },
+        '302': { name: 'Pakora', rate: 60, category: 'Appetizers & Snacks' },
+        '303': { name: 'Spring Rolls', rate: 80, category: 'Appetizers & Snacks' },
+        '304': { name: 'Chicken Wings', rate: 150, category: 'Appetizers & Snacks' },
+        '305': { name: 'Fish Fingers', rate: 120, category: 'Appetizers & Snacks' },
+        '306': { name: 'Veg Cutlet', rate: 70, category: 'Appetizers & Snacks' },
+        '307': { name: 'Chicken 65', rate: 180, category: 'Appetizers & Snacks' },
+        '308': { name: 'Paneer Tikka', rate: 160, category: 'Appetizers & Snacks' },
+        
+        // Breads & Rice
+        '401': { name: 'Roti (1 pc)', rate: 15, category: 'Breads & Rice' },
+        '402': { name: 'Naan', rate: 25, category: 'Breads & Rice' },
+        '403': { name: 'Butter Naan', rate: 35, category: 'Breads & Rice' },
+        '404': { name: 'Garlic Naan', rate: 40, category: 'Breads & Rice' },
+        '405': { name: 'Plain Rice', rate: 60, category: 'Breads & Rice' },
+        '406': { name: 'Jeera Rice', rate: 80, category: 'Breads & Rice' },
+        '407': { name: 'Paratha', rate: 30, category: 'Breads & Rice' },
+        
+        // Beverages
+        '501': { name: 'Tea', rate: 20, category: 'Beverages' },
+        '502': { name: 'Coffee', rate: 25, category: 'Beverages' },
+        '503': { name: 'Fresh Lime Water', rate: 30, category: 'Beverages' },
+        '504': { name: 'Lassi', rate: 50, category: 'Beverages' },
+        '505': { name: 'Cold Drink', rate: 40, category: 'Beverages' },
+        '506': { name: 'Fresh Juice', rate: 60, category: 'Beverages' },
+        '507': { name: 'Buttermilk', rate: 35, category: 'Beverages' },
+        '508': { name: 'Milkshake', rate: 80, category: 'Beverages' },
+        
+        // Desserts
+        '601': { name: 'Gulab Jamun', rate: 50, category: 'Desserts' },
+        '602': { name: 'Rasgulla', rate: 40, category: 'Desserts' },
+        '603': { name: 'Ice Cream', rate: 60, category: 'Desserts' },
+        '604': { name: 'Kheer', rate: 70, category: 'Desserts' },
+        '605': { name: 'Kulfi', rate: 50, category: 'Desserts' },
+        
+        // Chinese
+        '701': { name: 'Veg Noodles', rate: 120, category: 'Chinese' },
+        '702': { name: 'Chicken Noodles', rate: 150, category: 'Chinese' },
+        '703': { name: 'Veg Fried Rice', rate: 110, category: 'Chinese' },
+        '704': { name: 'Chicken Fried Rice', rate: 140, category: 'Chinese' },
+        '705': { name: 'Manchurian', rate: 130, category: 'Chinese' },
+        '706': { name: 'Chili Chicken', rate: 180, category: 'Chinese' },
+        
+        // South Indian
+        '801': { name: 'Dosa', rate: 80, category: 'South Indian' },
+        '802': { name: 'Idli Sambhar', rate: 60, category: 'South Indian' },
+        '803': { name: 'Uttapam', rate: 90, category: 'South Indian' },
+        '804': { name: 'Medu Vada', rate: 50, category: 'South Indian' },
+        '805': { name: 'Rava Dosa', rate: 100, category: 'South Indian' }
     }
 };
 
