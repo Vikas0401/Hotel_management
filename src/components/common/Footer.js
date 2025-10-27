@@ -5,7 +5,7 @@ const Footer = () => {
         <footer style={{
             background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
             color: 'white',
-            padding: '10px 10px 10px 10px',
+            padding: '8px 10px 6px 10px',
             marginTop: 'auto',
             boxShadow: '0 -4px 15px rgba(0,0,0,0.1)'
         }}>
@@ -14,26 +14,26 @@ const Footer = () => {
                 margin: '0 auto',
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-                gap: '20px',
+                gap: '15px',
                 alignItems: 'center'
             }}>
                 {/* VK Solutions Branding */}
                 <div style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '15px'
+                    gap: '10px'
                 }}>
                     <img 
                         src={`${process.env.PUBLIC_URL}/images/vk-logo.svg`} 
                         alt="VK Solutions" 
                         style={{ 
-                            height: '50px', 
-                            width: '50px',
+                            height: '35px', 
+                            width: '35px',
                             borderRadius: '50%',
-                            border: '3px solid #FFD700',
-                            boxShadow: '0 4px 12px rgba(255,215,0,0.4)',
+                            border: '2px solid #FFD700',
+                            boxShadow: '0 2px 6px rgba(255,215,0,0.4)',
                             background: 'white',
-                            padding: '3px'
+                            padding: '2px'
                         }}
                         onError={(e) => {
                             // Fallback to PNG if SVG doesn't load

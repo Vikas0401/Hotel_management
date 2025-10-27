@@ -1,13 +1,15 @@
 /* Dashboard Styles */
 .dashboard {
-    /* Removed min-height: 100vh to allow footer to be visible */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Main Two-Column Layout */
 .main-layout {
     display: flex;
-    height: calc(100vh - 58px - 200px); /* Increased footer space to 200px for complete visibility */
+    flex: 1;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 

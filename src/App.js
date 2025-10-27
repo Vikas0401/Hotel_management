@@ -29,7 +29,9 @@ import { ThemeProvider, useTheme } from './shared/services/ThemeContext';
 
 // Main App Content Component
 const AppContent = () => {
+    // eslint-disable-next-line no-unused-vars
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    // eslint-disable-next-line no-unused-vars
     const [currentUser, setCurrentUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
@@ -43,11 +45,6 @@ const AppContent = () => {
         if (authStatus) {
             const user = getCurrentUser();
             setCurrentUser(user);
-            
-            // Auto-redirect to hotel-specific dashboard if on root path
-            if (location.pathname === '/' && user) {
-                navigate(`/hotels/${user.hotelId}`, { replace: true });
-            }
             
             // Check for auto-export on first day of month (for bills)
             import('./services/billHistoryService').then(({ autoExportMonthlyReport }) => {
@@ -165,9 +162,7 @@ const AppContent = () => {
                 
                 {/* Fallback redirect */}
                 <Route path="*" element={
-                    isAuthenticated && currentUser ? 
-                        <Navigate to={`/hotels/${currentUser.hotelId}`} replace /> :
-                        <Navigate to="/login" replace />
+                    <Navigate to="/" replace />
                 } />
             </Routes>
         </div>

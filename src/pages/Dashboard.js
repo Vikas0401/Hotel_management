@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { isAuthenticated } from '../services/authService';
+import Footer from '../components/common/Footer';
 import '../styles/Dashboard.css';
 
 const Dashboard = () => {
@@ -65,78 +66,9 @@ const Dashboard = () => {
                             <p>व्यावसायिक डॉक्यूमेंट्स</p>
                         </div>
                     </div>
-                    
-                    {/* Demo Credentials Section */}
-                    <div style={{ 
-                        marginTop: '30px', 
-                        padding: '20px', 
-                        background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
-                        borderRadius: '12px',
-                        border: '2px solid #28a745',
-                        boxShadow: '0 4px 15px rgba(40, 167, 69, 0.2)'
-                    }}>
-                        <h3 style={{ 
-                            color: '#28a745', 
-                            textAlign: 'center', 
-                            marginBottom: '15px',
-                            fontSize: '1.2rem',
-                            fontWeight: 'bold'
-                        }}>🔐 डेमो लॉगिन माहिती</h3>
-                        
-                        <div style={{ 
-                            display: 'grid', 
-                            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
-                            gap: '15px' 
-                        }}>
-                            <div style={{ 
-                                background: 'white', 
-                                padding: '15px', 
-                                borderRadius: '8px',
-                                border: '1px solid #C41E3A',
-                                boxShadow: '0 2px 8px rgba(196, 30, 58, 0.1)'
-                            }}>
-                                <h4 style={{ color: '#C41E3A', margin: '0 0 10px 0' }}>🏨 हॉटेल मातोश्री</h4>
-                                <p style={{ margin: '5px 0', fontSize: '14px' }}><strong>Username:</strong> matoshree_admin</p>
-                                <p style={{ margin: '5px 0', fontSize: '14px' }}><strong>Password:</strong> matoshree@2025</p>
-                            </div>
-                            
-                            <div style={{ 
-                                background: 'white', 
-                                padding: '15px', 
-                                borderRadius: '8px',
-                                border: '1px solid #0D47A1',
-                                boxShadow: '0 2px 8px rgba(13, 71, 161, 0.1)'
-                            }}>
-                                <h4 style={{ color: '#0D47A1', margin: '0 0 10px 0' }}>🏨 हॉटेल जगदंबा</h4>
-                                <p style={{ margin: '5px 0', fontSize: '14px' }}><strong>Username:</strong> jagdamba_hotel_admin</p>
-                                <p style={{ margin: '5px 0', fontSize: '14px' }}><strong>Password:</strong> jagdamba#2025!secure</p>
-                            </div>
-                            
-                            <div style={{ 
-                                background: 'white', 
-                                padding: '15px', 
-                                borderRadius: '8px',
-                                border: '1px solid #2E7D32',
-                                boxShadow: '0 2px 8px rgba(46, 125, 50, 0.1)'
-                            }}>
-                                <h4 style={{ color: '#2E7D32', margin: '0 0 10px 0' }}>🏨 हॉटेल श्री हरी</h4>
-                                <p style={{ margin: '5px 0', fontSize: '14px' }}><strong>Username:</strong> shreehari_admin</p>
-                                <p style={{ margin: '5px 0', fontSize: '14px' }}><strong>Password:</strong> shreehari@2025#secure</p>
-                            </div>
-                        </div>
-                        
-                        <p style={{ 
-                            textAlign: 'center', 
-                            marginTop: '15px', 
-                            fontSize: '12px', 
-                            color: '#6c757d',
-                            fontStyle: 'italic'
-                        }}>
-                            👆 वरील क्रेडेंशियल्स वापरून तुम्ही संबंधित हॉटेलमध्ये लॉगिन करू शकता
-                        </p>
-                    </div>
                 </div>
             </section>
+            <Footer />
         </div>
     );
 };
