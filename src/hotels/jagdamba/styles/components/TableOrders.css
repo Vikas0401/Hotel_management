@@ -12,10 +12,10 @@
     padding: 9px 0; /* Reduced padding */
 }
 
-.table-orders-header h1 {
-    color: #2c3e50;
+.table-orders-header h2 {
+    color: black !important;
     margin-bottom: 0; /* Removed bottom margin */
-    font-size: 1.35rem; /* Reduced font size */
+    font-size: 2.8rem; /* Reduced font size */
     line-height: 1.2;
 }
 
@@ -226,7 +226,7 @@
 }
 
 .items-table td {
-    color: #555;
+    color: black !important;
     font-size: 0.81rem; /* 0.9rem - 10% = 0.81rem */
 }
 
@@ -235,7 +235,8 @@
 }
 
 .order-summary-section {
-    background: var(--color-surface-alt);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-accent)) !important; 
+    color: white !important;
     padding: 13.5px; /* 15px - 10% = 13.5px */
     border-radius: 7.2px; /* 8px - 10% = 7.2px */
     border-left: 3.6px solid var(--color-primary); /* 4px - 10% = 3.6px */

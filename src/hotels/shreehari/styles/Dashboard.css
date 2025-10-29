@@ -433,7 +433,7 @@
 .stat-number {
     font-size: 3.5rem;
     font-weight: bold;
-    color: #3498db;
+    color: white;
     margin-bottom: 10px;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }

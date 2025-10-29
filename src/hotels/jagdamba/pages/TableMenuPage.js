@@ -55,9 +55,10 @@ const TableMenuPage = () => {
 
     return (
         <div className="table-menu-container" style={{ paddingTop: '140px' }}>
+           <header class="Table Ordering">
+                <h2> {user?.hotelName || 'Hotel'} - Table Ordering</h2>
+             </header>
             <div className="table-menu-header">
-                <h1>🍽️ {user?.hotelName || 'Hotel'} - Table Ordering</h1>
-                
                 <div className="table-stats">
                     <div className="stat-card">
                         <span className="stat-number">{activeTables.length}</span>

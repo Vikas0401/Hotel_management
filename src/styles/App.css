@@ -28,7 +28,10 @@ body {
 }
 
 h1, h2, h3 {
-    color: #333;
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: black !important;
 }
 
 .container {

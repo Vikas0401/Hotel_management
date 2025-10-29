@@ -334,7 +334,21 @@
 .card-icon {
     font-size: 3rem;
     margin-bottom: 20px;
-    text-align: center;
+    text-.dashboard-main {
+    margin-top: 100px;
+}
+
+.dashboard-header {
+    height: 60px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: #fff; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+align: center;
 }
 
 .feature-card h3 {
@@ -435,7 +449,7 @@
 .stat-number {
     font-size: 3.5rem;
     font-weight: bold;
-    color: #3498db;
+    color: white;
     margin-bottom: 10px;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
