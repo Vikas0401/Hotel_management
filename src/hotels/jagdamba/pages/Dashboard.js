@@ -1,68 +1,97 @@
 /* eslint-disable unicode-bom */
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { isAuthenticated } from '../services/authService';
+import { fetchDashboardData } from '../services/dashboardService';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 import '../styles/Dashboard.css';
 
 const Dashboard = () => {
     const navigate = useNavigate();
+    const [startDate, setStartDate] = useState(new Date());
+    const [filterType, setFilterType] = useState('day');
+    const [dashboardData, setDashboardData] = useState({
+        parcelOrders: {
+            count: 0,
+            totalAmount: 0
+        },
+        tableOrders: {
+            count: 0,
+            totalAmount: 0
+        },
+        pendingPayments: []
+    });
 
     useEffect(() => {
-        if (isAuthenticated()) {
-            navigate('/home');
+        if (!isAuthenticated()) {
+            navigate('/login');
+            return;
         }
-    }, [navigate]);
+        
+        const loadDashboardData = async () => {
+            try {
+                const data = await fetchDashboardData(startDate, filterType);
+                setDashboardData(data);
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+                // You might want to show an error message to the user here
+            }
+        };
+
+        loadDashboardData();
+    }, [navigate, startDate, filterType]);
 
     return (
         <div className="dashboard">
             <section className="main-layout">
-                <div className="hero-side">
-                    <div className="hero-content">
-                        <div className="hero-icon">🏨</div>
-                        <h1 className="hero-title">हॉटेल व्यवस्थापन प्रणाली</h1>
-                        <p className="hero-subtitle">आधुनिक तंत्रज्ञानासह हॉटेल व्यवसायाचे संपूर्ण व्यवस्थापन</p>
-                        <Link to="/login" className="cta-button">
-                            🔐 लॉग इन करा
-                        </Link>
+                <div className="filter-section">
+                    <div className="date-filter">
+                        <DatePicker
+                            selected={startDate}
+                            onChange={(date) => setStartDate(date)}
+                            dateFormat="dd/MM/yyyy"
+                            className="date-picker"
+                        />
+                        <select 
+                            value={filterType}
+                            onChange={(e) => setFilterType(e.target.value)}
+                            className="filter-select"
+                        >
+                            <option value="day">दैनिक</option>
+                            <option value="week">साप्ताहिक</option>
+                            <option value="month">मासिक</option>
+                            <option value="year">वार्षिक</option>
+                        </select>
                     </div>
                 </div>
-                <div className="features-side">
-                    <h2 className="features-title">🌟 मुख्य वैशिष्ट्ये</h2>
-                    <div className="features-grid-compact">
-                        <div className="feature-card-compact bill-card">
-                            <div className="card-icon-compact">🧾</div>
-                            <h3>बिल व्यवस्थापन</h3>
-                            <p>जलद आणि अचूक बिलिंग</p>
+
+                <div className="stats-grid">
+                    <div className="stat-card">
+                        <h3>पार्सल ऑर्डर</h3>
+                        <div className="stat-content">
+                            <p>एकूण ऑर्डर: {dashboardData.parcelOrders.count}</p>
+                            <p>एकूण रक्कम: ₹{dashboardData.parcelOrders.totalAmount}</p>
                         </div>
-                        <div className="feature-card-compact menu-card">
-                            <div className="card-icon-compact">🍽️</div>
-                            <h3>टेबल ऑर्डरिंग</h3>
-                            <p>मल्टिपल टेबल व्यवस्थापन</p>
+                    </div>
+
+                    <div className="stat-card">
+                        <h3>टेबल ऑर्डर</h3>
+                        <div className="stat-content">
+                            <p>एकूण ऑर्डर: {dashboardData.tableOrders.count}</p>
+                            <p>एकूण रक्कम: ₹{dashboardData.tableOrders.totalAmount}</p>
                         </div>
-                        <div className="feature-card-compact parcel-card">
-                            <div className="card-icon-compact">📦</div>
-                            <h3>पार्सल ऑर्डर</h3>
-                            <p>टेकअवे आणि डिलिव्हरी</p>
-                        </div>
-                        <div className="feature-card-compact history-card">
-                            <div className="card-icon-compact">📊</div>
-                            <h3>इतिहास आणि अहवाल</h3>
-                            <p>विस्तृत बिझनेस अॅनालिटिक्स</p>
-                        </div>
-                        <div className="feature-card-compact user-card">
-                            <div className="card-icon-compact">👥</div>
-                            <h3>वापरकर्ता व्यवस्थापन</h3>
-                            <p>सुरक्षित लॉगिन सिस्टम</p>
-                        </div>
-                        <div className="feature-card-compact mobile-card">
-                            <div className="card-icon-compact">📱</div>
-                            <h3>मोबाईल फ्रेंडली</h3>
-                            <p>रेस्पॉन्सिव्ह डिझाईन</p>
-                        </div>
-                        <div className="feature-card-compact pdf-card">
-                            <div className="card-icon-compact">📄</div>
-                            <h3>PDF निर्यात</h3>
-                            <p>व्यावसायिक डॉक्यूमेंट्स</p>
+                    </div>
+
+                    <div className="stat-card pending-payments">
+                        <h3>बाकी असलेले</h3>
+                        <div className="pending-list">
+                            {dashboardData.pendingPayments.map((payment, index) => (
+                                <div key={index} className="pending-item">
+                                    <span>{payment.customerName}</span>
+                                    <span>₹{payment.pendingAmount}</span>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
