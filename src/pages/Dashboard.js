@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { isAuthenticated } from '../services/authService';
 import Footer from '../components/common/Footer';
 import '../styles/Dashboard.css';
+import hotelReception from '../assets/images/hotel-reception.jpg'; // Import the image
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -14,10 +15,16 @@ const Dashboard = () => {
         }
     }, [navigate]);
 
+    // Define the inline style for the background image
+    const heroSideStyle = {
+        backgroundImage: `url(${hotelReception})`
+    };
+
     return (
         <div className="dashboard">
             <section className="main-layout">
-                <div className="hero-side">
+                {/* Apply the inline style here */}
+                <div className="hero-side" style={heroSideStyle}>
                     <div className="hero-content">
                         <div className="hero-icon">🏨</div>
                         <h1 className="hero-title">हॉटेल व्यवस्थापन प्रणाली</h1>

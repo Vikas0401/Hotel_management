@@ -1,14 +1,14 @@
 /* src/hotels/jagdamba/styles/Dashboard.css */
 
-/* Main container for the dashboard */
+/* Main container for the dashboard - now inside dashboard-right */
 .dashboard-container {
     padding: 1rem;
-    background-color: #f0f2f5; /* Light grey background */
-    min-height: 100vh; /* Full height */
+    background-color: #f0f2f5;
+    min-height: 100vh;
     font-family: 'Arial', sans-serif;
 }
 
-/* Dashboard Header */
+/* Dashboard Header - adjusted for the new layout */
 .dashboard-header {
     display: flex;
     justify-content: space-between;
@@ -19,12 +19,11 @@
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 
-    /* Fixed positioning */
+    /* Fixed Positioning*/
     position: fixed;
-    top: 8rem;
+    top: 9rem;
     left: 1rem;
-    right: 1rem;
-    z-index: 1000;
+    right: 1rem;    
 }
 
 .dashboard-header h2 {
@@ -99,12 +98,12 @@
     cursor: pointer;
 }
 
-/* Main content area */
+/* Main content area - adjusted for new layout */
 .dashboard-main {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.5rem;
-    margin-top: 6rem; /* Push content below the fixed header */
+    margin-top: 8rem; /* Add padding here instead of margin */
 }
 
 /* Stats Grid */
