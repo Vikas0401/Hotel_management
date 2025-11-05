@@ -9,7 +9,10 @@
 /* Main Two-Column Layout */
 .main-layout {
     display: flex;
-    flex: 1;
+    height: calc(100vh - 58px - 200px); /* Increased footer space to 200px for complete visibility */
+    background-size: cover;
+    background-position: center;
+    position: relative;
 }
 
 /* Left Side - Hero Content */
