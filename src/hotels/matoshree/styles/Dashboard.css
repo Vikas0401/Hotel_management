@@ -1,26 +1,10 @@
 /* src/hotels/jagdamba/styles/Dashboard.css */
 
-/* New layout styles */
-.dashboard-layout {
-    display: flex;
-    min-height: 100vh;
-}
-
-.dashboard-left {
-    flex: 1;
-    background-size: cover;
-    background-position: center;
-}
-
-.dashboard-right {
-    flex: 2;
-}
-
 /* Main container for the dashboard - now inside dashboard-right */
 .dashboard-container {
-    padding: 0;
+    padding: 1rem;
     background-color: #f0f2f5;
-    width: 100%;
+    min-height: 100vh;
     font-family: 'Arial', sans-serif;
 }
 
@@ -34,10 +18,13 @@
     padding: 1rem 1.5rem;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    margin: 1rem; /* Add margin */
-    /* Removed fixed positioning */
-}
 
+    /* Fixed Positioning*/
+    position: fixed;
+    top: 9rem;
+    left: 1rem;
+    right: 1rem;    
+}
 
 .dashboard-header h2 {
     margin: 0;
@@ -116,7 +103,7 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.5rem;
-    padding: 0 1rem 1rem 1rem; /* Add padding here instead of margin */
+    margin-top: 15rem; /* Add padding here instead of margin */
 }
 
 /* Stats Grid */
@@ -142,7 +129,7 @@
 
 .stat-card:hover {
     transform: translateY(-5px);
-    box-.shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
 
 .stat-card.active {
@@ -197,7 +184,7 @@
 
 .section-header h3 {
     margin: 0;
-    font-size: 1.4rem;
+    font-.size: 1.4rem;
     color: #1f2937;
 }
 
@@ -207,7 +194,7 @@
     gap: 0.8rem;
 }
 
-.pending-.item {
+.pending-item {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
     align-items: center;

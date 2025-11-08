@@ -103,7 +103,7 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.5rem;
-    margin-top: 8rem; /* Add padding here instead of margin */
+    margin-top: 15rem; /* Add padding here instead of margin */
 }
 
 /* Stats Grid */
@@ -184,7 +184,7 @@
 
 .section-header h3 {
     margin: 0;
-    font-size: 1.4rem;
+    font-.size: 1.4rem;
     color: #1f2937;
 }
 
