@@ -1,12 +1,38 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { 
-    getActiveTables, 
-    getTableOrder, 
-    getTableOrderSummary,
-    completeTableOrder
-} from '../../services/tableService';
+// import {
+//     getActiveTables,
+//     getTableOrder,
+//     getTableOrderSummary,
+//     completeTableOrder
+// } from '../../services/tableService';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/components/TableOrders.css';
+
+// Mock data for demonstration
+const mockActiveTables = ['1', '3', '5'];
+
+const mockTableDetails = {
+    '1': {
+        startTime: new Date().toISOString(),
+        items: [
+            { code: '101', name: 'Paneer Tikka', rate: 250, quantity: 2, addedAt: new Date().toISOString() },
+            { code: '102', name: 'Dal Makhani', rate: 200, quantity: 1, addedAt: new Date().toISOString() },
+        ],
+    },
+    '3': {
+        startTime: new Date().toISOString(),
+        items: [
+            { code: '201', name: 'Chicken Biryani', rate: 350, quantity: 1, addedAt: new Date().toISOString() },
+        ],
+    },
+    '5': {
+        startTime: new Date().toISOString(),
+        items: [
+            { code: '301', name: 'Veg Pulao', rate: 180, quantity: 2, addedAt: new Date().toISOString() },
+            { code: '302', name: 'Raita', rate: 60, quantity: 2, addedAt: new Date().toISOString() },
+        ],
+    },
+};
 
 const TableOrders = () => {
     const [activeTables, setActiveTables] = useState([]);
@@ -15,11 +41,10 @@ const TableOrders = () => {
     const navigate = useNavigate();
 
     const loadActiveTables = useCallback(() => {
-        const tables = getActiveTables();
-        setActiveTables(tables);
-        
-        // If selected table is no longer active, clear selection
-        if (selectedTable && !tables.includes(selectedTable)) {
+        // const tables = getActiveTables();
+        setActiveTables(mockActiveTables);
+
+        if (selectedTable && !mockActiveTables.includes(selectedTable)) {
             setSelectedTable(null);
             setTableDetails(null);
         }
@@ -27,31 +52,39 @@ const TableOrders = () => {
 
     useEffect(() => {
         loadActiveTables();
-        // Refresh every 30 seconds to show real-time updates
         const interval = setInterval(loadActiveTables, 30000);
         return () => clearInterval(interval);
     }, [loadActiveTables]);
 
+    const getTableOrderSummary = (tableNumber) => {
+        const details = mockTableDetails[tableNumber];
+        if (!details) {
+            return { itemCount: 0, total: 0, startTime: new Date().toISOString() };
+        }
+        const itemCount = details.items.reduce((acc, item) => acc + item.quantity, 0);
+        const total = details.items.reduce((acc, item) => acc + item.rate * item.quantity, 0);
+        return { itemCount, total, startTime: details.startTime };
+    };
+
     const handleTableSelect = (tableNumber) => {
         setSelectedTable(tableNumber);
-        const details = getTableOrder(tableNumber);
+        // const details = getTableOrder(tableNumber);
+        const details = mockTableDetails[tableNumber];
         setTableDetails(details);
     };
 
     const handleCompleteOrder = (tableNumber) => {
-        const completedOrder = completeTableOrder(tableNumber);
-        if (completedOrder) {
-            // Store the completed order data for billing
-            localStorage.setItem('selectedFoods', JSON.stringify(completedOrder.items));
-            localStorage.setItem('customerInfo', JSON.stringify({
-                name: completedOrder.customerInfo.name || '',
-                tableNumber: tableNumber,
-                phoneNumber: completedOrder.customerInfo.phoneNumber || ''
-            }));
-            
-            // Navigate to bill page
-            navigate('/bill');
-        }
+        alert(`Order for table ${tableNumber} would be completed here in a real scenario.`);
+        // const completedOrder = completeTableOrder(tableNumber);
+        // if (completedOrder) {
+        //     localStorage.setItem('selectedFoods', JSON.stringify(completedOrder.items));
+        //     localStorage.setItem('customerInfo', JSON.stringify({
+        //         name: completedOrder.customerInfo.name || '',
+        //         tableNumber: tableNumber,
+        //         phoneNumber: completedOrder.customerInfo.phoneNumber || ''
+        //     }));
+        //     navigate('/bill');
+        // }
     };
 
     const calculateItemTotal = (item) => {
@@ -63,9 +96,9 @@ const TableOrders = () => {
     };
 
     const formatTime = (isoString) => {
-        return new Date(isoString).toLocaleTimeString([], { 
-            hour: '2-digit', 
-            minute: '2-digit' 
+        return new Date(isoString).toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit'
         });
     };
 
@@ -76,13 +109,12 @@ const TableOrders = () => {
             </div>
 
             <div className="table-orders-content">
-                {/* Left Panel - Active Tables List */}
                 <div className="tables-list-panel">
                     <h2>Active Tables</h2>
                     {activeTables.length === 0 ? (
                         <div className="no-tables">
                             <p>No active table orders</p>
-                            <button 
+                            <button
                                 className="new-order-btn"
                                 onClick={() => navigate('/menu')}
                             >
@@ -94,7 +126,7 @@ const TableOrders = () => {
                             {activeTables.map(tableNumber => {
                                 const summary = getTableOrderSummary(tableNumber);
                                 return (
-                                    <div 
+                                    <div
                                         key={tableNumber}
                                         className={`table-card ${selectedTable === tableNumber ? 'selected' : ''}`}
                                         onClick={() => handleTableSelect(tableNumber)}
@@ -113,7 +145,7 @@ const TableOrders = () => {
                                                 Started: {formatTime(summary.startTime)}
                                             </p>
                                         </div>
-                                        <button 
+                                        <button
                                             className="complete-btn"
                                             onClick={(e) => {
                                                 e.stopPropagation();
@@ -129,7 +161,6 @@ const TableOrders = () => {
                     )}
                 </div>
 
-                {/* Right Panel - Table Details */}
                 <div className="table-details-panel">
                     {selectedTable && tableDetails ? (
                         <>
@@ -138,7 +169,6 @@ const TableOrders = () => {
                                 <p>Started: {formatTime(tableDetails.startTime)}</p>
                             </div>
 
-                            {/* Order Items */}
                             <div className="order-items-section">
                                 <h3>Order Items ({tableDetails.items.length})</h3>
                                 {tableDetails.items.length === 0 ? (
@@ -173,7 +203,6 @@ const TableOrders = () => {
                                 )}
                             </div>
 
-                            {/* Order Summary */}
                             <div className="order-summary-section">
                                 <div className="summary-row">
                                     <span>Total Items:</span>
@@ -185,19 +214,17 @@ const TableOrders = () => {
                                 </div>
                             </div>
 
-                            {/* Action Buttons */}
                             <div className="action-buttons">
-                                <button 
+                                <button
                                     className="add-items-btn"
                                     onClick={() => {
-                                        // Set selected table in localStorage for menu page
                                         localStorage.setItem('selectedTableForOrder', selectedTable);
                                         navigate('/menu');
                                     }}
                                 >
                                     Add More Items
                                 </button>
-                                <button 
+                                <button
                                     className="complete-order-btn"
                                     onClick={() => handleCompleteOrder(selectedTable)}
                                 >

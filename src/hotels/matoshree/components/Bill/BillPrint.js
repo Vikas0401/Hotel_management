@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getCurrentUser } from '../../services/authService';
-import { saveBillToHistory } from '../../services/billHistoryService';
+import { saveBillToHistory, printSingleBill } from '../../services/billHistoryService';
 import { clearTableOrder } from '../../services/tableService';
 
 const BillPrint = () => {
@@ -94,7 +94,23 @@ const BillPrint = () => {
     };
 
     const handlePrint = () => {
-        window.print();
+        const subtotal = calculateSubtotal();
+        const tax = calculateTax(subtotal);
+        const total = calculateTotal();
+
+        const billData = {
+            billNumber,
+            date: currentDate,
+            time: currentTime,
+            customerInfo,
+            items: foodItems,
+            subtotal,
+            tax,
+            total,
+            paymentInfo
+        };
+        
+        printSingleBill(billData);
     };
 
     const handleClearBill = () => {
@@ -230,7 +246,7 @@ const BillPrint = () => {
             return {
                 address: user?.address || "वांबोरी, राहुरी, जिल्हा - अहिल्यानगर, महाराष्ट्र - ४१३७०४",
                 phone: "+91 8329376759",
-                email: "xxxxxxxx@gmail.com",
+                email: "babusalunke30@gmail.com",
                 gstin: "xxxxxxxxxxx"
             };
         } else if (user?.hotelId === 'shreehari') {

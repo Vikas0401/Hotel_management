@@ -1,177 +1,106 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { getBillHistory, filterBills, deleteBillFromHistory, getBillStatistics, exportBillHistoryToPDF, exportSingleBillToPDF, printSingleBill, updateBillPayment } from '../../services/billHistoryService';
-import { getCurrentUser } from '../../services/authService';
+import React, { useState, useEffect } from 'react';
+
+// Mock data for demonstration
+const mockBillHistory = [
+    {
+        id: '1',
+        billNumber: 'B123456',
+        date: new Date().toLocaleDateString(),
+        time: new Date().toLocaleTimeString(),
+        customerInfo: { name: 'Demo Customer 1', tableNumber: 'T1', phoneNumber: '9876543210' },
+        items: [
+            { name: 'Sample Special Thali', rate: 250, quantity: 1 },
+            { name: 'Vada Pav', rate: 30, quantity: 2 },
+        ],
+        subtotal: 310,
+        tax: 0,
+        total: 310,
+        paymentInfo: { jama: 310, baki: 0 },
+    },
+    {
+        id: '2',
+        billNumber: 'B123457',
+        date: new Date().toLocaleDateString(),
+        time: new Date().toLocaleTimeString(),
+        customerInfo: { name: 'Demo Customer 2', tableNumber: '-', phoneNumber: '9876543211' },
+        items: [
+            { name: 'Chicken Biryani', rate: 350, quantity: 1 },
+        ],
+        subtotal: 350,
+        tax: 63,
+        total: 413,
+        paymentInfo: { jama: 413, baki: 0 },
+    },
+];
+
+const mockStatistics = {
+    totalBills: 2,
+    totalRevenue: 723,
+    todaysBills: 2,
+    todaysRevenue: 723,
+};
 
 const BillHistory = () => {
-    const [bills, setBills] = useState([]);
-    const [filteredBills, setFilteredBills] = useState([]);
-    const [user, setUser] = useState(null);
-    const [statistics, setStatistics] = useState({});
+    const [bills, setBills] = useState(mockBillHistory);
+    const [filteredBills, setFilteredBills] = useState(mockBillHistory);
+    const [statistics, setStatistics] = useState(mockStatistics);
     const [filters, setFilters] = useState({
         customerName: '',
         startDate: '',
         endDate: ''
     });
     const [selectedBill, setSelectedBill] = useState(null);
-    const [editingPayment, setEditingPayment] = useState(false);
-    const [editPaymentData, setEditPaymentData] = useState({
-        jama: 0,
-        baki: 0
-    });
-
-    useEffect(() => {
-        setUser(getCurrentUser());
-        loadBills();
-        loadStatistics();
-    }, []);
-
-    const applyFilters = useCallback(() => {
-        const filtered = filterBills(filters.customerName, filters.startDate, filters.endDate);
-        setFilteredBills(filtered);
-    }, [filters]);
-
-    useEffect(() => {
-        applyFilters();
-    }, [bills, filters, applyFilters]);
-
-    const loadBills = () => {
-        console.log('Loading bills...');
-        const billHistory = getBillHistory();
-        console.log('Retrieved bill history:', billHistory);
-        console.log('Number of bills:', billHistory.length);
-        setBills(billHistory);
-    };
-
-    const loadStatistics = () => {
-        const stats = getBillStatistics();
-        setStatistics(stats);
-    };
 
     const handleFilterChange = (e) => {
         const { name, value } = e.target;
-        setFilters(prev => ({
-            ...prev,
-            [name]: value
-        }));
+        setFilters(prev => ({ ...prev, [name]: value }));
     };
+
+    useEffect(() => {
+        const { customerName, startDate, endDate } = filters;
+        let result = bills;
+        if (customerName) {
+            result = result.filter(bill => bill.customerInfo.name.toLowerCase().includes(customerName.toLowerCase()));
+        }
+        if (startDate) {
+            result = result.filter(bill => new Date(bill.date) >= new Date(startDate));
+        }
+        if (endDate) {
+            result = result.filter(bill => new Date(bill.date) <= new Date(endDate));
+        }
+        setFilteredBills(result);
+    }, [filters, bills]);
 
     const clearFilters = () => {
-        setFilters({
-            customerName: '',
-            startDate: '',
-            endDate: ''
-        });
+        setFilters({ customerName: '', startDate: '', endDate: '' });
     };
 
-    const handleDeleteBill = (billId) => {
-        if (window.confirm('तुम्हाला खात्री आहे की तुम्ही हे बिल हटवू इच्छिता?')) {
-            deleteBillFromHistory(billId);
-            loadBills();
-            loadStatistics();
-            setSelectedBill(null);
-        }
+    const handleDeleteBill = () => {
+        alert('This is a sample bill and cannot be deleted.');
     };
 
     const handleExportHistory = () => {
-        try {
-            const doc = exportBillHistoryToPDF();
-            const fileName = `${user?.hotelName || 'Hotel'}_bill_history_${new Date().toISOString().split('T')[0]}.pdf`;
-            doc.save(fileName);
-            
-            // Show success message
-            alert('बिल इतिहास PDF मध्ये डाउनलोड झाला!');
-        } catch (error) {
-            console.error('Error generating PDF:', error);
-            alert('PDF बनवताना त्रुटी झाली. कृपया पुन्हा प्रयत्न करा.');
-        }
+        alert('This is a sample history and cannot be exported.');
     };
 
-    const handleExportSingleBill = (bill) => {
-        try {
-            const doc = exportSingleBillToPDF(bill);
-            const fileName = `${user?.hotelName || 'Hotel'}_bill_${bill.billNumber}_${bill.date.replace(/\//g, '-')}.pdf`;
-            doc.save(fileName);
-            
-            // Show success message
-            alert('बिल PDF मध्ये डाउनलोड झाले!');
-        } catch (error) {
-            console.error('Error generating single bill PDF:', error);
-            alert('PDF बनवताना त्रुटी झाली. कृपया पुन्हा प्रयत्न करा.');
-        }
+    const handleExportSingleBill = () => {
+        alert('This is a sample bill and cannot be exported.');
     };
 
-    const handlePrintSingleBill = (bill) => {
-        try {
-            printSingleBill(bill);
-        } catch (error) {
-            console.error('Error printing bill:', error);
-            alert('प्रिंट करताना त्रुटी झाली. कृपया पुन्हा प्रयत्न करा.');
-        }
+    const handlePrintSingleBill = () => {
+        alert('This is a sample bill and cannot be printed.');
     };
 
     const formatCurrency = (amount) => {
-        return `₹${amount.toFixed(2)}`;
-    };
-
-    const handleEditPayment = (bill) => {
-        setEditingPayment(true);
-        setEditPaymentData({
-            jama: bill.paymentInfo?.jama || 0,
-            baki: bill.paymentInfo?.baki || bill.total
-        });
-    };
-
-    const handlePaymentDataChange = (e) => {
-        const { name, value } = e.target;
-        const numValue = parseFloat(value) || 0;
-        
-        if (name === 'jama') {
-            const newBaki = Math.max(0, selectedBill.total - numValue);
-            setEditPaymentData({
-                jama: numValue,
-                baki: newBaki
-            });
-        }
-    };
-
-    const handleSavePayment = () => {
-        if (selectedBill) {
-            const success = updateBillPayment(selectedBill.id, editPaymentData);
-            if (success) {
-                // Update the selected bill with new payment info
-                setSelectedBill({
-                    ...selectedBill,
-                    paymentInfo: editPaymentData
-                });
-                
-                // Reload bills to reflect changes in the table
-                loadBills();
-                setEditingPayment(false);
-                alert('पेमेंट माहिती यशस्वीरित्या अपडेट झाली!');
-            } else {
-                alert('पेमेंट माहिती अपडेट करताना त्रुटी झाली!');
-            }
-        }
-    };
-
-    const handleCancelEdit = () => {
-        setEditingPayment(false);
-        setEditPaymentData({ jama: 0, baki: 0 });
+        return `₹${(amount || 0).toFixed(2)}`;
     };
 
     return (
         <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto', paddingTop: '40px' }}>
-            {/* Header */}
             <div style={{ marginBottom: '30px', marginTop: '20px' }}>
-                <h1 style={{ 
-                    color: user?.hotelId === 'matoshree' ? '#C41E3A' : '#2c3e50',
-                    textAlign: 'center',
-                    marginBottom: '20px'
-                }} className={user?.hotelId === 'matoshree' ? 'marathi-title' : ''}>
+                <h1 style={{ color: '#2c3e50', textAlign: 'center', marginBottom: '20px' }}>
                     बिल इतिहास
                 </h1>
-
-                {/* Statistics */}
                 <div style={{ 
                     display: 'grid', 
                     gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
@@ -179,69 +108,30 @@ const BillHistory = () => {
                     marginBottom: '20px',
                     marginTop: '30px'
                 }}>
-                    <div className={user?.hotelId === 'matoshree' ? 'card' : ''} style={{ 
-                        padding: '15px', 
-                        background: 'white', 
-                        borderRadius: '8px', 
-                        boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-                        textAlign: 'center'
-                    }}>
+                    <div style={{ padding: '15px', background: 'white', borderRadius: '8px', boxShadow: '0 2px 5px rgba(0,0,0,0.1)', textAlign: 'center' }}>
                         <h3 style={{ color: '#007bff', margin: '0 0 10px 0' }}>एकूण बिल</h3>
                         <p style={{ fontSize: '24px', fontWeight: 'bold', margin: '0' }}>{statistics.totalBills}</p>
                     </div>
-                    <div className={user?.hotelId === 'matoshree' ? 'card' : ''} style={{ 
-                        padding: '15px', 
-                        background: 'white', 
-                        borderRadius: '8px', 
-                        boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-                        textAlign: 'center'
-                    }}>
+                    <div style={{ padding: '15px', background: 'white', borderRadius: '8px', boxShadow: '0 2px 5px rgba(0,0,0,0.1)', textAlign: 'center' }}>
                         <h3 style={{ color: '#28a745', margin: '0 0 10px 0' }}>एकूण कमाई</h3>
-                        <p style={{ fontSize: '24px', fontWeight: 'bold', margin: '0' }}>{formatCurrency(statistics.totalRevenue || 0)}</p>
+                        <p style={{ fontSize: '24px', fontWeight: 'bold', margin: '0' }}>{formatCurrency(statistics.totalRevenue)}</p>
                     </div>
-                    <div className={user?.hotelId === 'matoshree' ? 'card' : ''} style={{ 
-                        padding: '15px', 
-                        background: 'white', 
-                        borderRadius: '8px', 
-                        boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-                        textAlign: 'center'
-                    }}>
+                    <div style={{ padding: '15px', background: 'white', borderRadius: '8px', boxShadow: '0 2px 5px rgba(0,0,0,0.1)', textAlign: 'center' }}>
                         <h3 style={{ color: '#ffc107', margin: '0 0 10px 0' }}>आजचे बिल</h3>
                         <p style={{ fontSize: '24px', fontWeight: 'bold', margin: '0' }}>{statistics.todaysBills}</p>
                     </div>
-                    <div className={user?.hotelId === 'matoshree' ? 'card' : ''} style={{ 
-                        padding: '15px', 
-                        background: 'white', 
-                        borderRadius: '8px', 
-                        boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-                        textAlign: 'center'
-                    }}>
+                    <div style={{ padding: '15px', background: 'white', borderRadius: '8px', boxShadow: '0 2px 5px rgba(0,0,0,0.1)', textAlign: 'center' }}>
                         <h3 style={{ color: '#dc3545', margin: '0 0 10px 0' }}>आजची कमाई</h3>
-                        <p style={{ fontSize: '24px', fontWeight: 'bold', margin: '0' }}>{formatCurrency(statistics.todaysRevenue || 0)}</p>
+                        <p style={{ fontSize: '24px', fontWeight: 'bold', margin: '0' }}>{formatCurrency(statistics.todaysRevenue)}</p>
                     </div>
                 </div>
             </div>
 
-            {/* Filters */}
-            <div className={user?.hotelId === 'matoshree' ? 'card' : ''} style={{ 
-                padding: '20px', 
-                background: 'white', 
-                borderRadius: '8px', 
-                boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-                marginBottom: '20px'
-            }}>
-                <h3 style={{ 
-                    color: user?.hotelId === 'matoshree' ? '#C41E3A' : '#2c3e50', 
-                    marginBottom: '15px' 
-                }} className={user?.hotelId === 'matoshree' ? 'marathi-header' : ''}>
+            <div style={{ padding: '20px', background: 'white', borderRadius: '8px', boxShadow: '0 2px 5px rgba(0,0,0,0.1)', marginBottom: '20px' }}>
+                <h3 style={{ color: '#2c3e50', marginBottom: '15px' }}>
                     फिल्टर
                 </h3>
-                <div style={{ 
-                    display: 'grid', 
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
-                    gap: '15px', 
-                    alignItems: 'end' 
-                }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px', alignItems: 'end' }}>
                     <div>
                         <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>
                             ग्राहकाचे नाव
@@ -252,13 +142,7 @@ const BillHistory = () => {
                             value={filters.customerName}
                             onChange={handleFilterChange}
                             placeholder="ग्राहकाचे नाव शोधा"
-                            style={{
-                                width: '100%',
-                                padding: '8px',
-                                border: '1px solid #ddd',
-                                borderRadius: '4px',
-                                fontSize: '14px'
-                            }}
+                            style={{ width: '100%', padding: '8px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '14px' }}
                         />
                     </div>
                     <div>
@@ -270,13 +154,7 @@ const BillHistory = () => {
                             name="startDate"
                             value={filters.startDate}
                             onChange={handleFilterChange}
-                            style={{
-                                width: '100%',
-                                padding: '8px',
-                                border: '1px solid #ddd',
-                                borderRadius: '4px',
-                                fontSize: '14px'
-                            }}
+                            style={{ width: '100%', padding: '8px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '14px' }}
                         />
                     </div>
                     <div>
@@ -288,60 +166,23 @@ const BillHistory = () => {
                             name="endDate"
                             value={filters.endDate}
                             onChange={handleFilterChange}
-                            style={{
-                                width: '100%',
-                                padding: '8px',
-                                border: '1px solid #ddd',
-                                borderRadius: '4px',
-                                fontSize: '14px'
-                            }}
+                            style={{ width: '100%', padding: '8px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '14px' }}
                         />
                     </div>
                     <div style={{ display: 'flex', gap: '10px' }}>
-                        <button
-                            onClick={clearFilters}
-                            style={{
-                                padding: '8px 16px',
-                                background: '#6c757d',
-                                color: 'white',
-                                border: 'none',
-                                borderRadius: '4px',
-                                cursor: 'pointer',
-                                fontSize: '14px'
-                            }}
-                        >
+                        <button onClick={clearFilters} style={{ padding: '8px 16px', background: '#6c757d', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '14px' }}>
                             फिल्टर साफ करा
                         </button>
-                        <button
-                            onClick={handleExportHistory}
-                            style={{
-                                padding: '8px 16px',
-                                background: user?.hotelId === 'matoshree' ? '#C41E3A' : '#007bff',
-                                color: 'white',
-                                border: 'none',
-                                borderRadius: '4px',
-                                cursor: 'pointer',
-                                fontSize: '14px'
-                            }}
-                        >
+                        <button onClick={handleExportHistory} style={{ padding: '8px 16px', background: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '14px' }}>
                             📄 PDF एक्सपोर्ट करा
                         </button>
                     </div>
                 </div>
             </div>
 
-            {/* Bills List */}
-            <div className={user?.hotelId === 'matoshree' ? 'card' : ''} style={{ 
-                background: 'white', 
-                borderRadius: '8px', 
-                boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-                overflow: 'hidden'
-            }}>
+            <div style={{ background: 'white', borderRadius: '8px', boxShadow: '0 2px 5px rgba(0,0,0,0.1)', overflow: 'hidden' }}>
                 <div style={{ padding: '20px', borderBottom: '1px solid #eee' }}>
-                    <h3 style={{ 
-                        color: user?.hotelId === 'matoshree' ? '#C41E3A' : '#2c3e50', 
-                        margin: '0' 
-                    }} className={user?.hotelId === 'matoshree' ? 'marathi-header' : ''}>
+                    <h3 style={{ color: '#2c3e50', margin: '0' }}>
                         बिल यादी ({filteredBills.length})
                     </h3>
                 </div>
@@ -352,33 +193,21 @@ const BillHistory = () => {
                     </div>
                 ) : (
                     <div style={{ overflowX: 'auto' }}>
-                        <table style={{ 
-                            width: '100%', 
-                            borderCollapse: 'collapse',
-                            fontSize: '14px'
-                        }}>
+                        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
                             <thead>
-                                <tr style={{ 
-                                    background: 'linear-gradient(135deg, var(--color-primary), var(--color-primary-accent))',
-                                    color: 'white'
-                                }}>
-                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid var(--color-border)' }}>बिल नं.</th>
-                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid var(--color-border)' }}>तारीख</th>
-                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid var(--color-border)' }}>ग्राहक</th>
-                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid var(--color-border)' }}>ऑर्डर प्रकार</th>
-                                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid var(--color-border)' }}>टेबल</th>
-                                    <th style={{ padding: '12px', textAlign: 'right', borderBottom: '2px solid var(--color-border)' }}>रक्कम</th>
-                                    <th style={{ padding: '12px', textAlign: 'right', borderBottom: '2px solid var(--color-border)' }}>जमा</th>
-                                    <th style={{ padding: '12px', textAlign: 'right', borderBottom: '2px solid var(--color-border)' }}>बाकी</th>
-                                    <th style={{ padding: '12px', textAlign: 'center', borderBottom: '2px solid var(--color-border)' }}>कृती</th>
+                                <tr style={{ background: 'linear-gradient(135deg, var(--color-primary), var(--color-primary-accent))', color: 'white' }}>
+                                    <th style={{ padding: '12px', textAlign: 'left' }}>बिल नं.</th>
+                                    <th style={{ padding: '12px', textAlign: 'left' }}>तारीख</th>
+                                    <th style={{ padding: '12px', textAlign: 'left' }}>ग्राहक</th>
+                                    <th style={{ padding: '12px', textAlign: 'center' }}>ऑर्डर प्रकार</th>
+                                    <th style={{ padding: '12px', textAlign: 'left' }}>टेबल</th>
+                                    <th style={{ padding: '12px', textAlign: 'right' }}>रक्कम</th>
+                                    <th style={{ padding: '12px', textAlign: 'center' }}>कृती</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {filteredBills.map((bill, index) => (
-                                    <tr key={bill.id} style={{ 
-                                        borderBottom: '1px solid #eee',
-                                        background: index % 2 === 0 ? 'white' : '#f8f9fa'
-                                    }}>
+                                    <tr key={bill.id} style={{ borderBottom: '1px solid #eee', background: index % 2 === 0 ? 'white' : '#f8f9fa' }}>
                                         <td style={{ padding: '12px' }}>{bill.billNumber}</td>
                                         <td style={{ padding: '12px' }}>{bill.date}</td>
                                         <td style={{ padding: '12px' }}>{bill.customerInfo?.name || '-'}</td>
@@ -390,61 +219,14 @@ const BillHistory = () => {
                                         </td>
                                         <td style={{ padding: '12px' }}>{bill.customerInfo?.tableNumber || '-'}</td>
                                         <td style={{ padding: '12px', textAlign: 'right', fontWeight: 'bold' }}>{formatCurrency(bill.total)}</td>
-                                        <td style={{ padding: '12px', textAlign: 'right' }}>{formatCurrency(bill.paymentInfo?.jama || 0)}</td>
-                                        <td style={{ 
-                                            padding: '12px', 
-                                            textAlign: 'right', 
-                                            color: (bill.paymentInfo?.baki || bill.total) > 0 ? '#dc3545' : '#28a745',
-                                            fontWeight: 'bold'
-                                        }}>
-                                            {formatCurrency(bill.paymentInfo?.baki || bill.total)}
-                                        </td>
                                         <td style={{ padding: '12px', textAlign: 'center' }}>
-                                            <button
-                                                onClick={() => setSelectedBill(bill)}
-                                                style={{
-                                                    padding: '4px 8px',
-                                                    background: '#007bff',
-                                                    color: 'white',
-                                                    border: 'none',
-                                                    borderRadius: '3px',
-                                                    cursor: 'pointer',
-                                                    fontSize: '12px',
-                                                    marginRight: '3px',
-                                                    marginBottom: '3px'
-                                                }}
-                                            >
+                                            <button onClick={() => setSelectedBill(bill)} style={{ padding: '4px 8px', background: '#007bff', color: 'white', border: 'none', borderRadius: '3px', cursor: 'pointer', fontSize: '12px', marginRight: '3px', marginBottom: '3px' }}>
                                                 पहा
                                             </button>
-                                            <button
-                                                onClick={() => handlePrintSingleBill(bill)}
-                                                style={{
-                                                    padding: '4px 8px',
-                                                    background: '#28a745',
-                                                    color: 'white',
-                                                    border: 'none',
-                                                    borderRadius: '3px',
-                                                    cursor: 'pointer',
-                                                    fontSize: '12px',
-                                                    marginRight: '3px',
-                                                    marginBottom: '3px'
-                                                }}
-                                            >
+                                            <button onClick={handlePrintSingleBill} style={{ padding: '4px 8px', background: '#28a745', color: 'white', border: 'none', borderRadius: '3px', cursor: 'pointer', fontSize: '12px', marginRight: '3px', marginBottom: '3px' }}>
                                                 🖨️ प्रिंट
                                             </button>
-                                            <button
-                                                onClick={() => handleDeleteBill(bill.id)}
-                                                style={{
-                                                    padding: '4px 8px',
-                                                    background: '#dc3545',
-                                                    color: 'white',
-                                                    border: 'none',
-                                                    borderRadius: '3px',
-                                                    cursor: 'pointer',
-                                                    fontSize: '12px',
-                                                    marginBottom: '3px'
-                                                }}
-                                            >
+                                            <button onClick={handleDeleteBill} style={{ padding: '4px 8px', background: '#dc3545', color: 'white', border: 'none', borderRadius: '3px', cursor: 'pointer', fontSize: '12px', marginBottom: '3px' }}>
                                                 हटवा
                                             </button>
                                         </td>
@@ -456,65 +238,18 @@ const BillHistory = () => {
                 )}
             </div>
 
-            {/* Bill Detail Modal */}
             {selectedBill && (
-                <div style={{
-                    position: 'fixed',
-                    top: '0',
-                    left: '0',
-                    right: '0',
-                    bottom: '0',
-                    background: 'rgba(0,0,0,0.5)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    zIndex: 1000
-                }}>
-                    <div style={{
-                        background: 'white',
-                        padding: '20px',
-                        borderRadius: '8px',
-                        maxWidth: '600px',
-                        maxHeight: '80vh',
-                        overflow: 'auto',
-                        width: '90%'
-                    }}>
+                <div style={{ position: 'fixed', top: '0', left: '0', right: '0', bottom: '0', background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
+                    <div style={{ background: 'white', padding: '20px', borderRadius: '8px', maxWidth: '600px', maxHeight: '80vh', overflow: 'auto', width: '90%' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                            <h3 style={{ margin: '0', color: user?.hotelId === 'matoshree' ? '#C41E3A' : '#2c3e50' }}>
+                            <h3 style={{ margin: '0', color: '#2c3e50' }}>
                                 बिल तपशील - {selectedBill.billNumber}
                             </h3>
                             <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                                <button
-                                    onClick={() => handleExportSingleBill(selectedBill)}
-                                    style={{
-                                        padding: '6px 12px',
-                                        background: '#28a745',
-                                        color: 'white',
-                                        border: 'none',
-                                        borderRadius: '4px',
-                                        cursor: 'pointer',
-                                        fontSize: '12px',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: '5px'
-                                    }}
-                                >
+                                <button onClick={handleExportSingleBill} style={{ padding: '6px 12px', background: '#28a745', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '5px' }}>
                                     📄 PDF डाउनलोड
                                 </button>
-                                <button
-                                    onClick={() => {
-                                        setSelectedBill(null);
-                                        setEditingPayment(false);
-                                        setEditPaymentData({ jama: 0, baki: 0 });
-                                    }}
-                                    style={{
-                                        background: 'none',
-                                        border: 'none',
-                                        fontSize: '24px',
-                                        cursor: 'pointer',
-                                        color: '#666'
-                                    }}
-                                >
+                                <button onClick={() => setSelectedBill(null)} style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', color: '#666' }}>
                                     ×
                                 </button>
                             </div>
@@ -539,7 +274,7 @@ const BillHistory = () => {
 
                         <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '15px' }}>
                             <thead>
-                                <tr style={{ background: `linear-gradient(135deg, ${'var(--color-primary)'}, ${'var(--color-primary-accent)'})` }}>
+                                <tr style={{ background: `linear-gradient(135deg, var(--color-primary), var(--color-primary-accent))` }}>
                                     <th style={{ padding: '8px', border: '1px solid #ddd' }}>आयटम</th>
                                     <th style={{ padding: '8px', border: '1px solid #ddd' }}>दर</th>
                                     <th style={{ padding: '8px', border: '1px solid #ddd' }}>संख्या</th>
@@ -561,113 +296,9 @@ const BillHistory = () => {
                         <div style={{ textAlign: 'right' }}>
                             <p><strong>उपजोड: {formatCurrency(selectedBill.subtotal)}</strong></p>
                             <p><strong>जीएसटी (18%): {formatCurrency(selectedBill.tax)}</strong></p>
-                            <p style={{ fontSize: '18px', color: user?.hotelId === 'matoshree' ? '#C41E3A' : '#007bff' }}>
+                            <p style={{ fontSize: '18px', color: '#007bff' }}>
                                 <strong>एकूण: {formatCurrency(selectedBill.total)}</strong>
                             </p>
-                            
-                            {/* Payment Information */}
-                            <div style={{ marginTop: '15px', paddingTop: '15px', borderTop: '1px solid #ddd' }}>
-                                {editingPayment ? (
-                                    /* Edit Mode */
-                                    <div style={{ textAlign: 'left' }}>
-                                        <h4 style={{ marginBottom: '15px', color: '#2c3e50' }}>पेमेंट माहिती संपादित करा</h4>
-                                        <div style={{ marginBottom: '15px' }}>
-                                            <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>
-                                                जमा (Received Amount): ₹
-                                            </label>
-                                            <input
-                                                type="number"
-                                                name="jama"
-                                                value={editPaymentData.jama}
-                                                onChange={handlePaymentDataChange}
-                                                min="0"
-                                                step="0.01"
-                                                style={{
-                                                    padding: '8px',
-                                                    border: '1px solid #ddd',
-                                                    borderRadius: '4px',
-                                                    width: '150px',
-                                                    fontSize: '14px'
-                                                }}
-                                            />
-                                        </div>
-                                        <div style={{ marginBottom: '15px' }}>
-                                            <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>
-                                                बाकी (Balance): ₹
-                                            </label>
-                                            <div style={{
-                                                padding: '8px',
-                                                border: '1px solid #ddd',
-                                                borderRadius: '4px',
-                                                backgroundColor: '#f8f9fa',
-                                                width: '150px',
-                                                fontSize: '14px',
-                                                fontWeight: 'bold',
-                                                color: editPaymentData.baki > 0 ? '#dc3545' : '#28a745'
-                                            }}>
-                                                {editPaymentData.baki.toFixed(2)}
-                                            </div>
-                                        </div>
-                                        <div style={{ display: 'flex', gap: '10px' }}>
-                                            <button
-                                                onClick={handleSavePayment}
-                                                style={{
-                                                    padding: '8px 16px',
-                                                    background: '#28a745',
-                                                    color: 'white',
-                                                    border: 'none',
-                                                    borderRadius: '4px',
-                                                    cursor: 'pointer',
-                                                    fontSize: '14px'
-                                                }}
-                                            >
-                                                सेव्ह करा
-                                            </button>
-                                            <button
-                                                onClick={handleCancelEdit}
-                                                style={{
-                                                    padding: '8px 16px',
-                                                    background: '#6c757d',
-                                                    color: 'white',
-                                                    border: 'none',
-                                                    borderRadius: '4px',
-                                                    cursor: 'pointer',
-                                                    fontSize: '14px'
-                                                }}
-                                            >
-                                                रद्द करा
-                                            </button>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    /* View Mode */
-                                    <div>
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                                            <p><strong>जमा (Received): {formatCurrency(selectedBill.paymentInfo?.jama || 0)}</strong></p>
-                                            <button
-                                                onClick={() => handleEditPayment(selectedBill)}
-                                                style={{
-                                                    padding: '4px 8px',
-                                                    background: '#007bff',
-                                                    color: 'white',
-                                                    border: 'none',
-                                                    borderRadius: '3px',
-                                                    cursor: 'pointer',
-                                                    fontSize: '12px'
-                                                }}
-                                            >
-                                                संपादित करा
-                                            </button>
-                                        </div>
-                                        <p style={{ 
-                                            color: (selectedBill.paymentInfo?.baki || selectedBill.total) > 0 ? '#dc3545' : '#28a745',
-                                            fontSize: '16px'
-                                        }}>
-                                            <strong>बाकी (Balance): {formatCurrency(selectedBill.paymentInfo?.baki || selectedBill.total)}</strong>
-                                        </p>
-                                    </div>
-                                )}
-                            </div>
                         </div>
                     </div>
                 </div>

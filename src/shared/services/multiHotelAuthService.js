@@ -10,7 +10,8 @@ const hotelCredentials = {
         isAdmin: true,
         address: "वांबोरी, राहुरी, जिल्हा - अहिल्यानगर, महाराष्ट्र - ४१३७०४",
         theme: "matoshree",
-        language: "marathi"
+        language: "marathi",
+        email: "vikas4kale@gmail.com"
     },
     "jagdamba": {
         username: "jagdamba_hotel_admin",
@@ -20,7 +21,8 @@ const hotelCredentials = {
         isAdmin: true,
         address: "वांबोरी, राहुरी, जिल्हा - अहिल्यानगर, महाराष्ट्र - ४१३७०४",
         theme: "jagdamba",
-        language: "marathi"
+        language: "marathi",
+        email: "babusalunke30@gmail.com"
     },
     "shreehari": {
         username: "shreehari_admin",
@@ -30,7 +32,8 @@ const hotelCredentials = {
         isAdmin: true,
         address: "वांबोरी, राहुरी, जिल्हा - अहिल्यानगर, महाराष्ट्र - ४१३७०४",
         theme: "shreehari",
-        language: "marathi"
+        language: "marathi",
+        email: ""
     },
     "samplehotel": {
         username: "sample_demo_user",
@@ -40,7 +43,8 @@ const hotelCredentials = {
         isAdmin: true,
         address: "Demo Location, Sample City, India",
         theme: "sample",
-        language: "english"
+        language: "english",
+        email: ""
     }
 };
 
@@ -59,6 +63,7 @@ export const login = (username, password) => {
             address: hotel.address,
             theme: hotel.theme,
             language: hotel.language,
+            email: hotel.email || '',
             loginTime: new Date().toISOString()
         };
         localStorage.setItem("user", JSON.stringify(userSession));
