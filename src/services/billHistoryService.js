@@ -1,13 +1,6 @@
 // Bill History Service for managing saved bills
-import { getCurrentUser, getCurrentHotelId } from './authService';
 import { sendMonthlyReportByEmail } from './emailService'; // Import the email service
-import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
-
-// Sample bill data for demo purposes
-const getSampleBillData = () => {
-    // ... (rest of the function remains the same)
-};
 
 // Save bill to history
 export const saveBillToHistory = (billData) => {
@@ -100,11 +93,6 @@ const generateMonthlyPDF = (bills, month) => {
 
 // Export bills to PDF (for backup/download)
 export const exportBillHistoryToPDF = (monthlyFilter = null) => {
-    // ... (rest of the function remains the same)
-};
-
-// Helper function to generate bill table
-const generateBillTable = (doc, bills, startYPos) => {
     // ... (rest of the function remains the same)
 };
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 // Mock data for demonstration
 const mockFoodItems = [
@@ -13,12 +13,11 @@ const mockCustomerInfo = {
 };
 
 const BillPrint = () => {
-    const [foodItems, setFoodItems] = useState(mockFoodItems);
+    const [foodItems] = useState(mockFoodItems);
     const [billNumber] = useState('B123456');
     const [currentDate] = useState(new Date().toLocaleDateString());
     const [currentTime] = useState(new Date().toLocaleTimeString());
-    const [customerInfo, setCustomerInfo] = useState(mockCustomerInfo);
-    const [paymentInfo, setPaymentInfo] = useState({ jama: 310, baki: 0 });
+    const [customerInfo] = useState(mockCustomerInfo);
     const [includeGST, setIncludeGST] = useState(false);
 
     const calculateSubtotal = () => {

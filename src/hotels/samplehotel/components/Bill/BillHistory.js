@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+ import React, { useState, useEffect } from 'react';
 
 // Mock data for demonstration
 const mockBillHistory = [
@@ -41,9 +41,9 @@ const mockStatistics = {
 };
 
 const BillHistory = () => {
-    const [bills, setBills] = useState(mockBillHistory);
+    const [bills] = useState(mockBillHistory);
     const [filteredBills, setFilteredBills] = useState(mockBillHistory);
-    const [statistics, setStatistics] = useState(mockStatistics);
+    const [statistics] = useState(mockStatistics);
     const [filters, setFilters] = useState({
         customerName: '',
         startDate: '',
