@@ -15,7 +15,7 @@ const hotelCredentials = {
     },
     "jagdamba": {
         username: "jagdamba_hotel_admin",
-        password: "jagdamba#2025!secure",
+        password: "jagdamba@babu",
         hotelName: "हॉटेल जगदंबा",
         hotelId: "jagdamba",
         isAdmin: true,
@@ -26,7 +26,7 @@ const hotelCredentials = {
     },
     "shreehari": {
         username: "shreehari_admin",
-        password: "shreehari@2025#secure",
+        password: "shreehari@praveen",
         hotelName: "हॉटेल श्री हरी",
         hotelId: "shreehari",
         isAdmin: true,
@@ -37,7 +37,7 @@ const hotelCredentials = {
     },
     "samplehotel": {
         username: "sample_demo_user",
-        password: "sample$demo%2025",
+        password: "sample@demo",
         hotelName: "Sample Demo Hotel",
         hotelId: "samplehotel", 
         isAdmin: true,
