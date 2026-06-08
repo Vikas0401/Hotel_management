@@ -10,6 +10,7 @@ import MatoshreeApp from './hotels/matoshree/MatoshreeApp';
 import JagdambaApp from './hotels/jagdamba/JagdambaApp';
 import SampleHotelApp from './hotels/samplehotel/SampleHotelApp';
 import ShreeHariApp from './hotels/shreehari/ShreeHariApp';
+import ShreeSwamiSamarthApp from './hotels/shreeswamisamarth/ShreeSwamiSamarthApp';
 
 // Multi-hotel authentication
 import { 
@@ -151,6 +152,12 @@ const AppContent = () => {
                 <Route path="/hotels/shreehari/*" element={
                     <HotelRoute>
                         <ShreeHariApp onLogout={handleLogout} />
+                    </HotelRoute>
+                } />
+                
+                <Route path="/hotels/shreeswamisamarth/*" element={
+                    <HotelRoute>
+                        <ShreeSwamiSamarthApp onLogout={handleLogout} />
                     </HotelRoute>
                 } />
                 

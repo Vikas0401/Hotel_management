@@ -1,0 +1,257 @@
+/* Bill Component Styles */
+.bill-calculation {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.bill-calculation h2 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+    border-bottom: 2px solid #e74c3c;
+    padding-bottom: 10px;
+}
+
+.customer-info {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+.customer-info h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+.info-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.info-input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.info-input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.bill-container {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.bill-header {
+    text-align: center;
+    border-bottom: 2px solid #2c3e50;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.bill-header h1 {
+    color: #2c3e50;
+    margin: 0 0 10px 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.hotel-details {
+    color: #666;
+    font-size: 14px;
+}
+
+.bill-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background: white;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.bill-table th {
+    background-color: #2c3e50;
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.bill-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.bill-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.bill-table tr:last-child td {
+    border-bottom: none;
+}
+
+.bill-summary {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 6px;
+    margin-top: 20px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.summary-row:last-child {
+    border-bottom: none;
+}
+
+.total-row {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #e74c3c;
+    background: white;
+    padding: 15px;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.total-amount {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.no-items {
+    text-align: center;
+    color: #666;
+    font-size: 1.1rem;
+    padding: 40px;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+/* Payment Information Styles */
+.payment-info {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 20px;
+    margin-top: 20px;
+    border: 1px solid #dee2e6;
+}
+
+.payment-info h4 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.payment-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.payment-row:last-child {
+    margin-bottom: 0;
+}
+
+.payment-row input[type="number"] {
+    max-width: 120px;
+    text-align: right;
+}
+
+.payment-input-section {
+    background: #e8f4fd;
+    border: 1px solid #0066cc;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.payment-input-section h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.payment-balance {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.payment-balance.positive {
+    color: #dc3545;
+}
+
+.payment-balance.zero {
+    color: #28a745;
+}
+
+.print-button {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.print-button:hover {
+    background-color: #0056b3;
+}
+
+.clear-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.clear-button:hover {
+    background-color: #c82333;
+}
+
+@media (max-width: 768px) {
+    .info-form {
+        grid-template-columns: 1fr;
+    }
+    
+    .bill-table {
+        font-size: 14px;
+    }
+    
+    .bill-table th,
+    .bill-table td {
+        padding: 8px 6px;
+    }
+}
+

@@ -1,0 +1,425 @@
+/* Table Menu Page Styles */
+.table-menu-container {
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: calc(100vh - 58px - 200px);
+}
+
+.table-menu-header {
+    text-align: center;
+    margin-bottom: 15px; /* Reduced from 20px */
+    background: white;
+    padding: 12px; /* Increased from 10px to prevent     /* Collapsible sections mobile styles */
+    .section-header-collapsible {
+        padding: 12px 15px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    
+    .section-header-collapsible h2 {
+        font-size: 1rem;
+        text-align: center;
+    }
+    
+    .header-actions {
+        justify-content: space-between;
+    }
+    
+    .section-content {
+        padding: 15px;
+    }
+    
+    /* Mobile responsive layout - stack vertically */
+    .table-menu-content {
+        flex-direction: column !important;
+    }
+    
+    .food-entry-section {
+        flex: none !important;
+        width: 100% !important;
+    }
+    
+    .right-side-container {
+        flex: none !important;
+        width: 100% !important;
+        min-width: unset !important;
+    } border-radius: 8px; /* Reduced from 10px */
+    box-shadow: 0 1px 5px rgba(0,0,0,0.1); /* Further reduced shadow */
+}
+
+.table-menu-header h1 {
+    color: #2c3e50;
+    margin-bottom: 12px; /* Increased from 10px */
+    font-size: 1.3rem; /* Increased from 1.2rem for better readability */
+    line-height: 1.2; /* Improved line height */
+}
+
+.table-stats {
+    display: flex;
+    justify-content: center;
+    gap: 12px; /* Reduced from 15px */
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    padding: 8px 12px; /* Reduced from 10px 15px */
+    border-radius: 6px; /* Reduced from 8px */
+    text-align: center;
+    min-width: 75px; /* Reduced from 90px */
+    box-shadow: 0 1px 8px rgba(52, 152, 219, 0.3); /* Reduced shadow */
+}
+
+.stat-number {
+    display: block;
+    font-size: 1.1rem; /* Reduced from 1.3rem */
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: white;
+}
+
+.stat-label {
+    font-size: 0.65rem; /* Reduced from 0.75rem */
+    opacity: 0.9;
+    margin-top: 2px;
+}
+
+/* Collapsible Section Styles */
+.section-header-collapsible {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 15px 20px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border-radius: 10px;
+    margin-bottom: 0;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.section-header-collapsible:hover {
+    background: linear-gradient(135deg, #2980b9, #1f618d);
+    transform: translateY(-1px);
+}
+
+.section-header-collapsible h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.collapse-icon {
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+    font-weight: bold;
+}
+
+.collapse-icon.expanded {
+    transform: rotate(180deg);
+}
+
+.section-content {
+    padding: 20px;
+    background: white;
+    border-radius: 0 0 10px 10px;
+    border: 1px solid #e0e0e0;
+    border-top: none;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+        padding: 0 20px;
+    }
+    to {
+        opacity: 1;
+        max-height: 1000px;
+        padding: 20px;
+    }
+}
+
+/* Adjust existing styles for collapsible structure */
+.table-menu-content {
+    display: flex;
+    flex-direction: row; /* Changed from column to row for horizontal layout */
+    gap: 20px;
+    align-items: flex-start; /* Align items to top */
+}
+
+.food-entry-section,
+.active-tables-section {
+    background: var(--color-success);
+    color: white;
+    border-radius: 10px;
+    padding: 0;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+/* Specific widths for horizontal layout */
+.food-entry-section {
+    flex: 0 0 400px; /* Fixed width for food entry form */
+    min-height: 600px;
+}
+
+.active-tables-section {
+    flex: 1; /* Takes remaining space */
+    min-width: 300px;
+}
+
+.right-side-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 500px;
+}
+
+.quick-actions-section {
+    background: transparent;
+    border-radius: 10px;
+    padding: 0;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #ecf0f1;
+}
+
+.section-header h2 {
+    color: #2c3e50;
+    margin: 0;
+}
+
+.view-details-btn {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+}
+
+.view-details-btn:hover {
+    background: #2980b9;
+}
+
+.tables-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.table-summary-card {
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.table-summary-card:hover {
+    border-color: #3498db;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.2);
+}
+
+.table-summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.table-summary-header h3 {
+    color: #2c3e50;
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.table-status {
+    background: #27ae60;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+.table-summary-info {
+    margin-bottom: 15px;
+}
+
+.table-summary-info p {
+    margin: 8px 0;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.table-action-btn {
+    width: 100%;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+}
+
+.table-action-btn:hover {
+    background: #c0392b;
+}
+
+.quick-actions-section {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.quick-actions-section h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    min-width: 160px;
+}
+
+.action-btn.primary {
+    background: #27ae60;
+    color: white;
+}
+
+.action-btn.primary:hover {
+    background: #219a52;
+    transform: translateY(-2px);
+}
+
+.action-btn.secondary {
+    background: #95a5a6;
+    color: white;
+}
+
+.action-btn.secondary:hover {
+    background: #7f8c8d;
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .table-menu-container {
+        padding: 15px;
+    }
+    
+    .table-menu-header {
+        padding: 10px; /* Increased from 8px */
+        margin-bottom: 12px;
+    }
+    
+    .table-menu-header h1 {
+        font-size: 1.1rem; /* Increased from 1rem */
+        margin-bottom: 10px;
+    }
+    
+    .table-stats {
+        gap: 6px; /* Reduced from 8px */
+    }
+    
+    .stat-card {
+        min-width: 65px; /* Reduced from 80px */
+        padding: 6px 10px; /* Reduced from 8px 12px */
+    }
+    
+    .stat-number {
+        font-size: 0.9rem; /* Reduced from 1.1rem */
+    }
+    
+    .stat-label {
+        font-size: 0.55rem; /* Reduced from 0.65rem */
+    }
+    
+    /* Collapsible sections mobile styles */
+    .section-header-collapsible {
+        padding: 12px 15px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+    
+    .section-header-collapsible h2 {
+        font-size: 1rem;
+        text-align: center;
+    }
+    
+    .header-actions {
+        justify-content: space-between;
+    }
+    
+    .section-content {
+        padding: 15px;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+    
+    .view-details-btn {
+        align-self: center;
+    }
+    
+    .tables-summary-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .action-btn {
+        width: 100%;
+        max-width: 300px;
+    }
+}
