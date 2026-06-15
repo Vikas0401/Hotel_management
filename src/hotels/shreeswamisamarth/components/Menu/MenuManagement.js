@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { 
-    getHotelMenu, 
-    addMenuItem, 
-    updateMenuItem, 
-    deleteMenuItem, 
+import {
+    getHotelMenu,
+    addMenuItem,
+    updateMenuItem,
+    deleteMenuItem,
     resetToDefaultMenu,
-    getMenuCategories 
+    getMenuCategories
 } from '../../services/menuService';
 import { getCurrentUser } from '../../services/authService';
 
@@ -43,7 +43,7 @@ const MenuManagement = ({ onMenuUpdate }) => {
                 rate: parseFloat(newItem.rate),
                 category: newItem.category
             });
-            
+
             if (success) {
                 setNewItem({ code: '', name: '', rate: '', category: '' });
                 setShowAddForm(false);
@@ -59,7 +59,7 @@ const MenuManagement = ({ onMenuUpdate }) => {
                 rate: parseFloat(editingItem.rate),
                 category: editingItem.category
             });
-            
+
             if (success) {
                 setEditingItem(null);
                 loadMenu();
@@ -98,14 +98,14 @@ const MenuManagement = ({ onMenuUpdate }) => {
             <div className="management-header">
                 <h2><span className={user?.hotelId === 'matoshree' ? 'hotel-matoshree-name' : ''}>{user?.hotelName}</span> - मेनू व्यवस्थापन</h2>
                 <div className="management-actions">
-                    <button 
-                        onClick={() => setShowAddForm(true)} 
+                    <button
+                        onClick={() => setShowAddForm(true)}
                         className="add-item-btn"
                     >
                         नवीन आयटम जोडा
                     </button>
-                    <button 
-                        onClick={handleResetMenu} 
+                    <button
+                        onClick={handleResetMenu}
                         className="reset-menu-btn"
                     >
                         डिफॉल्टवर रीसेट करा
@@ -122,23 +122,23 @@ const MenuManagement = ({ onMenuUpdate }) => {
                             type="text"
                             placeholder="आयटम कोड (उदा., 801)"
                             value={newItem.code}
-                            onChange={(e) => setNewItem({...newItem, code: e.target.value})}
+                            onChange={(e) => setNewItem({ ...newItem, code: e.target.value })}
                         />
                         <input
                             type="text"
-                            placeholder="आयटमचे नाव"
+                            placeholder="आयटम चे नाव"
                             value={newItem.name}
-                            onChange={(e) => setNewItem({...newItem, name: e.target.value})}
+                            onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
                         />
                         <input
                             type="number"
                             placeholder="दर (₹)"
                             value={newItem.rate}
-                            onChange={(e) => setNewItem({...newItem, rate: e.target.value})}
+                            onChange={(e) => setNewItem({ ...newItem, rate: e.target.value })}
                         />
                         <select
                             value={newItem.category}
-                            onChange={(e) => setNewItem({...newItem, category: e.target.value})}
+                            onChange={(e) => setNewItem({ ...newItem, category: e.target.value })}
                         >
                             <option value="">श्रेणी निवडा</option>
                             {categories.map(cat => (
@@ -150,7 +150,7 @@ const MenuManagement = ({ onMenuUpdate }) => {
                             <input
                                 type="text"
                                 placeholder="नवीन श्रेणीचे नाव"
-                                onChange={(e) => setNewItem({...newItem, category: e.target.value})}
+                                onChange={(e) => setNewItem({ ...newItem, category: e.target.value })}
                             />
                         )}
                     </div>
@@ -174,16 +174,16 @@ const MenuManagement = ({ onMenuUpdate }) => {
                                             <input
                                                 type="text"
                                                 value={editingItem.name}
-                                                onChange={(e) => setEditingItem({...editingItem, name: e.target.value})}
+                                                onChange={(e) => setEditingItem({ ...editingItem, name: e.target.value })}
                                             />
                                             <input
                                                 type="number"
                                                 value={editingItem.rate}
-                                                onChange={(e) => setEditingItem({...editingItem, rate: e.target.value})}
+                                                onChange={(e) => setEditingItem({ ...editingItem, rate: e.target.value })}
                                             />
                                             <select
                                                 value={editingItem.category}
-                                                onChange={(e) => setEditingItem({...editingItem, category: e.target.value})}
+                                                onChange={(e) => setEditingItem({ ...editingItem, category: e.target.value })}
                                             >
                                                 {categories.map(cat => (
                                                     <option key={cat} value={cat}>{cat}</option>
@@ -202,14 +202,14 @@ const MenuManagement = ({ onMenuUpdate }) => {
                                                 <span className="item-rate">₹{item.rate}</span>
                                             </div>
                                             <div className="item-actions">
-                                                <button 
-                                                    onClick={() => setEditingItem(item)} 
+                                                <button
+                                                    onClick={() => setEditingItem(item)}
                                                     className="edit-btn"
                                                 >
                                                     संपादित करा
                                                 </button>
-                                                <button 
-                                                    onClick={() => handleDeleteItem(item.code)} 
+                                                <button
+                                                    onClick={() => handleDeleteItem(item.code)}
                                                     className="delete-btn"
                                                 >
                                                     हटवा
